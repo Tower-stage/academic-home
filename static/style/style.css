@@ -251,14 +251,12 @@ hr {
 
 /* 密码门：居中的一个输入框，无任何提示文字 */
 .backroom-gate {
-  display: flex;
-  justify-content: center;
   padding: 3.5em 0;
 }
 .backroom-gate .gate-field {
   position: relative;
   width: 100%;
-  max-width: 440px;
+  max-width: 420px;
 }
 .backroom-gate input {
   font: inherit;

@@ -14,7 +14,7 @@ import { readFileSync, writeFileSync, mkdirSync, cpSync, rmSync, existsSync, rea
 import { watch } from 'node:fs';
 import { dirname, join, resolve, sep, basename } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { webcrypto } from 'node:crypto';
+import { webcrypto, createHash } from 'node:crypto';
 import http from 'node:http';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
@@ -424,6 +424,12 @@ async function build() {
 
   const baseNodes = parse(read('templates/base.html'), 'templates/base.html');
 
+  // 给 style.css 加内容哈希，避免浏览器拿旧缓存（改了样式却看不到变化）
+  const cssPath = join(ROOT, 'static', 'style', 'style.css');
+  const cssV = existsSync(cssPath)
+    ? createHash('sha1').update(readFileSync(cssPath)).digest('hex').slice(0, 8)
+    : '';
+
   // 清空 dist 但不删 dist 目录本身（Windows 上删除被占用的目录会 EPERM，删内容则不会）
   mkdirSync(DIST, { recursive: true });
   for (const name of readdirSync(DIST)) {
@@ -442,6 +448,7 @@ async function build() {
         page_title: page.title,
         meta_description: siteView.title ? `${siteView.name} — ${siteView.title}` : siteView.name,
         page_path: page.out,
+        css_v: cssV,
         prefix: page.base || '',
       },
     ]);
