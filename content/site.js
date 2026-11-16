@@ -72,8 +72,11 @@ export default {
   ],
 
   // ---------- 可选装饰 ----------
-  // 上线后的站点地址，如 "https://boxiao.com/"（结尾带斜杠）。只为社交分享卡片（og:url / og:image）用；
-  // 留空就不输出这两项，不影响页面。
+  // 站点根路径：GitHub Pages 项目站是 "/仓库名/"，用户站（xxx.github.io）是 "/"。
+  // 只有 404 页会用到它——404 会在任意深度被访问，相对链接会指错地方。
+  base: "/academic-home/",
+  // 上线后的完整地址，如 "https://tower-stage.github.io/academic-home/"（结尾带斜杠）。
+  // 只为社交分享卡片（og:url / og:image）用；留空就不输出这两项，不影响页面。
   url: "",
   watermark: "style/logo-polyu.png",   // 底纹：把一张淡色图片放到 static/style/，这里写 "style/watermark.png"
   analytics: "",   // 统计脚本（可选）；留空则没有

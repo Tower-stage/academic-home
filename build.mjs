@@ -416,6 +416,8 @@ async function build() {
       tpl: '404.html',
       navTitle: '',
       title: `404 | ${siteView.name}`,
+      // 404 会在任意深度被访问，相对链接会指错，所以这一页用根路径前缀
+      base: siteView.base || '/',
       data: {},
     },
   ];
@@ -431,7 +433,7 @@ async function build() {
   for (const page of pages) {
     const where = `templates/${page.tpl}`;
     const nav = (siteView.nav || []).map((n) => ({ ...n, active: n.label === page.navTitle }));
-    const body = render(parse(read(where), where), [scope, page.data]);
+    const body = render(parse(read(where), where), [scope, { ...page.data, prefix: page.base || '' }]);
     const html = render(baseNodes, [
       {
         site: siteView,
@@ -440,7 +442,7 @@ async function build() {
         page_title: page.title,
         meta_description: siteView.title ? `${siteView.name} — ${siteView.title}` : siteView.name,
         page_path: page.out,
-        prefix: '',
+        prefix: page.base || '',
       },
     ]);
     writeFileSync(join(DIST, page.out), html, 'utf8');
