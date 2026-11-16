@@ -31,7 +31,6 @@ node build.mjs              # 只生成一次，输出到 site/
 |---|---|---|
 | 名字、中文名、职称、邮箱 | `content/site.js` | 改一处，三个页面同时更新 |
 | 首页自我介绍 | `content/site.js` 里的 `bio` | 每个数组元素是一段，可以写 `<a>` `<b>` `<i>` |
-| 研究兴趣 | `content/site.js` 里的 `interests` | |
 | 首页 News | `content/news.js` | 最新的放最上面 |
 | 论文列表 | `content/publications.js` | 自动分组、排序、加粗自己的名字 |
 | 经历页 | `content/experiences.js` | 研究 / 教育 / 会议 / 专利（顺序 = 数组顺序）；每条可加 `logo: "style/xxx.png"` 放校徽 |

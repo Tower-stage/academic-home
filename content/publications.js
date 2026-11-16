@@ -24,10 +24,10 @@
 //     EES 2024 的 dithieno）原文里出现了两个 Xiao, B.，第二个是另一位学者
 //     Xiao Biao，不再加粗。
 //
-//  ⚠️ 标黄的 5 条（一作 2 条 + 共一 3 条）：
+//  ⚠️ 标黄的 4 条（一作 2 条 + 共一 2 条）：
 //     Joule 2026 Mechanisms、AFM 2025 Unraveling（一作）；
-//     EES 2024 dithieno（第 3 作者）、Sci China Chem 2023（第 2 作者）、
-//     EES 2025 的 19.46%（第 2 作者，一作是 Wu, X.）——后三条为共一，带 †。
+//     Sci China Chem 2023（第 2 作者）、EES 2025 的 19.46%（第 2 作者，一作是 Wu, X.）——这两条为共一，带 †。
+//     EES 2024 的 dithieno 一篇按作者本人说明不是共一，已取消标黄和 †。
 // =============================================================
 
 export default [
@@ -165,8 +165,6 @@ export default [
     venue: "Energy & Environmental Science",
     details: "17(7), 2610–2620",
     doi: "https://doi.org/10.1039/d3ee04300b",
-    highlight: true,
-    equal: true,
   },
 
   // ---------------- 2023 ----------------

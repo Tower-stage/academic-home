@@ -5,10 +5,6 @@
 {{#each bio}}<p>{{ this }}</p>
 {{/each}}
 
-{{#if interests}}<p class="tight">My research interests include:</p>
-<ul class="interests">{{#each interests}}<li>{{ this }}</li>{{/each}}</ul>
-{{/if}}
-
 <h3>Contact</h3>
 <p class="tight">{{#if site.email}}<b>Email</b>&nbsp; <a class="email" href="#" data-addr="{{ site.email_b64 }}" title="点击写邮件">{{ site.email_text }}</a>{{/if}}</p>
 <ul class="links">

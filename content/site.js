@@ -35,13 +35,6 @@ export default {
      to reach me is email.`,
   ],
 
-  // ---------- 研究兴趣 ----------
-  interests: [
-    "Organic photovoltaics: all-polymer and all-small-molecule solar cells",
-    "Active-layer film formation and high-speed coating",
-    "Molecular design of donors and acceptors, and device stability",
-  ],
-
   // ---------- 联系方式 ----------
   email: "iam-bo.xiao@connect.polyu.hk",   // 来自 ORCID 公开记录；不想公开就写 ""
 
