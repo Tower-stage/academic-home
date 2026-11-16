@@ -42,7 +42,7 @@ export default [
         when: "2025 –",
         main: "Ph.D. Student",
         sub: "The Hong Kong Polytechnic University",
-        extra: "",
+        extra: "Supervisor: Prof. Gang Li",
         logo: "style/logo-polyu.png",
       },
       {
