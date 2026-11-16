@@ -26,14 +26,10 @@ export default {
   // 每个数组元素是一段。段落里可以写链接、加粗、斜体。
   bio: [
     `I am a researcher at <a href="https://www.polyu.edu.hk/">The Hong Kong Polytechnic
-     University</a>, working on organic photovoltaics (OPV) and organic solar cells (OSC).`,
+     University</a>, working on organic photovoltaics (OPV).`,
 
-    `My work centres on the active layer: how donor and acceptor molecules are designed,
-     how the film forms during high-speed coating, and how these choices propagate into
-     efficiency and operational stability. I have worked with all-polymer and
-     all-small-molecule systems, and I care a good deal about
-     <i>processability</i> — thickness tolerance, composition tolerance, and what survives
-     an industrial coating speed.`,
+    `My work centres on processability: the physical mechanisms that govern film formation
+     during high-speed coating, process simulation, and semi-transparent OPV devices.`,
 
     `I am always happy to talk about OPV/OSC, processing, or collaborations. The fastest way
      to reach me is email.`,
