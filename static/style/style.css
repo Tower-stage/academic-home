@@ -275,17 +275,25 @@ hr {
 .backroom-gate input.shake { animation: shake .3s; }
 .backroom-gate button {
   font: inherit;
-  padding: .6em 1.3em;
+  font-size: 1.15em;
+  line-height: 1;
+  width: 2.9em;
+  min-width: 2.9em;
+  align-self: stretch;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid var(--rule);
   border-radius: 8px;
   background: #fff;
-  color: var(--accent);
   cursor: pointer;
-  letter-spacing: .04em;
+  transition: border-color .2s ease, background .2s ease;
 }
 .backroom-gate button:hover,
 .backroom-gate button:focus-visible {
   border-color: var(--accent);
+  background: #fdfbf8;
   outline: none;
 }
 
