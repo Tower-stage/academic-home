@@ -34,6 +34,16 @@ export default [
   // ---------------- 2026 ----------------
   {
     type: "journal",
+    authors: "Wan, J., Yang, X., Sun, R., Xiao, B., Zhang, M., & Min, J.",
+    year: 2026,
+    title:
+      "Redefining the industrial evaluation of high-speed printable organic photovoltaic materials through a manufacturing-oriented figure of merit",
+    venue: "Energy & Environmental Science",
+    details: "19(17), 5749–5760",
+    doi: "https://doi.org/10.1039/d6ee04349f",
+  },
+  {
+    type: "journal",
     authors:
       "Xiao, B., Sun, R., Wan, J., Xu, L., Shao, Y., Zhao, J., Ma, Y., Zheng, Q., Xiao, B., & Min, J.",
     year: 2026,
