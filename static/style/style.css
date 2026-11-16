@@ -253,16 +253,19 @@ hr {
 .backroom-gate {
   display: flex;
   justify-content: center;
-  align-items: stretch;
-  gap: .55em;
-  flex-wrap: wrap;
   padding: 3.5em 0;
+}
+.backroom-gate .gate-field {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
 }
 .backroom-gate input {
   font: inherit;
   font-size: 1em;
-  padding: .6em 1em;
-  min-width: 240px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: .6em 3.1em .6em 1em;
   text-align: center;
   border: 1px solid var(--rule);
   border-radius: 8px;
@@ -274,26 +277,28 @@ hr {
 }
 .backroom-gate input.shake { animation: shake .3s; }
 .backroom-gate button {
-  font: inherit;
-  font-size: 1.15em;
-  line-height: 1;
-  width: 2.9em;
-  min-width: 2.9em;
-  align-self: stretch;
+  position: absolute;
+  top: 50%;
+  right: .32em;
+  transform: translateY(-50%);
+  width: 2.3em;
+  height: 2.3em;
   padding: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--rule);
-  border-radius: 8px;
-  background: #fff;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  font: inherit;
+  font-size: 1.05em;
+  line-height: 1;
   cursor: pointer;
-  transition: border-color .2s ease, background .2s ease;
+  transition: background .2s ease;
 }
 .backroom-gate button:hover,
 .backroom-gate button:focus-visible {
-  border-color: var(--accent);
-  background: #fdfbf8;
+  background: #f4f1eb;
   outline: none;
 }
 
@@ -370,7 +375,6 @@ hr {
   .classic-nav::after { display: none; }
   .nav-menu { font-size: 16px; gap: 15px; }
   .backroom-gate { padding: 2.6em 0; }
-  .backroom-gate input { min-width: 0; flex: 1 1 auto; }
   .avatar { max-height: 130px; max-width: 130px; margin-left: 1em; }
   h1 { font-size: 1.55em; }
   h1 .cn { display: block; margin: .15em 0 0; font-size: .78em; }
