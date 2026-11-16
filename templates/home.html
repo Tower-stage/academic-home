@@ -1,0 +1,23 @@
+{{#if site.avatar}}<img class="avatar" src="{{ site.avatar }}" alt="{{ site.name }}">{{/if}}
+<h1>{{ site.name }}{{#if site.name_cn}}<span class="cn"><span class="sep">｜</span>{{ site.name_cn }}</span>{{/if}}</h1>
+{{#if site.title}}<p class="subtitle">{{ site.title }}</p>{{/if}}
+
+{{#each bio}}<p>{{ this }}</p>
+{{/each}}
+
+{{#if interests}}<p class="tight">My research interests include:</p>
+<ul class="interests">{{#each interests}}<li>{{ this }}</li>{{/each}}</ul>
+{{/if}}
+
+<h3>Contact</h3>
+<p class="tight">{{#if site.email}}<b>Email</b>&nbsp; <a class="email" href="#" data-addr="{{ site.email_b64 }}" title="点击写邮件">{{ site.email_text }}</a>{{/if}}</p>
+<ul class="links">
+{{#each site.links}}<li><a href="{{ href }}">{{ label }}</a></li>
+{{/each}}
+</ul>
+
+<h3>News</h3>
+<div class="news">
+{{#each news}}<p><span class="date">{{ date }}</span> {{ text }}</p>
+{{/each}}
+</div>

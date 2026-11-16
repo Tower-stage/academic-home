@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="下次再拍">
+  <circle cx="100" cy="100" r="98" fill="#f4f1eb" stroke="#ded8cc" stroke-width="1.5"/>
+  <text x="100" y="100" text-anchor="middle" dominant-baseline="middle" letter-spacing="1"
+        style="font-family:'Songti SC','SimSun','STSong','Noto Serif SC',serif;font-size:36px;fill:#3f3f3f;opacity:.88">下次再拍</text>
+</svg>

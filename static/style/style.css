@@ -1,0 +1,366 @@
+/* =============================================================
+   style.css —— 全站唯一样式表
+   改版式改这里；改内容不要动这个文件。
+
+   设计配方（"素雅"就靠这几条，别多加）：
+   1. 单列 800 px，17 px / 1.7 行高，四周大量留白
+   2. 全站只有一个字体栈（无衬线衬线混排只在中文名和字母标记上）
+   3. 全站只有一个强调色 #8C1515（Stanford Cardinal），只出现在
+      链接悬停、当前页导航、返回顶部
+   4. 链接用 1 px 虚线下划线，不是实线
+   5. 导航上方一道 1 px 细线，左右上角各一个 L 形折角
+   6. 没有卡片、没有阴影、没有圆角卡片、没有侧栏、没有动画
+   ============================================================= */
+
+:root {
+  --ink: #111;
+  --accent: #8C1515;
+  --rule: #d8d8d8;
+  --muted: #666;
+  --hl: #f9f9ce;
+  --sans: Optima, Candara, Calibri, "Segoe UI", Arial, sans-serif;
+  --serif: Georgia, "Times New Roman", serif;
+  --cn: STFangsong, "FangSong", "Songti SC", serif;
+}
+
+html { scroll-behavior: smooth; scroll-padding-top: 2em; }
+
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 1em 1em 4em;
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--ink);
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- 链接：虚线下划线，悬停变红 ---------- */
+a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+a:hover { color: var(--accent); }
+
+/* ---------- 底纹（可选装饰） ---------- */
+.background-logo {
+  position: fixed;
+  inset: 0;
+  background-size: 42%;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: .055;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ---------- 导航 ---------- */
+.classic-nav {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 72px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--ink);
+}
+
+/* 左右上角的 L 形折角：整站最出彩的小细节，两行 CSS */
+.classic-nav::before,
+.classic-nav::after {
+  content: "";
+  position: absolute;
+  top: -15px;
+  width: 20px;
+  height: 20px;
+}
+.classic-nav::before { left: -15px; border-left: 1px solid var(--ink); border-top: 1px solid var(--ink); }
+.classic-nav::after { right: -15px; border-right: 1px solid var(--ink); border-top: 1px solid var(--ink); }
+
+.nav-menu { display: flex; gap: 24px; font-size: 18px; }
+.nav-menu a { font-weight: 700; text-decoration: none; }
+.nav-menu a:hover { color: var(--accent); }
+.nav-menu a.active { color: var(--accent); }
+
+/* ---------- 标题与正文 ---------- */
+main { margin-top: 2.2em; }
+
+h1 {
+  font-size: 1.9em;
+  line-height: 1.3;
+  font-weight: 700;
+  margin: 0 0 .35em;
+}
+h1 .cn {
+  font-family: var(--cn);
+  font-weight: 400;
+  font-size: .85em;
+  margin-left: .5em;
+  white-space: nowrap;
+}
+
+h2 {
+  font-size: 1.25em;
+  font-weight: 700;
+  margin: 2.2em 0 .6em;
+  padding-bottom: .2em;
+}
+
+h3 {
+  font-size: 1.05em;
+  font-weight: 700;
+  margin: 2.2em 0 .7em;
+  letter-spacing: .01em;
+}
+
+p { margin: 0 0 1em; }
+p.tight { margin-bottom: .3em; }
+
+.subtitle {
+  margin: -.1em 0 1.4em;
+  color: #444;
+  font-style: italic;
+}
+
+.lead { color: #444; font-size: .95em; }
+.note { color: var(--muted); font-size: .9em; }
+sup.eq { font-size: .75em; line-height: 0; }
+
+/* ---------- 头像 ---------- */
+.avatar {
+  float: right;
+  max-height: 210px;
+  max-width: 210px;
+  margin: .3em 0 1.2em 1.8em;
+}
+
+/* ---------- 首页列表 ---------- */
+ul.interests,
+ul.links {
+  padding-left: 1.3em;
+  margin: .2em 0 1.4em;
+}
+ul.interests li { margin-bottom: .15em; }
+
+ul.links {
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .3em 1.6em;
+}
+
+/* ---------- News ---------- */
+.news { margin-bottom: 1em; }
+.news p { line-height: 1.45; margin: 0 0 .4em; }
+.date {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  margin-right: .45em;
+}
+
+/* ---------- 论文列表 ---------- */
+ol.pubs {
+  padding-left: 1.5em;
+  margin: .4em 0 1em;
+}
+ol.pubs li { margin-bottom: .85em; line-height: 1.55; }
+ol.pubs li p { margin: 0; }
+ol.pubs li.hl {
+  background: var(--hl);
+  border-radius: 8px;
+  padding: .5em .8em;
+  margin-left: -.8em;
+}
+
+/* ---------- 经历表 ---------- */
+table.exp {
+  width: 100%;
+  border-collapse: collapse;
+  margin: .3em 0 1em;
+}
+table.exp td { vertical-align: top; padding: .34em 0; }
+table.exp td.when {
+  width: 9em;
+  padding-right: 1em;
+  color: #444;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+table.exp .sub { color: #555; font-size: .94em; }
+
+/* 条目左侧的校徽（可选）：小图标 + 文字两栏 */
+table.exp .entry { display: flex; align-items: flex-start; gap: .65em; }
+table.exp .entry-logo {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  flex: 0 0 auto;
+  margin-top: .18em;
+}
+table.exp .entry-text { min-width: 0; }
+
+/* ---------- 页脚 ---------- */
+footer { margin-top: 3.5em; }
+hr {
+  border: 0;
+  border-top: 1px dashed var(--rule);
+  margin: 0 0 1em;
+}
+.copyright {
+  text-align: center;
+  color: var(--muted);
+  font-size: .9em;
+  margin: 0;
+}
+
+/* ---------- 返回顶部 ---------- */
+#back-to-top {
+  position: fixed;
+  right: 2em;
+  bottom: 2em;
+  padding: .45em .9em;
+  border: 1px solid var(--rule);
+  border-radius: 2em;
+  background: #fff;
+  color: var(--accent);
+  font-family: var(--sans);
+  font-size: .72em;
+  letter-spacing: .1em;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s ease;
+}
+#back-to-top.visible { opacity: 1; pointer-events: auto; }
+#back-to-top:hover { border-color: var(--accent); }
+
+/* ---------- Backroom ---------- */
+
+/* 密码门：居中的一个输入框，无任何提示文字 */
+.backroom-gate {
+  display: flex;
+  justify-content: center;
+  padding: 3.5em 0;
+}
+.backroom-gate input {
+  font: inherit;
+  font-size: 1em;
+  padding: .6em 1em;
+  min-width: 240px;
+  text-align: center;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: #fff;
+}
+.backroom-gate input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.backroom-gate input.shake { animation: shake .3s; }
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+/* 解锁后的内容：文章列表 + 单篇 */
+.section-empty { color: var(--muted); font-size: .9em; }
+
+/* 文章：先进列表，点开才铺正文；篇数再多也只是一行行标题 */
+.backroom-content .notes { margin-top: .9em; }
+
+.post-index { list-style: none; margin: .6em 0 0; padding: 0; }
+.post-index li {
+  display: flex;
+  align-items: baseline;
+  gap: 1em;
+  padding: .55em 0;
+  border-bottom: 1px solid var(--rule);
+}
+.post-index li:first-child { border-top: 1px solid var(--rule); }
+.post-index a { text-decoration: none; }
+.post-index a:hover {
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  text-underline-offset: 2px;
+}
+.post-index-date {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: .85em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.post-back { display: inline-block; margin-bottom: 1.1em; font-size: .88em; }
+.post { margin: 0 0 2em; }
+.post h2 { margin-bottom: .1em; }
+.post .post-date {
+  display: block;
+  margin-bottom: .8em;
+  color: var(--muted);
+  font-size: .88em;
+  font-variant-numeric: tabular-nums;
+}
+.post h3 { margin-top: 1.5em; }
+.post img { max-width: 100%; height: auto; border-radius: 4px; }
+.post blockquote {
+  background: #f9f9f9;
+  border-left: 3px solid var(--rule);
+  margin: 1em 0;
+  padding: .4em 1em;
+  color: #444;
+}
+.post pre {
+  background: #f7f7f7;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: .8em 1em;
+  overflow-x: auto;
+}
+.post code { background: #f3f3f3; padding: .05em .35em; border-radius: 3px; font-size: .9em; }
+.post pre code { background: none; padding: 0; }
+
+/* ---------- 窄屏 ---------- */
+@media (max-width: 640px) {
+  body { font-size: 16.5px; padding: .8em .9em 3em; }
+  .classic-nav { margin-top: 40px; }
+  .classic-nav::before,
+  .classic-nav::after { display: none; }
+  .nav-menu { font-size: 16px; gap: 15px; }
+  .avatar { max-height: 130px; max-width: 130px; margin-left: 1em; }
+  h1 { font-size: 1.55em; }
+  h1 .cn { display: block; margin: .15em 0 0; font-size: .78em; }
+  h1 .cn .sep { display: none; }
+  table.exp td.when { width: 7em; white-space: normal; }
+}
+
+/* 手机：头像不再浮动，改成标题上方的一小块，正文就不会被挤成细条 */
+@media (max-width: 520px) {
+  .avatar {
+    float: none;
+    display: block;
+    max-height: 108px;
+    max-width: 108px;
+    margin: 0 0 1em;
+  }
+}
+
+/* ---------- 打印（Ctrl+P 存 PDF 当简历用） ---------- */
+@media print {
+  .classic-nav::before,
+  .classic-nav::after,
+  #back-to-top,
+  footer hr { display: none; }
+  body { max-width: none; font-size: 11pt; }
+  a { text-decoration: none; color: #000; }
+  ol.pubs li.hl { background: none; }
+}

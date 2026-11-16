@@ -1,0 +1,17 @@
+<h1>Publications</h1>
+<p class="lead">
+  {{#if legend}}{{ legend }}. {{/if}}Please cite the published version where
+  available.
+</p>
+
+{{#each sections}}
+<h2 id="{{ anchor }}">{{ title }}</h2>
+{{#if note}}<p class="lead">{{ note }}</p>{{/if}}
+<ol class="pubs">
+{{#each entries}}
+  <li{{#if highlight}} class="hl"{{/if}}>
+    <p>{{ authors }} ({{ year }}). {{ title }}{{#if venue}} <i>{{ venue }}</i>{{/if}}{{#if details}}, {{ details }}{{/if}}.{{#if doi}} <a href="{{ doi }}">[doi]</a>{{/if}}{{#if note}} <span class="note">[{{ note }}]</span>{{/if}}</p>
+  </li>
+{{/each}}
+</ol>
+{{/each}}

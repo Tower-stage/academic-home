@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ page_title }}</title>
+<meta name="description" content="{{ meta_description }}">
+<meta name="author" content="{{ site.name }}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{ page_title }}">
+<meta property="og:description" content="{{ meta_description }}">
+<meta property="og:site_name" content="{{ site.name }}">
+<meta name="twitter:card" content="summary">
+{{#if site.url}}<meta property="og:url" content="{{ site.url }}{{ page_path }}">
+<meta property="og:image" content="{{ site.url }}style/og.png">{{/if}}
+<link rel="icon" href="{{ prefix }}style/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="{{ prefix }}style/style.css">
+</head>
+<body>
+
+{{#if site.watermark}}<div class="background-logo" style="background-image:url('{{ site.watermark }}')"></div>{{/if}}
+
+<!-- ===== 导航：右侧菜单 ===== -->
+<nav class="classic-nav">
+  <div class="nav-menu">
+    {{#each nav}}<a href="{{ prefix }}{{ href }}"{{#if active}} class="active"{{/if}}>{{ label }}</a>{{/each}}
+  </div>
+</nav>
+
+<main>
+{{ body }}
+</main>
+
+<footer>
+  <hr>
+  <p class="copyright">&copy; {{ site.name }} {{ site.copyright_from }} - {{ site.year_now }}</p>
+</footer>
+
+{{#if site.analytics}}{{ site.analytics }}{{/if}}
+
+<button type="button" id="back-to-top" title="Back to top" aria-label="Back to top">TO TOP</button>
+
+<script src="{{ prefix }}js/unlock.js" defer></script>
+
+<script>
+  // 返回顶部按钮：滚过一屏才出现。想删掉它，连同上两行的 button 一起删。
+  var btn = document.getElementById('back-to-top');
+  window.addEventListener('scroll', function () {
+    btn.classList.toggle('visible', window.scrollY > 600);
+  }, { passive: true });
+  btn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // 邮箱防爬：页面只显示 "name [at] host [dot] tld"，点击时才还原成 mailto。
+  document.querySelectorAll('a.email[data-addr]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      location.href = 'mailto:' + atob(a.getAttribute('data-addr'));
+    });
+  });
+</script>
+</body>
+</html>

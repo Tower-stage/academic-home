@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Placeholder avatar">
+  <circle cx="100" cy="100" r="98" fill="#f4f1eb" stroke="#ded8cc" stroke-width="1.5"/>
+  <text x="100" y="104" text-anchor="middle" dominant-baseline="middle"
+        font-family="Georgia, 'Times New Roman', serif" font-size="66" fill="#8C1515" opacity="0.72">BX</text>
+  <text x="100" y="146" text-anchor="middle" dominant-baseline="middle"
+        font-family="Georgia, 'Times New Roman', serif" font-size="13" letter-spacing="2"
+        fill="#8a8378">ADD A PHOTO</text>
+</svg>

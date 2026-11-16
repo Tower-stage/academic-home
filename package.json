@@ -1,0 +1,14 @@
+{
+  "name": "academic-home",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "零依赖的学术个人主页：改 content/ 里的数据，跑 node build.mjs 生成静态站点。",
+  "scripts": {
+    "dev": "node build.mjs --serve",
+    "build": "node build.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

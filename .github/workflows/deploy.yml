@@ -1,0 +1,50 @@
+name: Build and deploy
+
+# 每次 push 到 main，自动构建 site/ 并发布到 GitHub Pages。
+# 前提：仓库 Settings -> Pages -> Source 选 "GitHub Actions"。
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # 项目零依赖，所以没有 npm install 这一步。
+      # SITE_PASSWORD 是可选的：设置后，"需要密码"的内容才会在 CI 里被加密。
+      # 在仓库 Settings -> Secrets and variables -> Actions 里新建 secret 名为 SITE_PASSWORD。
+      - name: Build
+        run: node build.mjs
+        env:
+          SITE_PASSWORD: ${{ secrets.SITE_PASSWORD }}
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
