@@ -49,7 +49,7 @@ export default [
         when: "2022 – 2025",
         main: "M.E. in Materials Science and Engineering",
         sub: "Wuhan University",
-        extra: 'Supervisor: <a href="https://scholars.whu.edu.cn/en/persons/jie-min/">Prof. Jie Min</a><br>Mentor: <a href="https://scholars.whu.edu.cn/en/persons/rui-sun/">Dr. Rui Sun</a>',
+        extra: 'Supervisor: <a href="https://scholars.whu.edu.cn/en/persons/jie-min/">Prof. Jie Min</a><br>Research Mentor: <a href="https://scholars.whu.edu.cn/en/persons/rui-sun/">Dr. Rui Sun</a>',
         logo: "style/logo-wuhan.png",
       },
       {
