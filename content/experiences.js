@@ -42,14 +42,14 @@ export default [
         when: "2025 –",
         main: "Ph.D. Student",
         sub: "The Hong Kong Polytechnic University",
-        extra: "Supervisor: Prof. Gang Li",
+        extra: 'Supervisor: <a href="https://www.polyu.edu.hk/eee/people/academic-staff-and-teaching-staff/prof-li-gang/">Prof. Gang Li</a>',
         logo: "style/logo-polyu.png",
       },
       {
         when: "2022 – 2025",
         main: "M.E. in Materials Science and Engineering",
         sub: "Wuhan University",
-        extra: "Supervisor: Prof. Jie Min",
+        extra: 'Supervisor: <a href="https://scholars.whu.edu.cn/en/persons/jie-min/">Prof. Jie Min</a>',
         logo: "style/logo-wuhan.png",
       },
       {

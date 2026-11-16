@@ -31,7 +31,7 @@ export default {
     `My work centres on processability: the physical mechanisms that govern film formation
      during high-speed coating, process simulation, and semi-transparent OPV devices.`,
 
-    `I am always happy to talk about OPV/OSC, processing, or collaborations. The fastest way
+    `I am always happy to talk about OPV, processing, or collaborations. The fastest way
      to reach me is email.`,
   ],
 
