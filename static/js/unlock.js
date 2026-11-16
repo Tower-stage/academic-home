@@ -109,10 +109,9 @@
     }
   }
 
-  input.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      unlock();
-    }
+  // 表单提交：桌面按 Enter、手机点按钮或键盘的“前往”都走这里
+  gate.addEventListener('submit', function (e) {
+    e.preventDefault();
+    unlock();
   });
 })();

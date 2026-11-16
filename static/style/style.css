@@ -253,6 +253,9 @@ hr {
 .backroom-gate {
   display: flex;
   justify-content: center;
+  align-items: stretch;
+  gap: .55em;
+  flex-wrap: wrap;
   padding: 3.5em 0;
 }
 .backroom-gate input {
@@ -270,6 +273,21 @@ hr {
   border-color: var(--accent);
 }
 .backroom-gate input.shake { animation: shake .3s; }
+.backroom-gate button {
+  font: inherit;
+  padding: .6em 1.3em;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--accent);
+  cursor: pointer;
+  letter-spacing: .04em;
+}
+.backroom-gate button:hover,
+.backroom-gate button:focus-visible {
+  border-color: var(--accent);
+  outline: none;
+}
 
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
@@ -343,6 +361,8 @@ hr {
   .classic-nav::before,
   .classic-nav::after { display: none; }
   .nav-menu { font-size: 16px; gap: 15px; }
+  .backroom-gate { padding: 2.6em 0; }
+  .backroom-gate input { min-width: 0; flex: 1 1 auto; }
   .avatar { max-height: 130px; max-width: 130px; margin-left: 1em; }
   h1 { font-size: 1.55em; }
   h1 .cn { display: block; margin: .15em 0 0; font-size: .78em; }
