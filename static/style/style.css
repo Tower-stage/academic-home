@@ -218,6 +218,13 @@ hr {
   font-size: .9em;
   margin: 0;
 }
+/* ICP 备案号（填了 site.js 的 icp 才出现） */
+.icp {
+  text-align: center;
+  font-size: .82em;
+  margin: .35em 0 0;
+}
+.icp a { color: var(--muted); }
 
 /* ---------- 返回顶部 ---------- */
 #back-to-top {

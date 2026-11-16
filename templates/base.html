@@ -34,6 +34,7 @@
 <footer>
   <hr>
   <p class="copyright">&copy; {{ site.name }} {{ site.copyright_from }} - {{ site.year_now }}</p>
+  {{#if site.icp}}<p class="icp"><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">{{ site.icp }}</a></p>{{/if}}
 </footer>
 
 {{#if site.analytics}}{{ site.analytics }}{{/if}}
