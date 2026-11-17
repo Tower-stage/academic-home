@@ -14,30 +14,6 @@
 
 export default [
   {
-    title: "Research Experience",
-    icon: "🔬",
-    entries: [
-      {
-        when: "Nov 2023 –",
-        main: "A framework for understanding high-throughput processability of OPV",
-        sub: "",
-        extra: "Combined coating tests, COMSOL flow modelling and Hansen parameter analysis.",
-      },
-      {
-        when: "May 2023 – Oct 2023",
-        main: "High-throughput printing of organic solar cells",
-        sub: "",
-        extra: "Raised blade-coating speed from 1 to 6 m/min.",
-      },
-      {
-        when: "Sep 2022 – Apr 2023",
-        main: "Single-molecular organic solar cells",
-        sub: "",
-        extra: "Characterised electrical properties, carrier dynamics and recombination.",
-      },
-    ],
-  },
-  {
     title: "Education",
     icon: "🎓",
     inline: true,
@@ -62,6 +38,30 @@ export default [
         sub: "Huazhong University of Science & Technology",
         extra: "",
         logo: "style/logo-hust.png",
+      },
+    ],
+  },
+  {
+    title: "Research Experience",
+    icon: "🔬",
+    entries: [
+      {
+        when: "Nov 2023 –",
+        main: "A framework for understanding high-throughput processability of OPV",
+        sub: "",
+        extra: "Combined coating tests, COMSOL flow modelling and Hansen parameter analysis.",
+      },
+      {
+        when: "May 2023 – Oct 2023",
+        main: "High-throughput printing of organic solar cells",
+        sub: "",
+        extra: "Raised blade-coating speed from 1 to 6 m/min.",
+      },
+      {
+        when: "Sep 2022 – Apr 2023",
+        main: "Single-molecular organic solar cells",
+        sub: "",
+        extra: "Characterised electrical properties, carrier dynamics and recombination.",
       },
     ],
   },
