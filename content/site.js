@@ -64,11 +64,8 @@ export default {
     `Semi-transparent OPV devices.`,
   ],
 
-  interests_zh: [
-    `研究物理机制如何决定有机光伏材料的加工性。`,
-    `用热力学和动力学模型预测新材料的可印刷性。`,
-    `半透明有机光伏器件。`,
-  ],
+  // 研究兴趣只有英文一份；填了下面的 interests_zh 才会出现中文版
+  interests_zh: [],
 
   // ---------- 联系方式 ----------
   email: "iam-bo.xiao@connect.polyu.hk",   // 来自 ORCID 公开记录；不想公开就写 ""

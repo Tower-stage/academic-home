@@ -395,7 +395,9 @@ async function build() {
         bio: (siteView.bio || []).map(withEmail),
         bio_zh: (siteView.bio_zh || []).map(withEmail),
         interests: (siteView.interests || []).map(withEmail),
-        interests_zh: (siteView.interests_zh || []).map(withEmail),
+        interests_zh: (siteView.interests_zh || []).length
+          ? siteView.interests_zh.map(withEmail)
+          : '',
       },
     },
     {

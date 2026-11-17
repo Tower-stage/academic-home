@@ -34,8 +34,13 @@
   var btn = document.getElementById('lang-toggle');
   if (!btn) return;
   function grab(id) { return document.getElementById(id); }
-  var en = ['lead-en', 'bio-en', 'interests-en'].map(grab);
-  var zh = ['lead-zh', 'bio-zh', 'interests-zh'].map(grab);
+  var en = ['lead-en', 'bio-en'].map(grab);
+  var zh = ['lead-zh', 'bio-zh'].map(grab);
+  // 研究兴趣没有中文版时，不参与切换（哪种语言下都保持英文）
+  if (document.getElementById('interests-zh')) {
+    en.push(grab('interests-en'));
+    zh.push(grab('interests-zh'));
+  }
   function apply(lang) {
     var isZh = lang === 'zh';
     en.forEach(function (n) { if (n) n.hidden = isZh; });
