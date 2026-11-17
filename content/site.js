@@ -64,12 +64,11 @@ export default {
   // ICP 备案号：拿到号之后填这里（如 "粤ICP备2026000000号-1"），页脚会自动出现一行带工信部链接的小字。
   // 没备案就留空，页脚不显示。
   icp: "",
-  // 站点根路径：GitHub Pages 项目站是 "/仓库名/"，用户站或自有域名是 "/"。
+  // 站点根路径：自有域名（boboxiao.cn）是 "/"；GitHub Pages 项目站才是 "/仓库名/"。
   // 只有 404 页会用到它——404 会在任意深度被访问，相对链接会指错地方。
-  base: "/academic-home/",
-  // 上线后的完整地址（结尾带斜杠）。分享卡片（og:url / og:image）用它；
-  // 换成自定义域名时这里和上面的 base 一起改。留空则不输出这两项。
-  url: "https://tower-stage.github.io/academic-home/",
+  base: "/",
+  // 上线后的完整地址（结尾带斜杠）。分享卡片（og:url / og:image）用它。
+  url: "https://boboxiao.cn/",
   watermark: "style/logo-polyu.png",   // 底纹：把一张淡色图片放到 static/style/，这里写 "style/watermark.png"
   analytics: "",   // 统计脚本（可选）；留空则没有
 };
