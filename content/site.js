@@ -33,15 +33,16 @@ export default {
      Electronic Engineering at <a href="https://www.polyu.edu.hk/">The Hong Kong Polytechnic
      University</a>, where I work with
      <a href="https://www.polyu.edu.hk/eee/people/academic-staff-and-teaching-staff/prof-li-gang/">Prof. Gang Li</a>
-     on organic photovoltaics (OPV). My work centres on processability: the physical
-     mechanisms that govern film formation during high-speed coating, process simulation,
-     and semi-transparent OPV devices.`,
+     on organic photovoltaics (OPV). My work covers the processability and physical
+     mechanisms of OPV, optoelectronic structure simulation, and the printing of
+     semi-transparent OPV devices.`,
 
     `Before coming to PolyU, I received my M.E. in Materials Science and Engineering from
      <a href="https://en.whu.edu.cn/">Wuhan University</a>, advised by
      <a href="https://scholars.whu.edu.cn/en/persons/jie-min/">Prof. Jie Min</a>, and worked
      closely with <a href="https://scholars.whu.edu.cn/en/persons/rui-sun/">Dr. Rui Sun</a>.
-     I hold a B.E. in Functional Material from Huazhong University of Science and Technology.
+     I hold a B.E. in Functional Material from
+     <a href="https://www.hust.edu.cn/">Huazhong University of Science and Technology</a>.
      My academic training is in energy materials.`,
 
     `I am always happy to talk about OPV or sci-fi films. {EMAIL}`,
@@ -50,9 +51,9 @@ export default {
   // 中文正文：与上面 bio 一一对应，改了英文记得同步改这里
   // 注意：中文不要折行，换行会变成一个空格，中文里看着会多出空隙
   bio_zh: [
-    `你好！我是香港理工大学电子及资讯工程学系（EEE）的博士研究生，在 Prof. Gang Li 课题组从事有机光伏（OPV）研究。我的工作围绕加工性展开：高速涂布过程中决定成膜的物理机制、过程仿真，以及半透明 OPV 器件。`,
+    `你好！我是<a href="https://www.polyu.edu.hk/">香港理工大学</a>电子及资讯工程学系（EEE）的博士研究生，在 <a href="https://www.polyu.edu.hk/eee/people/academic-staff-and-teaching-staff/prof-li-gang/">Prof. Gang Li</a> 课题组从事有机光伏（OPV）研究。我的工作包括有机光伏的可加工性和物理机制，光电学结构仿真，以及半透明 OPV 器件印刷。`,
 
-    `来港理工之前，我在武汉大学取得材料科学与工程硕士学位，导师 Prof. Jie Min，并与 Dr. Rui Sun 密切合作。本科就读于华中科技大学功能材料专业。我的学术训练集中在能源材料。`,
+    `来港理工之前，我在<a href="https://en.whu.edu.cn/">武汉大学</a>取得材料科学与工程硕士学位，导师 <a href="https://scholars.whu.edu.cn/en/persons/jie-min/">Prof. Jie Min</a>，并与 <a href="https://scholars.whu.edu.cn/en/persons/rui-sun/">Dr. Rui Sun</a> 密切合作；本科就读于<a href="https://www.hust.edu.cn/">华中科技大学</a>功能材料专业，学术训练集中在能源材料。`,
 
     `欢迎交流 OPV 或者科幻电影。{EMAIL}`,
   ],
