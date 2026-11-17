@@ -418,8 +418,8 @@ async function build() {
     {
       out: 'backroom.html',
       tpl: 'backroom.html',
-      navTitle: 'Backroom',
-      title: `Backroom | ${siteView.name}`,
+      navTitle: 'Essay',
+      title: `Essay | ${siteView.name}`,
       data: {},
     },
     {
