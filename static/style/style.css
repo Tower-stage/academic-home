@@ -51,7 +51,7 @@ a:hover { color: var(--accent); }
 .background-logo {
   position: fixed;
   inset: 0;
-  background-size: 42%;
+  background-size: 14%;
   background-position: center;
   background-repeat: no-repeat;
   opacity: .055;
