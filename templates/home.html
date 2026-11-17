@@ -1,9 +1,39 @@
 {{#if site.avatar}}<img class="avatar" src="{{ site.avatar }}" alt="{{ site.name }}">{{/if}}
 <h1>{{ site.name }}{{#if site.name_cn}}<span class="cn"><span class="sep">｜</span>{{ site.name_cn }}</span>{{/if}}</h1>
-{{#if site.title}}<p class="subtitle">{{ site.title }}</p>{{/if}}
+{{#if site.title}}<p class="subtitle"><span id="lead-en">{{ site.title }}</span>{{#if site.title_zh}}<span id="lead-zh" hidden lang="zh-CN">{{ site.title_zh }}</span>{{/if}}{{#if site.bio_zh}} <a href="#" class="lang-toggle" id="lang-toggle" data-lang="en" title="切换语言">中文</a>{{/if}}</p>{{/if}}
 
+<div id="bio-en">
 {{#each bio}}<p>{{ this }}</p>
 {{/each}}
+</div>
+{{#if site.bio_zh}}<div id="bio-zh" hidden lang="zh-CN">
+{{#each site.bio_zh}}<p>{{ this }}</p>
+{{/each}}
+</div>
+<script>
+(function () {
+  var btn = document.getElementById('lang-toggle');
+  if (!btn) return;
+  var en = [document.getElementById('lead-en'), document.getElementById('bio-en')];
+  var zh = [document.getElementById('lead-zh'), document.getElementById('bio-zh')];
+  function apply(lang) {
+    var isZh = lang === 'zh';
+    en.forEach(function (n) { if (n) n.hidden = isZh; });
+    zh.forEach(function (n) { if (n) n.hidden = !isZh; });
+    btn.textContent = isZh ? 'English' : '中文';
+    btn.setAttribute('data-lang', isZh ? 'zh' : 'en');
+    try { localStorage.setItem('site-lang', lang); } catch (e) {}
+  }
+  btn.addEventListener('click', function (e) {
+    e.preventDefault();
+    apply(btn.getAttribute('data-lang') === 'zh' ? 'en' : 'zh');
+  });
+  var saved = null;
+  try { saved = localStorage.getItem('site-lang'); } catch (e) {}
+  if (saved === 'zh') apply('zh');
+})();
+</script>
+{{/if}}
 
 <h3>Contact</h3>
 <p class="tight">{{#if site.email}}<b>Email</b>&nbsp; <a class="email" href="#" data-addr="{{ site.email_b64 }}" title="点击写邮件">{{ site.email_text }}</a>{{/if}}</p>

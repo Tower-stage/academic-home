@@ -15,6 +15,9 @@ export default {
   name: "Bo Xiao",                                // 英文名，用于标题栏、页脚
   name_cn: "肖博",                                // 中文名，仿宋显示；填上就显示
   title: "PhD Student, The Hong Kong Polytechnic University",  // 副标题；不要就写成 ""
+  // 中文副标题 + 中文正文。填了之后首页会多一个「中文 / English」切换。
+  // 不想做双语就把这两项写成 "" 或删掉。
+  title_zh: "香港理工大学 博士研究生",
 
   // ---------- 头像 ----------
   // 放在 static/style/ 下。透明底 PNG 最好看，高度 200–260 px 即可。
@@ -33,6 +36,15 @@ export default {
 
     `I am always happy to talk about OPV, processing, or collaborations. The fastest way
      to reach me is email.`,
+  ],
+
+  // 中文正文：与上面 bio 一一对应，改了英文记得同步改这里
+  bio_zh: [
+    `我在香港理工大学做研究，方向是有机光伏（OPV）。`,
+
+    `我的工作围绕加工性展开：高速涂布过程中决定成膜的物理机制、过程仿真，以及半透明 OPV 器件。`,
+
+    `欢迎交流 OPV、加工或合作，邮件是最快的方式。`,
   ],
 
   // ---------- 联系方式 ----------
