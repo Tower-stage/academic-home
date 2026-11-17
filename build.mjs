@@ -282,7 +282,8 @@ function mdToHtml(src) {
 
 // 读取 markdown 的 front-matter（顶部 --- 之间那几行）
 function parseFrontMatter(md) {
-  const m = String(md).replace(/^\uFEFF/, '').match(/^---\s*\n([\s\S]*?)\n---\s*\n?([\s\S]*)$/);
+  // 先把 Windows 的 CRLF 统一成 LF：否则行尾的 \r 会让下面按行解析的 key: value 匹配失败
+  const m = String(md).replace(/^\uFEFF/, '').replace(/\r\n?/g, '\n').match(/^---\s*\n([\s\S]*?)\n---\s*\n?([\s\S]*)$/);
   if (!m) return { meta: {}, body: md };
   const meta = {};
   for (const line of m[1].split('\n')) {
