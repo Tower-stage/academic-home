@@ -19,9 +19,9 @@ export default [
     inline: true,
     entries: [
       {
-        when: "2025 – present",
+        when: "2025 –",
         main: "Ph.D. Student in Electrical and Electronic Engineering",
-        sub: "The Hong Kong Polytechnic University",
+        sub: "Hong Kong Polytechnic University",
         extra: "",
         logo: "style/logo-polyu.png",
       },
