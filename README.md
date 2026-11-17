@@ -31,7 +31,9 @@ node build.mjs              # 只生成一次，输出到 site/
 |---|---|---|
 | 名字、中文名、职称、邮箱 | `content/site.js` | 改一处，三个页面同时更新 |
 | 首页自我介绍 | `content/site.js` 里的 `bio` | 每个数组元素是一段，可以写 `<a>` `<b>` `<i>` |
-| 首页中英双语 | `content/site.js` 里的 `bio_zh` + `title_zh` | 填了首页副标题后面就出现「中文 / English」切换，选择记在浏览器里；删掉或留空则只有英文 |
+| 首页中英双语 | `content/site.js` 里的 `bio_zh` + `title_zh` | 填了首页副标题后面就出现「中文版自我介绍」切换，选择记在浏览器里；删掉或留空则只有英文 |
+| 段落里的邮件链接 | `content/site.js` 的 `bio` / `bio_zh` | 写 `{EMAIL}` 会变成可点的 📧（真实地址仍是 base64 防爬） |
+| 小标题前面的 emoji | 论文组在 `build.mjs` 的 `PUB_SECTIONS`；经历页在 `content/experiences.js` 的 `icon` | 不想显示就写 `icon: ""` |
 | 首页 News | `content/news.js` | 最新的放最上面 |
 | 论文列表 | `content/publications.js` | 自动分组、排序、加粗自己的名字 |
 | 经历页 | `content/experiences.js` | 研究 / 教育 / 会议 / 专利（顺序 = 数组顺序）；每条可加 `logo: "style/xxx.png"` 放校徽 |
