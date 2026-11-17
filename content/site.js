@@ -44,7 +44,7 @@ export default {
      I hold a B.E. in Materials Science and Engineering from
      <a href="https://www.hust.edu.cn/">Huazhong University of Science and Technology</a>.`,
 
-    `I am always happy to talk about OPV 🔆 or recurve bow 🏹.`,
+    `I am always happy to talk about OPV 🔆 or archery 🏹.`,
   ],
 
   // 中文正文：与上面 bio 一一对应，改了英文记得同步改这里
