@@ -22,7 +22,7 @@
 <table class="exp">
 {{#each entries}}
   <tr>
-    <td class="when">{{ when }}</td>
+    {{#if when}}<td class="when">{{ when }}</td>{{/if}}
     <td class="what">
       <div class="entry">
         {{#if logo}}<img class="entry-logo" src="{{ logo }}" alt="">{{/if}}
