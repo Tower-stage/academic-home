@@ -10,12 +10,32 @@
 {{#each bio_zh}}<p>{{ this }}</p>
 {{/each}}
 </div>
-<script>
+{{/if}}
+
+{{#if interests}}<div id="interests-en">
+<h3>📊 Research Interests</h3>
+<ul class="interests">
+{{#each interests}}<li>{{ this }}</li>
+{{/each}}
+</ul>
+</div>
+{{/if}}
+{{#if interests_zh}}<div id="interests-zh" hidden lang="zh-CN">
+<h3>📊 研究兴趣</h3>
+<ul class="interests">
+{{#each interests_zh}}<li>{{ this }}</li>
+{{/each}}
+</ul>
+</div>
+{{/if}}
+
+{{#if bio_zh}}<script>
 (function () {
   var btn = document.getElementById('lang-toggle');
   if (!btn) return;
-  var en = [document.getElementById('lead-en'), document.getElementById('bio-en')];
-  var zh = [document.getElementById('lead-zh'), document.getElementById('bio-zh')];
+  function grab(id) { return document.getElementById(id); }
+  var en = ['lead-en', 'bio-en', 'interests-en'].map(grab);
+  var zh = ['lead-zh', 'bio-zh', 'interests-zh'].map(grab);
   function apply(lang) {
     var isZh = lang === 'zh';
     en.forEach(function (n) { if (n) n.hidden = isZh; });

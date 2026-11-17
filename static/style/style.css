@@ -163,6 +163,13 @@ ul.links {
   gap: .3em 1.6em;
 }
 
+/* 研究兴趣（📊 那一节） */
+ul.interests {
+  margin: -.2em 0 1.6em;
+  padding-left: 1.3em;
+}
+ul.interests li { margin-bottom: .4em; }
+
 /* ---------- News ---------- */
 .news { margin-bottom: 1em; }
 .news p { line-height: 1.45; margin: 0 0 .4em; }

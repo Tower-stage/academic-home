@@ -392,6 +392,8 @@ async function build() {
         news: (news || []).map((n) => ({ date: fmtDate(n.date), text: n.text || '' })),
         bio: (siteView.bio || []).map(withEmail),
         bio_zh: (siteView.bio_zh || []).map(withEmail),
+        interests: (siteView.interests || []).map(withEmail),
+        interests_zh: (siteView.interests_zh || []).map(withEmail),
       },
     },
     {
