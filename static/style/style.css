@@ -54,7 +54,7 @@ a:hover { color: var(--accent); }
   background-size: 18%;
   background-position: center;
   background-repeat: no-repeat;
-  opacity: .105;
+  opacity: .04;
   filter: grayscale(1);
   z-index: -1;
   pointer-events: none;
