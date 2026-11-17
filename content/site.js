@@ -59,16 +59,15 @@ export default {
 
   // 研究兴趣（首页 📊 那一节；删成空数组就不显示）
   interests: [
-    `Investigating how film formation during high-speed coating governs the processability
-     of organic photovoltaic materials.`,
+    `Investigating how physical mechanisms govern the processability of organic photovoltaic materials.`,
     `Using thermodynamic and kinetic models to predict the printability of new materials.`,
-    `Applying these approaches to semi-transparent OPV devices.`,
+    `Semi-transparent OPV devices.`,
   ],
 
   interests_zh: [
-    `研究高速涂布过程中成膜的物理机制如何决定有机光伏材料的加工性。`,
+    `研究物理机制如何决定有机光伏材料的加工性。`,
     `用热力学和动力学模型预测新材料的可印刷性。`,
-    `把这些方法用于半透明 OPV 器件。`,
+    `半透明 OPV 器件。`,
   ],
 
   // ---------- 联系方式 ----------
