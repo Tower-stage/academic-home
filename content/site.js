@@ -44,7 +44,7 @@ export default {
      I hold a B.E. in Materials Science and Engineering from
      <a href="https://www.hust.edu.cn/">Huazhong University of Science and Technology</a>.`,
 
-    `I am always happy to talk about OPV or archery. {EMAIL}`,
+    `I am always happy to talk about OPV 🔆 or archery 🏹.`,
   ],
 
   // 中文正文：与上面 bio 一一对应，改了英文记得同步改这里
@@ -54,7 +54,7 @@ export default {
 
     `来香港理工大学之前，我在<a href="https://en.whu.edu.cn/">武汉大学</a>取得材料科学与工程硕士学位，导师<a href="https://scholars.whu.edu.cn/en/persons/jie-min/">闵杰教授</a>，并与<a href="https://scholars.whu.edu.cn/en/persons/rui-sun/">孙瑞博士</a>密切合作；本科就读于<a href="https://www.hust.edu.cn/">华中科技大学</a>，专业为材料科学与工程。`,
 
-    `欢迎交流有机光伏和射箭。{EMAIL}`,
+    `欢迎交流有机光伏🔆和箭术🏹。`,
   ],
 
   // 研究兴趣（首页 📊 那一节；删成空数组就不显示）
