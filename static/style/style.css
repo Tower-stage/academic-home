@@ -222,8 +222,18 @@ table.exp .entry-text { min-width: 0; }
 
 /* Education 那种「一行式」：日期、学位、学校并成一句，校徽在左 */
 table.exp.exp-inline td { padding: .5em 0; }
-table.exp.exp-inline .entry { align-items: center; gap: 1.1em; }
-table.exp.exp-inline .entry-logo { width: 64px; height: 64px; }
+table.exp.exp-inline .entry { align-items: center; gap: .9em; }
+/* 校徽盒子固定宽度，三枚图各自缩放，保证文字左边线对齐、视觉重量一致 */
+table.exp .logo-box {
+  width: 70px;
+  height: 70px;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+table.exp.exp-inline .entry-logo { width: 66px; height: 66px; }
+table.exp.exp-inline img.entry-logo[src$="logo-polyu.png"] { width: 54px; height: 54px; }
 table.exp.exp-inline .when-inline {
   color: #444;
   font-variant-numeric: tabular-nums;
