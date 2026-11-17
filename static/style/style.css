@@ -210,14 +210,13 @@ table.exp td.when {
 }
 table.exp .sub { color: #555; font-size: .94em; }
 
-/* 条目左侧的校徽（可选）：小图标 + 文字两栏 */
-table.exp .entry { display: flex; align-items: flex-start; gap: .65em; }
+/* 条目左侧的校徽（可选）：校徽 + 文字两栏 */
+table.exp .entry { display: flex; align-items: flex-start; gap: .9em; }
 table.exp .entry-logo {
-  width: 30px;
-  height: 30px;
+  width: 60px;
+  height: 60px;
   object-fit: contain;
   flex: 0 0 auto;
-  margin-top: .18em;
 }
 table.exp .entry-text { min-width: 0; }
 

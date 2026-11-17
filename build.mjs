@@ -223,6 +223,7 @@ function groupExperiences(sections) {
       sub: e.sub ?? '',
       extra: e.extra ?? '',
       logo: e.logo ?? '',
+      inline: !!s.inline,
     })),
   }));
 }

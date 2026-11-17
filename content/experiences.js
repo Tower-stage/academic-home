@@ -40,6 +40,7 @@ export default [
   {
     title: "Education",
     icon: "🎓",
+    inline: true,
     entries: [
       {
         when: "2025 –",
