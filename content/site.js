@@ -27,24 +27,24 @@ export default {
 
   // ---------- 首页正文 ----------
   // 每个数组元素是一段。段落里可以写链接、加粗、斜体。
+  // 写 {EMAIL} 会被替换成一个「📧」邮件链接（点它就发邮件）。
   bio: [
     `I am a researcher at <a href="https://www.polyu.edu.hk/">The Hong Kong Polytechnic
      University</a>, working on organic photovoltaics (OPV).`,
 
-    `My work centres on processability: the physical mechanisms that govern film formation
-     during high-speed coating, process simulation, and semi-transparent OPV devices.`,
+    `My work centres on processability, physical mechanisms, process simulation, and
+     semi-transparent OPV devices.`,
 
-    `I am always happy to talk about OPV, processing, or collaborations. The fastest way
-     to reach me is email.`,
+    `I am always happy to talk about anything — just email me. {EMAIL}`,
   ],
 
   // 中文正文：与上面 bio 一一对应，改了英文记得同步改这里
   bio_zh: [
     `我在香港理工大学做研究，方向是有机光伏（OPV）。`,
 
-    `我的工作围绕加工性展开：高速涂布过程中决定成膜的物理机制、过程仿真，以及半透明 OPV 器件。`,
+    `我的工作围绕加工性、物理机制、过程仿真，以及半透明 OPV 器件展开。`,
 
-    `欢迎交流 OPV、加工或合作，邮件是最快的方式。`,
+    `欢迎交流一切，直接发邮件就行。{EMAIL}`,
   ],
 
   // ---------- 联系方式 ----------

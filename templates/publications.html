@@ -5,7 +5,7 @@
 </p>
 
 {{#each sections}}
-<h2 id="{{ anchor }}">{{ title }}</h2>
+<h2 id="{{ anchor }}">{{#if icon}}{{ icon }} {{/if}}{{ title }}</h2>
 {{#if note}}<p class="lead">{{ note }}</p>{{/if}}
 <ol class="pubs">
 {{#each entries}}

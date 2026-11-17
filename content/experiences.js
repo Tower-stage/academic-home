@@ -1,19 +1,21 @@
 // =============================================================
-//  content/experiences.js —— 经历页（研究 / 教育 / 会议 / 专利 / 获奖）
+//  content/experiences.js —— 经历页（研究 / 教育 / 会议 / 专利）
 //
 //  数据来源：你申博时的 CV（Boxiao-CV.pdf），逐条整理。
 //  结构：一个数组，每个元素是一节（section），节里每一条是 entries 的一项。
+//    icon  节标题前面的 emoji，不想显示就写 ""
 //    when  时间，左边那一列，越短越好："2022 – 2025"、"Nov 2023 –"
 //    main  主标题（学位/项目/报告题目/奖项名）
 //    sub   副标题（单位、地点、角色），没有就 ""
 //    extra 补充说明（导师、一句话要点），没有就 ""
 //
-//  想加一节：复制任意一节，改 title 和 entries。
+//  想加一节：复制任意一节，改 icon / title / entries。
 // =============================================================
 
 export default [
   {
     title: "Research Experience",
+    icon: "🔬",
     entries: [
       {
         when: "Nov 2023 –",
@@ -37,6 +39,7 @@ export default [
   },
   {
     title: "Education",
+    icon: "🎓",
     entries: [
       {
         when: "2025 –",
@@ -63,6 +66,7 @@ export default [
   },
   {
     title: "Conference Presentations",
+    icon: "🗣️",
     entries: [
       {
         when: "2024",
@@ -80,6 +84,7 @@ export default [
   },
   {
     title: "Patents",
+    icon: "📜",
     entries: [
       {
         when: "2024",

@@ -184,11 +184,11 @@ function slugify(text, fallback) {
 
 // 论文分组：顺序 = 这里的顺序；组内按年份从新到旧（同年保持文件里的先后）
 const PUB_SECTIONS = [
-  { type: 'journal',    title: 'Journal Articles',   anchor: 'journal' },
-  { type: 'conference', title: 'Conference Papers',  anchor: 'conference' },
-  { type: 'preprint',   title: 'Preprints',          anchor: 'preprint' },
-  { type: 'chapter',    title: 'Book Chapters',      anchor: 'chapter' },
-  { type: 'software',   title: 'Software & Data',    anchor: 'software' },
+  { type: 'journal',    title: 'Journal Articles',   anchor: 'journal',    icon: '📄' },
+  { type: 'conference', title: 'Conference Papers',  anchor: 'conference', icon: '🎤' },
+  { type: 'preprint',   title: 'Preprints',          anchor: 'preprint',   icon: '📃' },
+  { type: 'chapter',    title: 'Book Chapters',      anchor: 'chapter',    icon: '📚' },
+  { type: 'software',   title: 'Software & Data',    anchor: 'software',   icon: '💻' },
 ];
 
 function groupPublications(pubs, site) {
@@ -215,6 +215,7 @@ function groupPublications(pubs, site) {
 function groupExperiences(sections) {
   return sections.map((s, i) => ({
     title: s.title ?? '',
+    icon: s.icon ?? '',
     anchor: s.anchor || slugify(s.title, `section-${i + 1}`),
     entries: (s.entries || []).map((e) => ({
       when: e.when ?? '',
@@ -373,6 +374,12 @@ async function build() {
     : '';
   const scope = { site: siteView };
 
+  // 自我介绍里可以写 {EMAIL}，构建时替换成「📧」邮件链接（真实地址同样走 base64 防爬）
+  const emailAnchor = email
+    ? `<a class="email bio-mail" href="#" data-addr="${siteView.email_b64}" title="发邮件">📧</a>`
+    : 'mailto:';
+  const withEmail = (s) => String(s).split('{EMAIL}').join(emailAnchor);
+
   const written = [];
 
   const pages = [
@@ -383,8 +390,8 @@ async function build() {
       title: siteView.name || 'Home',
       data: {
         news: (news || []).map((n) => ({ date: fmtDate(n.date), text: n.text || '' })),
-        bio: siteView.bio || [],
-        interests: siteView.interests || [],
+        bio: (siteView.bio || []).map(withEmail),
+        bio_zh: (siteView.bio_zh || []).map(withEmail),
       },
     },
     {

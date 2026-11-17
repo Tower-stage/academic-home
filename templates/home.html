@@ -1,13 +1,13 @@
 {{#if site.avatar}}<img class="avatar" src="{{ site.avatar }}" alt="{{ site.name }}">{{/if}}
 <h1>{{ site.name }}{{#if site.name_cn}}<span class="cn"><span class="sep">｜</span>{{ site.name_cn }}</span>{{/if}}</h1>
-{{#if site.title}}<p class="subtitle"><span id="lead-en">{{ site.title }}</span>{{#if site.title_zh}}<span id="lead-zh" hidden lang="zh-CN">{{ site.title_zh }}</span>{{/if}}{{#if site.bio_zh}} <a href="#" class="lang-toggle" id="lang-toggle" data-lang="en" title="切换语言">中文</a>{{/if}}</p>{{/if}}
+{{#if site.title}}<p class="subtitle"><span id="lead-en">{{ site.title }}</span>{{#if site.title_zh}}<span id="lead-zh" hidden lang="zh-CN">{{ site.title_zh }}</span>{{/if}}{{#if bio_zh}} <a href="#" class="lang-toggle" id="lang-toggle" data-lang="en" title="切换语言">中文版自我介绍</a>{{/if}}</p>{{/if}}
 
 <div id="bio-en">
 {{#each bio}}<p>{{ this }}</p>
 {{/each}}
 </div>
-{{#if site.bio_zh}}<div id="bio-zh" hidden lang="zh-CN">
-{{#each site.bio_zh}}<p>{{ this }}</p>
+{{#if bio_zh}}<div id="bio-zh" hidden lang="zh-CN">
+{{#each bio_zh}}<p>{{ this }}</p>
 {{/each}}
 </div>
 <script>
@@ -20,7 +20,7 @@
     var isZh = lang === 'zh';
     en.forEach(function (n) { if (n) n.hidden = isZh; });
     zh.forEach(function (n) { if (n) n.hidden = !isZh; });
-    btn.textContent = isZh ? 'English' : '中文';
+    btn.textContent = isZh ? 'English version' : '中文版自我介绍';
     btn.setAttribute('data-lang', isZh ? 'zh' : 'en');
     try { localStorage.setItem('site-lang', lang); } catch (e) {}
   }
@@ -35,14 +35,14 @@
 </script>
 {{/if}}
 
-<h3>Contact</h3>
+<h3>📧 Contact</h3>
 <p class="tight">{{#if site.email}}<b>Email</b>&nbsp; <a class="email" href="#" data-addr="{{ site.email_b64 }}" title="点击写邮件">{{ site.email_text }}</a>{{/if}}</p>
 <ul class="links">
 {{#each site.links}}<li><a href="{{ href }}">{{ label }}</a></li>
 {{/each}}
 </ul>
 
-<h3>News</h3>
+<h3>📢 News</h3>
 <div class="news">
 {{#each news}}<p><span class="date">{{ date }}</span> {{ text }}</p>
 {{/each}}

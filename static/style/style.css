@@ -133,6 +133,9 @@ p.tight { margin-bottom: .3em; }
   margin-left: .5em;
   white-space: nowrap;
 }
+.subtitle a.lang-toggle { font-style: normal; }
+/* 正文里的「📧」当图标用，不要虚线下划线 */
+a.bio-mail { text-decoration: none; font-size: 1.3em; vertical-align: -.12em; }
 
 .lead { color: #444; font-size: .95em; }
 .note { color: var(--muted); font-size: .9em; }
