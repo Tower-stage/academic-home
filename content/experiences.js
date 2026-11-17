@@ -43,17 +43,17 @@ export default [
     inline: true,
     entries: [
       {
-        when: "2025 –",
+        when: "2025 – present",
         main: "Ph.D. Student",
         sub: "The Hong Kong Polytechnic University",
-        extra: 'Supervisor: <a href="https://www.polyu.edu.hk/eee/people/academic-staff-and-teaching-staff/prof-li-gang/">Prof. Gang Li</a>',
+        extra: "",
         logo: "style/logo-polyu.png",
       },
       {
         when: "2022 – 2025",
         main: "M.E. in Materials Science and Engineering",
         sub: "Wuhan University",
-        extra: 'Supervisor: <a href="https://scholars.whu.edu.cn/en/persons/jie-min/">Prof. Jie Min</a><br>Research Mentor: <a href="https://scholars.whu.edu.cn/en/persons/rui-sun/">Dr. Rui Sun</a>',
+        extra: "",
         logo: "style/logo-wuhan.png",
       },
       {

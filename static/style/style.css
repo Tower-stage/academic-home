@@ -220,6 +220,15 @@ table.exp .entry-logo {
 }
 table.exp .entry-text { min-width: 0; }
 
+/* Education 那种「一行式」：日期、学位、学校并成一句，校徽在左 */
+table.exp.exp-inline td { padding: .5em 0; }
+table.exp.exp-inline .entry { align-items: center; gap: 1.1em; }
+table.exp.exp-inline .entry-logo { width: 64px; height: 64px; }
+table.exp.exp-inline .when-inline {
+  color: #444;
+  font-variant-numeric: tabular-nums;
+}
+
 /* ---------- 页脚 ---------- */
 footer { margin-top: 3.5em; }
 hr {

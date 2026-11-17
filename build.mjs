@@ -216,6 +216,7 @@ function groupExperiences(sections) {
   return sections.map((s, i) => ({
     title: s.title ?? '',
     icon: s.icon ?? '',
+    inline: !!s.inline,
     anchor: s.anchor || slugify(s.title, `section-${i + 1}`),
     entries: (s.entries || []).map((e) => ({
       when: e.when ?? '',

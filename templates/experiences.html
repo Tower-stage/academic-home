@@ -5,6 +5,23 @@
 
 {{#each sections}}
 <h2 id="{{ anchor }}">{{#if icon}}{{ icon }} {{/if}}{{ title }}</h2>
+{{#if inline}}
+<table class="exp exp-inline">
+{{#each entries}}
+  <tr>
+    <td class="what">
+      <div class="entry">
+        {{#if logo}}<img class="entry-logo" src="{{ logo }}" alt="">{{/if}}
+        <div class="entry-text">
+          <span class="when-inline">{{ when }}</span>, <span class="entry-main">{{ main }}</span>{{#if sub}}, <span class="sub">{{ sub }}</span>{{/if}}
+          {{#if extra}}<br><span class="sub">{{ extra }}</span>{{/if}}
+        </div>
+      </div>
+    </td>
+  </tr>
+{{/each}}
+</table>
+{{else}}
 <table class="exp">
 {{#each entries}}
   <tr>
@@ -13,7 +30,7 @@
       <div class="entry">
         {{#if logo}}<img class="entry-logo" src="{{ logo }}" alt="">{{/if}}
         <div class="entry-text">
-          {{#if inline}}<span class="entry-main">{{ main }}</span>{{#if sub}}, <span class="sub">{{ sub }}</span>{{/if}}{{else}}<span class="entry-main">{{ main }}</span>{{#if sub}}<br><span class="sub">{{ sub }}</span>{{/if}}{{/if}}
+          <span class="entry-main">{{ main }}</span>{{#if sub}}<br><span class="sub">{{ sub }}</span>{{/if}}
           {{#if extra}}<br><span class="sub">{{ extra }}</span>{{/if}}
         </div>
       </div>
@@ -21,4 +38,5 @@
   </tr>
 {{/each}}
 </table>
+{{/if}}
 {{/each}}
