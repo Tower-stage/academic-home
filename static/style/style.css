@@ -202,9 +202,10 @@ table.exp {
 }
 table.exp td { vertical-align: top; padding: .34em 0; }
 table.exp td.when {
-  width: 9em;
-  padding-right: 1em;
-  color: #444;
+  width: 1%;            /* 收缩到内容宽度，年份后面不留大片空白 */
+  padding-right: .9em;
+  color: #333;
+  font-weight: 600;     /* 年份加粗 */
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
@@ -235,7 +236,8 @@ table.exp .logo-box {
 table.exp.exp-inline .entry-logo { width: 66px; height: 66px; }
 table.exp.exp-inline img.entry-logo[src$="logo-polyu.png"] { width: 54px; height: 54px; }
 table.exp.exp-inline .when-inline {
-  color: #444;
+  color: #333;
+  font-weight: 600;
   font-variant-numeric: tabular-nums;
 }
 
@@ -412,7 +414,7 @@ hr {
   h1 { font-size: 1.55em; }
   h1 .cn { display: block; margin: .15em 0 0; font-size: .78em; }
   h1 .cn .sep { display: none; }
-  table.exp td.when { width: 7em; white-space: normal; }
+  table.exp td.when { width: 1%; padding-right: .7em; white-space: normal; }
   /* 窄屏下表格按容器宽度分配列宽，长单词允许断行，避免横向溢出 */
   table.exp { table-layout: fixed; }
   table.exp .entry-text, table.exp .sub { overflow-wrap: anywhere; }
