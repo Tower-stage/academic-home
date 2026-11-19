@@ -47,6 +47,18 @@ export default [
     entries: [
       {
         when: "",
+        main: "Processability of organic photovoltaics with green aromatic solvents",
+        sub: "",
+        extra: "",
+      },
+      {
+        when: "",
+        main: "Dipole-moment engineering of organic photovoltaic donors",
+        sub: "",
+        extra: "",
+      },
+      {
+        when: "",
         main: "A framework for understanding high-throughput processability of OPV",
         sub: "",
         extra: "Combined coating tests, COMSOL flow modelling and Hansen parameter analysis.",
