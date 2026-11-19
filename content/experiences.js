@@ -46,31 +46,31 @@ export default [
     icon: "🔬",
     entries: [
       {
-        when: "2025 – present",
+        when: "2026",
         main: "Processability of organic photovoltaics with green aromatic solvents",
         sub: "",
         extra: "",
       },
       {
-        when: "2025 – present",
+        when: "2026",
         main: "Dipole-moment engineering of organic photovoltaic donors",
         sub: "",
         extra: "",
       },
       {
-        when: "Nov 2023 –",
+        when: "2025",
         main: "A framework for understanding high-throughput processability of OPV",
         sub: "",
         extra: "",
       },
       {
-        when: "May 2023 – Oct 2023",
+        when: "2024",
         main: "High-throughput printing of organic solar cells",
         sub: "",
         extra: "",
       },
       {
-        when: "Sep 2022 – Apr 2023",
+        when: "2023",
         main: "Single-molecular organic solar cells",
         sub: "",
         extra: "",
