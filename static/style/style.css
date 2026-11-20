@@ -401,6 +401,37 @@ hr {
 .post code { background: #f3f3f3; padding: .05em .35em; border-radius: 3px; font-size: .9em; }
 .post pre code { background: none; padding: 0; }
 
+/* 工具：Essay 里的三个交互应用，各占一整屏，点开才解密塞进 iframe。
+   iframe 允许比正文（800px）宽 —— 模型库卡片墙和 textbook 的侧栏要地方；
+   用 50% - 半宽 的方式往两侧摊开，窄屏再退回满宽。 */
+.essay-group {
+  margin: 1.7em 0 0;
+  color: var(--muted);
+  font-size: .8em;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.app-bar {
+  display: flex;
+  align-items: baseline;
+  gap: 1em;
+  flex-wrap: wrap;
+}
+.app-bar h2 { margin: 0; }
+.app-open { margin-left: auto; font-size: .86em; white-space: nowrap; }
+.app-desc { margin: .35em 0 1em; color: var(--muted); font-size: .9em; }
+#app-frame-wrap { margin-top: .4em; }
+.app-frame {
+  display: block;
+  width: min(94vw, 1240px);
+  margin-left: calc(50% - min(47vw, 620px));
+  height: calc(100vh - 190px);
+  min-height: 470px;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: #fff;
+}
+
 /* ---------- 窄屏 ---------- */
 @media (max-width: 640px) {
   body { font-size: 16.5px; padding: .8em .9em 3em; }
@@ -422,6 +453,13 @@ hr {
   table.exp.exp-inline .entry-logo { width: 50px; height: 50px; }
   table.exp.exp-inline img.entry-logo[src$="logo-polyu.png"] { width: 42px; height: 42px; }
   table.exp.exp-inline .entry { gap: .6em; }
+  /* 窄屏：应用退回容器宽度，高度按视口给足 */
+  .app-frame {
+    width: 100%;
+    margin-left: 0;
+    height: calc(100vh - 210px);
+    min-height: 430px;
+  }
 }
 
 /* 手机：头像不再浮动，改成标题上方的一小块，正文就不会被挤成细条 */

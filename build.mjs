@@ -474,12 +474,32 @@ async function build() {
   const posts = backroomPosts
     .map((p) => ({ slug: p.slug, title: p.meta.title || p.slug, date: p.meta.date || '', body: p.bodyHtml }))
     .sort((a, b) => String(b.date).localeCompare(String(a.date)));
+  // Essay 里的「工具」：每条对应 content/apps/<slug>.html，各自单独加密。
+  // 列表只带标题，密文等点开那一条时浏览器才去取，所以大应用不拖慢整页。
+  const appsMeta = existsSync(join(ROOT, 'content', 'apps.js')) ? await load('content/apps.js') : [];
+  const apps = (Array.isArray(appsMeta) ? appsMeta : []).map((a) => ({
+    slug: a.slug,
+    title: a.title || a.slug,
+    date: a.date || '',
+    desc: a.desc || '',
+  }));
+
   const backroomBodyNodes = parse(read('templates/backroom-body.html'), 'templates/backroom-body.html');
-  const backroomHtml = render(backroomBodyNodes, [{ posts }]);
+  const backroomHtml = render(backroomBodyNodes, [{ posts, apps }]);
   mkdirSync(join(DIST, 'backroom'), { recursive: true });
   const rec = password ? await encryptHtml(backroomHtml, password) : { status: 'unavailable' };
   writeFileSync(join(DIST, 'backroom', 'content.json'), JSON.stringify(rec), 'utf8');
   written.push('backroom/content.json');
+
+  for (const app of apps) {
+    const src = join(ROOT, 'content', 'apps', `${app.slug}.html`);
+    if (!existsSync(src)) {
+      throw new Error(`content/apps.js 里的 "${app.slug}" 找不到对应文件 content/apps/${app.slug}.html`);
+    }
+    const one = password ? await encryptHtml(readFileSync(src, 'utf8'), password) : { status: 'unavailable' };
+    writeFileSync(join(DIST, 'backroom', `app-${app.slug}.json`), JSON.stringify(one), 'utf8');
+    written.push(`backroom/app-${app.slug}.json`);
+  }
 
   // static/ 下的东西整包复制（样式、附件、CNAME 都放这里）
   const staticDir = join(ROOT, 'static');

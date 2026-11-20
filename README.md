@@ -39,6 +39,7 @@ node build.mjs              # 只生成一次，输出到 site/
 | 经历页 | `content/experiences.js` | 研究 / 教育 / 会议 / 专利（顺序 = 数组顺序）；每条可加 `logo: "style/xxx.png"` 放校徽 |
 | 背景底纹 | `content/site.js` 里的 `watermark` | 放一张淡色图到 `static/style/`，写相对路径，如校徽 |
 | Backroom（私密） | `content/backroom/*.md` | 文章；整页一个密码；列表 + 单篇 |
+| Backroom 里的工具 | `content/apps.js` + `content/apps/*.html` | 独立单文件网页应用；同一个密码，各自单独加密、点开才加载 |
 | 头像 | `static/style/avatar-empty.svg` | 现在是空圆形占位；换照片后改 `site.js` 里的 `avatar` |
 | 颜色、字号、间距 | `static/style/style.css` 顶部的 `:root` | |
 | 分享卡片（微信/推特） | `content/site.js` 的 `url` | 填上线域名（结尾带 `/`）才输出 `og:url` / `og:image`；卡片图是 `static/style/og.png`（1200×630） |
@@ -118,6 +119,13 @@ date: 2026-11-16
 - 文件名随便；`title` 就是文章标题。列表按 `date` 从新到旧排列，文件名决定 URL 里的锚点
   （`hello.md` → `#post-hello`）。文件名用英文/数字，别用空格和中文，免得链接难敲。
 - 所有文章都在 Backroom 里、都要密码——没有"公开"这一说了。
+
+**工具（可选）**：Backroom 里除了文章，还能挂整块的交互应用。现在有三条：文献抽读器、模型库 v2、OPV Textbook。
+做法是把每个应用存成一个**自包含的单文件 HTML** 放进 `content/apps/<英文短名>.html`，再在 `content/apps.js`
+里加一条 `{ slug, title, date, desc }`（数组顺序 = 列表顺序）。构建时每个应用用同一把密码**单独加密**成
+`site/backroom/app-<slug>.json`；页面列表只写标题，点开那一条才下载 + 解密，塞进 iframe 里跑
+（`srcdoc`，和站点同源，应用自己的 localStorage 照常可用），右上角还有「新标签页打开」。
+这样 400KB 的模型库不会拖慢文章列表，改一个工具也不用重传另外两个。
 
 **上线时**：在 GitHub 仓库 Settings → Secrets and variables → Actions 新建 secret，
 名字 `SITE_PASSWORD`，值就是你的密码。这样 CI 构建时才会把 Backroom 加密进去。

@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>光伏文献 · 每日抽读</title>
+<style>
+*{box-sizing:border-box}
+:root{--bg:#fbfbfa;--ink:#18181b;--muted:#71717a;--line:#e4e4e7;--acc:#2563eb;--ok:#0f766e;--no:#a1a1aa;--warn:#b45309}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif}
+header{padding:28px 32px 0;max-width:1180px;margin:0 auto}
+h1{font-size:19px;margin:0 0 4px;letter-spacing:.2px}
+.sub{color:var(--muted);font-size:13px}
+.wrap{max-width:1180px;margin:0 auto;padding:20px 32px 80px;display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:28px;align-items:start}
+@media(max-width:900px){.wrap{grid-template-columns:1fr;padding:16px}}
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:14px 0 20px}
+button{font:inherit;font-size:13px;cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--ink);padding:7px 14px;border-radius:99px;transition:.15s}
+button:hover{border-color:#c4c4c8}
+button.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+button.primary:hover{opacity:.86}
+button.small{padding:4px 11px;font-size:12px}
+button:disabled{opacity:.4;cursor:default}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:12px;transition:.15s}
+.card.want{border-color:#bfdbfe;box-shadow:0 1px 0 #eff6ff}
+.card.no{opacity:.42}
+.card.read{border-color:#99f6e4;background:#f6fffd}
+.meta{display:flex;gap:9px;align-items:center;font-size:12px;color:var(--muted);flex-wrap:wrap}
+.idx{font-variant-numeric:tabular-nums;font-weight:600;color:#a1a1aa}
+.pill{border:1px solid var(--line);border-radius:99px;padding:0 8px;font-size:11px;line-height:18px}
+.pill.t-形貌{background:#f5f3ff;border-color:#ddd6fe;color:#5b21b6}
+.pill.t-放大{background:#fff7ed;border-color:#fed7aa;color:#9a3412}
+.pill.t-钙钛矿代表作{background:#fef2f2;border-color:#fecaca;color:#991b1b}
+.cite{font-variant-numeric:tabular-nums}
+h3{font-size:15.5px;line-height:1.45;margin:8px 0 4px;font-weight:600}
+.venue{font-size:13px;color:var(--muted);font-style:italic}
+.acts{display:flex;gap:8px;align-items:center;margin-top:12px;flex-wrap:wrap}
+.acts .sp{flex:1}
+.btn-want.on{background:#eff6ff;border-color:#93c5fd;color:#1d4ed8}
+.btn-no.on{background:#f4f4f5;border-color:#d4d4d8;color:#52525b}
+.btn-read.on{background:#ccfbf1;border-color:#5eead4;color:#0f766e}
+a.doi{font-size:12.5px;color:var(--acc);text-decoration:none;border-bottom:1px solid #bfdbfe;padding-bottom:1px}
+a.doi:hover{border-color:var(--acc)}
+.hint{font-size:12.5px;color:var(--muted)}
+aside{position:sticky;top:20px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+.panel h2{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 12px;font-weight:600}
+.stat{display:flex;justify-content:space-between;font-size:13px;padding:5px 0;border-bottom:1px dashed var(--line)}
+.stat:last-child{border:0}
+.stat b{font-variant-numeric:tabular-nums}
+.track{height:5px;background:var(--line);border-radius:99px;overflow:hidden;margin:10px 0 4px}
+.track i{display:block;height:100%;background:var(--acc);width:0;transition:.3s}
+#purified,#starred{max-height:34vh;overflow:auto;margin:0 -4px}
+.pi a{color:inherit;text-decoration:none}
+.pi a:hover{color:var(--acc)}
+.btn-star.on{background:#fffbeb;border-color:#fcd34d;color:#b45309}
+.unstar{color:#a1a1aa;text-decoration:none;font-size:11px;padding:0 3px;cursor:pointer}
+.unstar:hover{color:#dc2626}
+.pi{font-size:13px;padding:7px 4px;border-bottom:1px solid #f4f4f5;line-height:1.45}
+.pi:last-child{border:0}
+.pi .yr{color:var(--muted);font-size:11.5px}
+.grp{font-size:11.5px;color:var(--muted);margin:12px 0 4px;letter-spacing:.04em}
+.empty{font-size:12.5px;color:var(--muted);padding:6px 0}
+footer{max-width:1180px;margin:0 auto;padding:0 32px 40px;color:var(--muted);font-size:12px}
+</style>
+</head>
+<body>
+<header>
+  <h1>光伏文献 · 每日抽读</h1>
+  <div class="sub">126 篇 · 三人组内直属产出 · 点「想读」才出现 DOI · 读完打勾进「已读完」 · 值得回看的点 ☆ 进第二个盒子</div>
+  <div class="sub" id="warn" style="display:none;color:#b45309;margin-top:8px"></div>
+</header>
+
+<div class="wrap">
+  <main>
+    <div class="bar">
+      <button class="primary" id="draw">抽今天的十篇</button>
+      <button id="redraw">重抽今天</button>
+      <span class="hint" id="dayinfo"></span>
+    </div>
+    <div id="cards"></div>
+  </main>
+
+  <aside>
+    <div class="panel">
+      <h2>今日进度</h2>
+      <div class="stat"><span>已判定</span><b id="s-judged">0 / 10</b></div>
+      <div class="stat"><span>想读</span><b id="s-want">0</b></div>
+      <div class="stat"><span>已读完</span><b id="s-read">0</b></div>
+      <div class="stat"><span>累计已读 / 全部</span><b id="s-total">0 / 126</b></div>
+      <div class="track"><i id="track"></i></div>
+      <div class="hint" id="left"></div>
+    </div>
+
+    <div class="panel">
+      <h2 id="h-read">✓ 已读完</h2>
+      <div id="purified"></div>
+      <div class="bar" style="margin:14px 0 0">
+        <button class="small" id="exp-md">导出 Markdown</button>
+        <button class="small" id="exp-copy">复制</button>
+      </div>
+      <div class="bar" style="margin:8px 0 0">
+        <button class="small" id="exp-csv">导出 CSV</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2 id="h-star">★ 值得回看</h2>
+      <div id="starred"></div>
+      <div class="bar" style="margin:14px 0 0">
+        <button class="small" id="exp-star-md">导出 Markdown</button>
+        <button class="small" id="exp-star-csv">导出 CSV</button>
+      </div>
+      <div class="bar" style="margin:8px 0 0">
+        <button class="small" id="reset">清空全部记录</button>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<footer>数据来源：OpenAlex（作者身份经 ORCID 锚定）· 记录保存在本浏览器 localStorage</footer>
+
+<script>
+const PAPERS = [{"i":"A01","s":"Amassian","sn":"Aram Amassian","y":2024,"r":"通讯","t":"OPV","c":26,"ti":"Mapping the interfacial energetic landscape in organic solar cells reveals pathways to reducing non-radiative losses","v":"Matter","d":"10.1016/j.matt.2024.10.007"},{"i":"A02","s":"Amassian","sn":"Aram Amassian","y":2023,"r":"通讯","t":"钙钛矿代表作","c":138,"ti":"A multiscale ion diffusion framework sheds light on the diffusion–stability–hysteresis nexus in metal halide perovskites","v":"Nature Materials","d":"10.1038/s41563-023-01488-2"},{"i":"A03","s":"Amassian","sn":"Aram Amassian","y":2022,"r":"通讯","t":"钙钛矿代表作","c":136,"ti":"A universal co-solvent dilution strategy enables facile and cost-effective fabrication of perovskite photovoltaics","v":"Nature Communications","d":"10.1038/s41467-021-27740-4"},{"i":"A04","s":"Amassian","sn":"Aram Amassian","y":2022,"r":"通讯","t":"OPV","c":20,"ti":"Versatile methods for improving the mechanical properties of fullerene and non-fullerene bulk heterojunction layers to enable stretchable organic solar cells","v":"Journal of Materials Chemistry C","d":"10.1039/d1tc05263b"},{"i":"A05","s":"Amassian","sn":"Aram Amassian","y":2021,"r":"通讯","t":"OPV","c":117,"ti":"Pushing the Limits of Flexibility and Stretchability of Solar Cells: A Review","v":"Advanced Materials","d":"10.1002/adma.202101469"},{"i":"A06","s":"Amassian","sn":"Aram Amassian","y":2021,"r":"通讯","t":"OPV","c":8,"ti":"Conjugated polymers with controllable interfacial order and energetics enable tunable heterojunctions in organic and colloidal quantum dot photovoltaics","v":"Journal of Materials Chemistry A","d":"10.1039/d1ta09544g"},{"i":"A07","s":"Amassian","sn":"Aram Amassian","y":2020,"r":"通讯","t":"OPV","c":161,"ti":"Stretchable and Transparent Conductive PEDOT:PSS‐Based Electrodes for Organic Photovoltaics and Strain Sensors Applications","v":"Advanced Functional Materials","d":"10.1002/adfm.202001251"},{"i":"A08","s":"Amassian","sn":"Aram Amassian","y":2020,"r":"通讯","t":"OPV","c":46,"ti":"Optimizing Solid-State Ligand Exchange for Colloidal Quantum Dot Optoelectronics: How Much Is Enough?","v":"ACS Applied Energy Materials","d":"10.1021/acsaem.0c00389"},{"i":"A09","s":"Amassian","sn":"Aram Amassian","y":2019,"r":"通讯","t":"钙钛矿代表作","c":231,"ti":"Dynamical Transformation of Two-Dimensional Perovskites with Alternating Cations in the Interlayer Space for High-Performance Photovoltaics","v":"Journal of the American Chemical Society","d":"10.1021/jacs.8b13104"},{"i":"A10","s":"Amassian","sn":"Aram Amassian","y":2019,"r":"通讯","t":"钙钛矿代表作","c":228,"ti":"Multi-cation Synergy Suppresses Phase Segregation in Mixed-Halide Perovskites","v":"Joule","d":"10.1016/j.joule.2019.05.016"},{"i":"A11","s":"Amassian","sn":"Aram Amassian","y":2019,"r":"通讯","t":"放大/稳定性","c":173,"ti":"Scalable Ambient Fabrication of High-Performance CsPbI2Br Solar Cells","v":"Joule","d":"10.1016/j.joule.2019.07.015"},{"i":"A12","s":"Amassian","sn":"Aram Amassian","y":2019,"r":"通讯","t":"OPV","c":68,"ti":"Impact of the Solvation State of Lead Iodide on Its Two‐Step Conversion to MAPbI3: An In Situ Investigation","v":"Advanced Functional Materials","d":"10.1002/adfm.201807544"},{"i":"A13","s":"Amassian","sn":"Aram Amassian","y":2018,"r":"通讯","t":"钙钛矿代表作","c":799,"ti":"Stable High‐Performance Perovskite Solar Cells via Grain Boundary Passivation","v":"Advanced Materials","d":"10.1002/adma.201706576"},{"i":"A14","s":"Amassian","sn":"Aram Amassian","y":2018,"r":"通讯","t":"钙钛矿代表作","c":293,"ti":"Phase Transition Control for High Performance Ruddlesden–Popper Perovskite Solar Cells","v":"Advanced Materials","d":"10.1002/adma.201707166"},{"i":"A15","s":"Amassian","sn":"Aram Amassian","y":2018,"r":"通讯","t":"钙钛矿代表作","c":261,"ti":"Phase Transition Control for High-Performance Blade-Coated Perovskite Solar Cells","v":"Joule","d":"10.1016/j.joule.2018.04.011"},{"i":"A16","s":"Amassian","sn":"Aram Amassian","y":2018,"r":"通讯","t":"钙钛矿代表作","c":245,"ti":"High performance ambient-air-stable FAPbI 3 perovskite solar cells with molecule-passivated Ruddlesden–Popper/3D heterostructured film","v":"Energy & Environmental Science","d":"10.1039/c8ee02542h"},{"i":"A17","s":"Amassian","sn":"Aram Amassian","y":2018,"r":"通讯","t":"钙钛矿代表作","c":222,"ti":"Blade-Coated Hybrid Perovskite Solar Cells with Efficiency > 17%: An In Situ Investigation","v":"ACS Energy Letters","d":"10.1021/acsenergylett.8b00428"},{"i":"A18","s":"Amassian","sn":"Aram Amassian","y":2018,"r":"通讯","t":"OPV","c":44,"ti":"Hybrid Tandem Quantum Dot/Organic Solar Cells with Enhanced Photocurrent and Efficiency via Ink and Interlayer Engineering","v":"ACS Energy Letters","d":"10.1021/acsenergylett.8b00460"},{"i":"A19","s":"Amassian","sn":"Aram Amassian","y":2017,"r":"通讯","t":"形貌","c":198,"ti":"Morphology Development in Solution-Processed Functional Organic Blend Films: An In Situ Viewpoint","v":"Chemical Reviews","d":"10.1021/acs.chemrev.6b00618"},{"i":"A20","s":"Amassian","sn":"Aram Amassian","y":2017,"r":"通讯","t":"形貌","c":41,"ti":"Open‐Circuit Voltage in Organic Solar Cells: The Impacts of Donor Semicrystallinity and Coexistence of Multiple Interfacial Charge‐Transfer Bands","v":"Advanced Energy Materials","d":"10.1002/aenm.201601995"},{"i":"A21","s":"Amassian","sn":"Aram Amassian","y":2016,"r":"通讯","t":"钙钛矿代表作","c":201,"ti":"Hybrid Perovskite Thin‐Film Photovoltaics: In Situ Diagnostics and Importance of the Precursor Solvate Phases","v":"Advanced Materials","d":"10.1002/adma.201604113"},{"i":"A22","s":"Amassian","sn":"Aram Amassian","y":2016,"r":"通讯","t":"形貌","c":196,"ti":"Morphology changes upon scaling a high-efficiency, solution-processed solar cell","v":"Energy & Environmental Science","d":"10.1039/c6ee01623e"},{"i":"A23","s":"Amassian","sn":"Aram Amassian","y":2016,"r":"通讯","t":"放大/稳定性","c":64,"ti":"Highly efficient polymer solar cells with printed photoactive layer: rational process transfer from spin-coating","v":"Journal of Materials Chemistry A","d":"10.1039/c6ta06258j"},{"i":"A24","s":"Amassian","sn":"Aram Amassian","y":2016,"r":"通讯","t":"OPV","c":31,"ti":"Solution-processable MoOx nanocrystals enable highly efficient reflective and semitransparent polymer solar cells","v":"Nano Energy","d":"10.1016/j.nanoen.2016.08.019"},{"i":"A25","s":"Amassian","sn":"Aram Amassian","y":2015,"r":"通讯","t":"OPV","c":151,"ti":"Polymer Solar Cells with Efficiency >10% Enabled via a Facile Solution‐Processed Al‐Doped ZnO Electron Transporting Layer","v":"Advanced Energy Materials","d":"10.1002/aenm.201500204"},{"i":"A26","s":"Amassian","sn":"Aram Amassian","y":2015,"r":"通讯","t":"形貌","c":61,"ti":"Synergistic Impact of Solvent and Polymer Additives on the Film Formation of Small Molecule Blend Films for Bulk Heterojunction Solar Cells","v":"Advanced Energy Materials","d":"10.1002/aenm.201501121"},{"i":"A27","s":"Amassian","sn":"Aram Amassian","y":2015,"r":"通讯","t":"形貌","c":60,"ti":"Toward Additive‐Free Small‐Molecule Organic Solar Cells: Roles of the Donor Crystallization Pathway and Dynamics","v":"Advanced Materials","d":"10.1002/adma.201503395"},{"i":"A28","s":"Amassian","sn":"Aram Amassian","y":2015,"r":"通讯","t":"OPV","c":52,"ti":"Highly efficient organic solar cells based on a robust room-temperature solution-processed copper iodide hole transporter","v":"Nano Energy","d":"10.1016/j.nanoen.2015.07.018"},{"i":"A29","s":"Amassian","sn":"Aram Amassian","y":2015,"r":"通讯","t":"OPV","c":44,"ti":"Hybrid tandem solar cells with depleted-heterojunction quantum dot and polymer bulk heterojunction subcells","v":"Nano Energy","d":"10.1016/j.nanoen.2015.08.010"},{"i":"A30","s":"Amassian","sn":"Aram Amassian","y":2015,"r":"通讯","t":"OPV","c":40,"ti":"Impact of Molecular Orientation and Spontaneous Interfacial Mixing on the Performance of Organic Solar Cells","v":"Chemistry of Materials","d":"10.1021/acs.chemmater.5b01845"},{"i":"A31","s":"Amassian","sn":"Aram Amassian","y":2014,"r":"通讯","t":"OPV","c":318,"ti":"Importance of the Donor:Fullerene Intermolecular Arrangement for High-Efficiency Organic Photovoltaics","v":"Journal of the American Chemical Society","d":"10.1021/ja502985g"},{"i":"A32","s":"Amassian","sn":"Aram Amassian","y":2014,"r":"通讯","t":"OPV","c":120,"ti":"Efficient inverted bulk-heterojunction solar cells from low-temperature processing of amorphous ZnO buffer layers","v":"Journal of Materials Chemistry A","d":"10.1039/c4ta02276a"},{"i":"A33","s":"Amassian","sn":"Aram Amassian","y":2014,"r":"通讯","t":"形貌","c":72,"ti":"Late stage crystallization and healing during spin-coating enhance carrier transport in small-molecule organic semiconductors","v":"Journal of Materials Chemistry C","d":"10.1039/c4tc00981a"},{"i":"A34","s":"Amassian","sn":"Aram Amassian","y":2013,"r":"通讯","t":"OPV","c":170,"ti":"Spin‐Cast Bulk Heterojunction Solar Cells: A Dynamical Investigation","v":"Advanced Materials","d":"10.1002/adma.201203440"},{"i":"A35","s":"Amassian","sn":"Aram Amassian","y":2013,"r":"通讯","t":"形貌","c":162,"ti":"Solvent Additive Effects on Small Molecule Crystallization in Bulk Heterojunction Solar Cells Probed During Spin Casting","v":"Advanced Materials","d":"10.1002/adma.201302389"},{"i":"A36","s":"Amassian","sn":"Aram Amassian","y":2013,"r":"通讯","t":"放大/稳定性","c":125,"ti":"In situ UV-visible absorption during spin-coating of organic semiconductors: a new probe for organic electronics and photovoltaics","v":"Journal of Materials Chemistry C","d":"10.1039/c3tc32077d"},{"i":"A37","s":"Amassian","sn":"Aram Amassian","y":2013,"r":"通讯","t":"OPV","c":102,"ti":"Re‐evaluating the Role of Sterics and Electronic Coupling in Determining the Open‐Circuit Voltage of Organic Solar Cells","v":"Advanced Materials","d":"10.1002/adma.201301319"},{"i":"C01","s":"CampoyQuiles","sn":"Mariano Campoy-Quiles","y":2026,"r":"通讯","t":"放大/稳定性","c":2,"ti":"Increasing polymer molecular weight enables low-donor-content, efficient and scalable semi-transparent organic solar cells","v":"Journal of Materials Chemistry A","d":"10.1039/d5ta07234d"},{"i":"C02","s":"CampoyQuiles","sn":"Mariano Campoy-Quiles","y":2026,"r":"通讯","t":"放大/稳定性","c":0,"ti":"High-throughput thickness gradient screening reveals thickness and light-intensity dependent efficiency in indoor organic photovoltaics","v":"Journal of Materials Chemistry A","d":"10.1039/d6ta01910b"},{"i":"C03","s":"CampoyQuiles","sn":"Mariano Campoy-Quiles","y":2025,"r":"通讯","t":"OPV","c":16,"ti":"What Makes Thickness‐Tolerant Organic Solar Cells?","v":"Advanced Energy Materials","d":"10.1002/aenm.202405735"},{"i":"C04","s":"CampoyQuiles","sn":"Mariano Campoy-Quiles","y":2024,"r":"通讯","t":"放大/稳定性","c":22,"ti":"High Polymer Molecular Weight Yields Solar Cells with Simultaneously Improved Performance and Thermal Stability","v":"Small","d":"10.1002/smll.202311735"},{"i":"C05","s":"CampoyQuiles","sn":"Mariano Campoy-Quiles","y":2024,"r":"通讯","t":"放大/稳定性","c":19,"ti":"Combinatorial screening of wide band-gap organic solar cell materials with open-circuit voltage between 1.1 and 1.4 V","v":"Journal of Materials Chemistry A","d":"10.1039/d4ta01944j"},{"i":"C06","s":"CampoyQuiles","sn":"Mariano Campoy-Quiles","y":2024,"r":"通讯","t":"OPV","c":15,"ti":"Tailoring the Electron‐Deficient Central Core on Fused‐Ring Nonfullerene Acceptors: Deciphering the Relationships Between Structure, Property, and Photovoltaic Performance","v":"Advanced Energy and Sustainability Research","d":"10.1002/aesr.202400028"},{"i":"C07","s":"CampoyQuiles","sn":"Mariano Campoy-Quiles","y":2024,"r":"通讯","t":"放大/稳定性","c":11,"ti":"High‐Throughput Screening of Low‐Bandgap Organic Semiconductors for Photovoltaic Applications: In the Search of Correlations","v":"Solar RRL","d":"10.1002/solr.202400213"},{"i":"C08","s":"CampoyQuiles","sn":"Mariano Campoy-Quiles","y":2024,"r":"一作","t":"OPV","c":2,"ti":"A universal additive concept yields record-high efficient organic solar cells","v":"Science China Materials","d":"10.1007/s40843-024-2810-8"},{"i":"C09","s":"CampoyQuiles","sn":"Mariano Campoy-Quiles","y":2023,"r":"通讯","t":"OPV","c":9,"ti":"RAINBOW Organic Solar Cells: Implementing Spectral Splitting in Lateral Multi‐Junction Architectures","v":"Advanced Materials","d":"10.1002/adma.202212226"},{"i":"C10","s":"CampoyQuiles","sn":"Mariano Campoy-Quiles","y":2022,"r":"通讯","t":"OPV","c":60,"ti":"Identifying structure–absorption relationships and predicting absorption strength of non-fullerene acceptors for organic photovoltaics","v":"Energy & Environmental Science","d":"10.1039/d2ee00887d"},{"i":"C11","s":"CampoyQuiles","sn":"Mariano Campoy-Quiles","y":2022,"r":"通讯","t":"形貌","c":10,"ti":"Comparing the microstructure and photovoltaic performance of 3 perylene imide acceptors with similar energy levels but different packing tendencies","v":"Journal of Materials Chemistry C","d":"10.1039/d1tc05037k"},{"i":"C12","s":"CampoyQuiles","sn":"Mariano Campoy-Quiles","y":2021,"r":"通讯","t":"OPV","c":45,"ti":"Predicting the photocurrent–composition dependence in organic solar cells","v":"Energy & Environmental Science","d":"10.1039/d0ee02958k"},{"i":"C13","s":"CampoyQuiles","sn":"Mariano Campoy-Quiles","y":2021,"r":"通讯","t":"放大/稳定性","c":12,"ti":"High‐Throughput Screening of Blade‐Coated Polymer:Polymer Solar Cells: Solvent Determines Achievable Performance","v":"ChemSusChem","d":"10.1002/cssc.202101888"},{"i":"C14","s":"CampoyQuiles","sn":"Mariano Campoy-Quiles","y":2021,"r":"通讯","t":"OPV","c":11,"ti":"Effect of Quencher, Geometry, and Light Outcoupling on the Determination of Exciton Diffusion Length in Nonfullerene Acceptors","v":"Solar RRL","d":"10.1002/solr.202100822"},{"i":"C15","s":"CampoyQuiles","sn":"Mariano Campoy-Quiles","y":2020,"r":"通讯","t":"放大/稳定性","c":43,"ti":"Structure dependent photostability of ITIC and ITIC-4F","v":"Materials Advances","d":"10.1039/d0ma00458h"},{"i":"C16","s":"CampoyQuiles","sn":"Mariano Campoy-Quiles","y":2020,"r":"通讯","t":"放大/稳定性","c":33,"ti":"Towards photovoltaic windows: scalable fabrication of semitransparent modules based on non-fullerene acceptors via laser-patterning","v":"Journal of Materials Chemistry A","d":"10.1039/d0ta02994g"},{"i":"C17","s":"CampoyQuiles","sn":"Mariano Campoy-Quiles","y":2020,"r":"通讯","t":"放大/稳定性","c":17,"ti":"Microfluidic‐Assisted Blade Coating of Compositional Libraries for Combinatorial Applications: The Case of Organic Photovoltaics","v":"Advanced Energy Materials","d":"10.1002/aenm.202001308"},{"i":"C18","s":"CampoyQuiles","sn":"Mariano Campoy-Quiles","y":2019,"r":"通讯","t":"放大/稳定性","c":61,"ti":"Blade coated P3HT:non-fullerene acceptor solar cells: a high-throughput parameter study with a focus on up-scalability","v":"Journal of Materials Chemistry A","d":"10.1039/c9ta07361b"},{"i":"C19","s":"CampoyQuiles","sn":"Mariano Campoy-Quiles","y":2019,"r":"通讯","t":"放大/稳定性","c":40,"ti":"Efficient Exploration of the Composition Space in Ternary Organic Solar Cells by Combining High‐Throughput Material Libraries and Hyperspectral Imaging","v":"Advanced Energy Materials","d":"10.1002/aenm.201902417"},{"i":"C20","s":"CampoyQuiles","sn":"Mariano Campoy-Quiles","y":2018,"r":"通讯","t":"放大/稳定性","c":33,"ti":"High‐Throughput Multiparametric Screening of Solution Processed Bulk Heterojunction Solar Cells","v":"Advanced Electronic Materials","d":"10.1002/aelm.201700477"},{"i":"C21","s":"CampoyQuiles","sn":"Mariano Campoy-Quiles","y":2018,"r":"通讯","t":"OPV","c":19,"ti":"Comparing the potential of different strategies for colour tuning in thin film photovoltaic technologies","v":"Science and Technology of Advanced Materials","d":"10.1080/14686996.2018.1530050"},{"i":"C22","s":"CampoyQuiles","sn":"Mariano Campoy-Quiles","y":2018,"r":"通讯","t":"放大/稳定性","c":10,"ti":"Combinatorial optimization of evaporated bilayer small molecule organic solar cells through orthogonal thickness gradients","v":"Organic Electronics","d":"10.1016/j.orgel.2018.05.007"},{"i":"C23","s":"CampoyQuiles","sn":"Mariano Campoy-Quiles","y":2017,"r":"通讯","t":"形貌","c":33,"ti":"Quantifying local thickness and composition in thin films of organic photovoltaic blends by Raman scattering","v":"Journal of Materials Chemistry C","d":"10.1039/c7tc01472d"},{"i":"C24","s":"CampoyQuiles","sn":"Mariano Campoy-Quiles","y":2016,"r":"通讯","t":"OPV","c":385,"ti":"Exploring the origin of high optical absorption in conjugated polymers","v":"Nature Materials","d":"10.1038/nmat4645"},{"i":"C25","s":"CampoyQuiles","sn":"Mariano Campoy-Quiles","y":2014,"r":"通讯","t":"形貌","c":30,"ti":"Spectroscopic Evaluation of Mixing and Crystallinity of Fullerenes in Bulk Heterojunctions","v":"Advanced Functional Materials","d":"10.1002/adfm.201401626"},{"i":"C26","s":"CampoyQuiles","sn":"Mariano Campoy-Quiles","y":2014,"r":"一作","t":"形貌","c":25,"ti":"On the complex refractive index of polymer:fullerene photovoltaic blends","v":"Thin Solid Films","d":"10.1016/j.tsf.2014.02.096"},{"i":"C28","s":"CampoyQuiles","sn":"Mariano Campoy-Quiles","y":2013,"r":"通讯","t":"形貌","c":45,"ti":"Uniaxial macroscopic alignment of conjugated polymer systems by directional crystallization during blade coating","v":"Journal of Materials Chemistry C","d":"10.1039/c3tc32056a"},{"i":"C29","s":"CampoyQuiles","sn":"Mariano Campoy-Quiles","y":2013,"r":"一作","t":"形貌","c":4,"ti":"Continuous lateral gradients in film morphology for position sensitive detection and organic solar cell optimization","v":"Organic Photonics and Photovoltaics","d":"10.2478/oph-2013-0002"},{"i":"C30","s":"CampoyQuiles","sn":"Mariano Campoy-Quiles","y":2009,"r":"一作","t":"形貌","c":86,"ti":"Ternary mixing: A simple method to tailor the morphology of organic solar cells","v":"Organic Electronics","d":"10.1016/j.orgel.2009.05.028"},{"i":"C31","s":"CampoyQuiles","sn":"Mariano Campoy-Quiles","y":2008,"r":"一作","t":"形貌","c":1452,"ti":"Morphology evolution via self-organization and lateral and vertical diffusion in polymer:fullerene solar cell blends","v":"Nature Materials","d":"10.1038/nmat2102"},{"i":"F01","s":"FengLiu","sn":"Feng Liu","y":2026,"r":"通讯","t":"OPV","c":10,"ti":"Dual-molecule reciprocal doping strategy for cathode interfacial materials enables over 20.7% efficiency in organic solar cells","v":"Energy & Environmental Science","d":"10.1039/d5ee06226h"},{"i":"F02","s":"FengLiu","sn":"Feng Liu","y":2025,"r":"通讯","t":"OPV","c":6,"ti":"Unlocking functional potentials: Nanofibril networks in organic semiconductors","v":"Advanced Nanocomposites","d":"10.1016/j.adna.2025.05.001"},{"i":"F03","s":"FengLiu","sn":"Feng Liu","y":2022,"r":"通讯","t":"形貌","c":45,"ti":"Complex multilength-scale morphology in organic photovoltaics","v":"Trends in Chemistry","d":"10.1016/j.trechm.2022.05.004"},{"i":"F04","s":"FengLiu","sn":"Feng Liu","y":2021,"r":"通讯","t":"形貌","c":278,"ti":"Progress and prospects of the morphology of non-fullerene acceptor based high-efficiency organic solar cells","v":"Energy & Environmental Science","d":"10.1039/d1ee01220g"},{"i":"F05","s":"FengLiu","sn":"Feng Liu","y":2021,"r":"通讯","t":"形貌","c":53,"ti":"Decoupling Complex Multi‐Length‐Scale Morphology in Non‐Fullerene Photovoltaics with Nitrogen K‐Edge Resonant Soft X‐ray Scattering","v":"Advanced Materials","d":"10.1002/adma.202107316"},{"i":"F06","s":"FengLiu","sn":"Feng Liu","y":2021,"r":"通讯","t":"OPV","c":32,"ti":"Ternary organic solar cells with 16.88% efficiency enabled by a twisted perylene diimide derivative to enhance the open-circuit voltage","v":"Journal of Materials Chemistry C","d":"10.1039/d0tc05691j"},{"i":"F07","s":"FengLiu","sn":"Feng Liu","y":2021,"r":"通讯","t":"形貌","c":21,"ti":"Probing morphology and chemistry in complex soft materials with in situ resonant soft x-ray scattering","v":"Journal of Physics Condensed Matter","d":"10.1088/1361-648x/ac0194"},{"i":"F08","s":"FengLiu","sn":"Feng Liu","y":2020,"r":"通讯","t":"形貌","c":348,"ti":"Optimized active layer morphology toward efficient and polymer batch insensitive organic solar cells","v":"Nature Communications","d":"10.1038/s41467-020-16621-x"},{"i":"F09","s":"FengLiu","sn":"Feng Liu","y":2020,"r":"通讯","t":"OPV","c":50,"ti":"Efficient modulation of end groups for the asymmetric small molecule acceptors enabling organic solar cells with over 15% efficiency","v":"Journal of Materials Chemistry A","d":"10.1039/d0ta01032d"},{"i":"F10","s":"FengLiu","sn":"Feng Liu","y":2020,"r":"通讯","t":"放大/稳定性","c":24,"ti":"Enhanced efficiency and stability of nonfullerene ternary polymer solar cells based on a spontaneously assembled active layer: the role of a high mobility small molecular electron acceptor","v":"Journal of Materials Chemistry C","d":"10.1039/d0tc00225a"},{"i":"F11","s":"FengLiu","sn":"Feng Liu","y":2019,"r":"通讯","t":"OPV","c":311,"ti":"Simplified synthetic routes for low cost and high photovoltaic performance n-type organic semiconductor acceptors","v":"Nature Communications","d":"10.1038/s41467-019-08508-3"},{"i":"F14","s":"FengLiu","sn":"Feng Liu","y":2018,"r":"通讯","t":"形貌","c":627,"ti":"High-efficiency small-molecule ternary solar cells with a hierarchical morphology enabled by synergizing fullerene and non-fullerene acceptors","v":"Nature Energy","d":"10.1038/s41560-018-0234-9"},{"i":"F15","s":"FengLiu","sn":"Feng Liu","y":2018,"r":"通讯","t":"OPV","c":404,"ti":"Dithienopicenocarbazole-Based Acceptors for Efficient Organic Solar Cells with Optoelectronic Response Over 1000 nm and an Extremely Low Energy Loss","v":"Journal of the American Chemical Society","d":"10.1021/jacs.7b13239"},{"i":"F16","s":"FengLiu","sn":"Feng Liu","y":2018,"r":"通讯","t":"OPV","c":296,"ti":"Asymmetrical Ladder‐Type Donor‐Induced Polar Small Molecule Acceptor to Promote Fill Factors Approaching 77% for High‐Performance Nonfullerene Polymer Solar Cells","v":"Advanced Materials","d":"10.1002/adma.201800052"},{"i":"F17","s":"FengLiu","sn":"Feng Liu","y":2018,"r":"通讯","t":"OPV","c":285,"ti":"Fine‐Tuning of Molecular Packing and Energy Level through Methyl Substitution Enabling Excellent Small Molecule Acceptors for Nonfullerene Polymer Solar Cells with Efficiency up to 12.54%","v":"Advanced Materials","d":"10.1002/adma.201706124"},{"i":"F18","s":"FengLiu","sn":"Feng Liu","y":2018,"r":"通讯","t":"形貌","c":265,"ti":"Morphology Optimization via Side Chain Engineering Enables All-Polymer Solar Cells with Excellent Fill Factor and Stability","v":"Journal of the American Chemical Society","d":"10.1021/jacs.8b05038"},{"i":"F19","s":"FengLiu","sn":"Feng Liu","y":2018,"r":"通讯","t":"钙钛矿代表作","c":260,"ti":"Two-Dimensional Perovskite Solar Cells with 14.1% Power Conversion Efficiency and 0.68% External Radiative Efficiency","v":"ACS Energy Letters","d":"10.1021/acsenergylett.8b01181"},{"i":"F21","s":"FengLiu","sn":"Feng Liu","y":2018,"r":"通讯","t":"OPV","c":155,"ti":"Ternary non-fullerene polymer solar cells with 13.51% efficiency and a record-high fill factor of 78.13%","v":"Energy & Environmental Science","d":"10.1039/c8ee01564c"},{"i":"F22","s":"FengLiu","sn":"Feng Liu","y":2018,"r":"通讯","t":"OPV","c":143,"ti":"Conformation Locking on Fused‐Ring Electron Acceptor for High‐Performance Nonfullerene Organic Solar Cells","v":"Advanced Functional Materials","d":"10.1002/adfm.201705095"},{"i":"F23","s":"FengLiu","sn":"Feng Liu","y":2018,"r":"通讯","t":"OPV","c":140,"ti":"Efficient Organic Solar Cells with Extremely High Open‐Circuit Voltages and Low Voltage Losses by Suppressing Nonradiative Recombination Losses","v":"Advanced Energy Materials","d":"10.1002/aenm.201801699"},{"i":"F24","s":"FengLiu","sn":"Feng Liu","y":2018,"r":"通讯","t":"OPV","c":132,"ti":"An Electron Acceptor with Broad Visible–NIR Absorption and Unique Solid State Packing for As‐Cast High Performance Binary Organic Solar Cells","v":"Advanced Functional Materials","d":"10.1002/adfm.201802324"},{"i":"F27","s":"FengLiu","sn":"Feng Liu","y":2018,"r":"通讯","t":"OPV","c":125,"ti":"Nonfullerene Polymer Solar Cells Based on a Main-Chain Twisted Low-Bandgap Acceptor with Power Conversion Efficiency of 13.2%","v":"ACS Energy Letters","d":"10.1021/acsenergylett.8b00627"},{"i":"F28","s":"FengLiu","sn":"Feng Liu","y":2018,"r":"通讯","t":"放大/稳定性","c":109,"ti":"Printed Nonfullerene Organic Solar Cells with the Highest Efficiency of 9.5%","v":"Advanced Energy Materials","d":"10.1002/aenm.201701942"},{"i":"F29","s":"FengLiu","sn":"Feng Liu","y":2018,"r":"通讯","t":"OPV","c":105,"ti":"Terthieno[3,2‐b]Thiophene (6T) Based Low Bandgap Fused‐Ring Electron Acceptor for Highly Efficient Solar Cells with a High Short‐Circuit Current Density and Low Open‐Circuit Voltage Loss","v":"Advanced Energy Materials","d":"10.1002/aenm.201702831"},{"i":"F32","s":"FengLiu","sn":"Feng Liu","y":2018,"r":"通讯","t":"OPV","c":59,"ti":"Steric Engineering of Alkylthiolation Side Chains to Finely Tune Miscibility in Nonfullerene Polymer Solar Cells","v":"Advanced Energy Materials","d":"10.1002/aenm.201802686"},{"i":"F34","s":"FengLiu","sn":"Feng Liu","y":2018,"r":"通讯","t":"OPV","c":52,"ti":"Mapping Nonfullerene Acceptors with a Novel Wide Bandgap Polymer for High Performance Polymer Solar Cells","v":"Advanced Energy Materials","d":"10.1002/aenm.201801214"},{"i":"F47","s":"FengLiu","sn":"Feng Liu","y":2017,"r":"通讯","t":"形貌","c":494,"ti":"An Unfused‐Core‐Based Nonfullerene Acceptor Enables High‐Efficiency Organic Solar Cells with Excellent Morphological Stability at High Temperatures","v":"Advanced Materials","d":"10.1002/adma.201705208"},{"i":"F49","s":"FengLiu","sn":"Feng Liu","y":2017,"r":"通讯","t":"OPV","c":288,"ti":"Efficient Semitransparent Solar Cells with High NIR Responsiveness Enabled by a Small‐Bandgap Electron Acceptor","v":"Advanced Materials","d":"10.1002/adma.201606574"},{"i":"F50","s":"FengLiu","sn":"Feng Liu","y":2017,"r":"通讯","t":"钙钛矿代表作","c":257,"ti":"In situ dynamic observations of perovskite crystallisation and microstructure evolution intermediated from [PbI6]4− cage nanoparticles","v":"Nature Communications","d":"10.1038/ncomms15688"},{"i":"F51","s":"FengLiu","sn":"Feng Liu","y":2017,"r":"通讯","t":"放大/稳定性","c":256,"ti":"High‐Performance As‐Cast Nonfullerene Polymer Solar Cells with Thicker Active Layer and Large Area Exceeding 11% Power Conversion Efficiency","v":"Advanced Materials","d":"10.1002/adma.201704546"},{"i":"F56","s":"FengLiu","sn":"Feng Liu","y":2017,"r":"通讯","t":"OPV","c":102,"ti":"High Efficiency Ternary Nonfullerene Polymer Solar Cells with Two Polymer Donors and an Organic Semiconductor Acceptor","v":"Advanced Energy Materials","d":"10.1002/aenm.201602215"},{"i":"F57","s":"FengLiu","sn":"Feng Liu","y":2017,"r":"通讯","t":"OPV","c":96,"ti":"Small‐Molecule Solar Cells with Simultaneously Enhanced Short‐Circuit Current and Fill Factor to Achieve 11% Efficiency","v":"Advanced Materials","d":"10.1002/adma.201700616"},{"i":"F60","s":"FengLiu","sn":"Feng Liu","y":2017,"r":"通讯","t":"OPV","c":53,"ti":"Thiophene Rings Improve the Device Performance of Conjugated Polymers in Polymer Solar Cells with Thick Active Layers","v":"Advanced Energy Materials","d":"10.1002/aenm.201700519"},{"i":"F72","s":"FengLiu","sn":"Feng Liu","y":2016,"r":"一作","t":"OPV","c":295,"ti":"A Thieno[3,4- b ]thiophene-Based Non-fullerene Electron Acceptor for High-Performance Bulk-Heterojunction Organic Solar Cells","v":"Journal of the American Chemical Society","d":"10.1021/jacs.6b08523"},{"i":"F73","s":"FengLiu","sn":"Feng Liu","y":2016,"r":"通讯","t":"OPV","c":265,"ti":"Ternary Organic Solar Cells Based on Two Compatible Nonfullerene Acceptors with Power Conversion Efficiency >10%","v":"Advanced Materials","d":"10.1002/adma.201602570"},{"i":"F74","s":"FengLiu","sn":"Feng Liu","y":2016,"r":"通讯","t":"OPV","c":191,"ti":"Achieving High‐Performance Ternary Organic Solar Cells through Tuning Acceptor Alloy","v":"Advanced Materials","d":"10.1002/adma.201603154"},{"i":"F75","s":"FengLiu","sn":"Feng Liu","y":2016,"r":"通讯","t":"OPV","c":117,"ti":"A simple perylene diimide derivative with a highly twisted geometry as an electron acceptor for efficient organic solar cells","v":"Journal of Materials Chemistry A","d":"10.1039/c6ta04232e"},{"i":"F76","s":"FengLiu","sn":"Feng Liu","y":2016,"r":"通讯","t":"OPV","c":105,"ti":"Toward Practical Useful Polymers for Highly Efficient Solar Cells via a Random Copolymer Approach","v":"Journal of the American Chemical Society","d":"10.1021/jacs.6b06418"},{"i":"F77","s":"FengLiu","sn":"Feng Liu","y":2016,"r":"通讯","t":"OPV","c":97,"ti":"Head‐to‐Head Linkage Containing Bithiophene‐Based Polymeric Semiconductors for Highly Efficient Polymer Solar Cells","v":"Advanced Materials","d":"10.1002/adma.201603112"},{"i":"F78","s":"FengLiu","sn":"Feng Liu","y":2016,"r":"通讯","t":"形貌","c":87,"ti":"New insight of molecular interaction, crystallization and phase separation in higher performance small molecular solar cells via solvent vapor annealing","v":"Nano Energy","d":"10.1016/j.nanoen.2016.10.031"},{"i":"F79","s":"FengLiu","sn":"Feng Liu","y":2016,"r":"通讯","t":"OPV","c":76,"ti":"A non-fullerene electron acceptor modified by thiophene-2-carbonitrile for solution-processed organic solar cells","v":"Journal of Materials Chemistry A","d":"10.1039/c6ta00056h"},{"i":"F80","s":"FengLiu","sn":"Feng Liu","y":2016,"r":"通讯","t":"放大/稳定性","c":59,"ti":"Using o‐Chlorobenzaldehyde as a Fast Removable Solvent Additive during Spin‐Coating PTB7‐Based Active Layers: High Efficiency Thick‐Film Polymer Solar Cells","v":"Advanced Energy Materials","d":"10.1002/aenm.201601344"},{"i":"F81","s":"FengLiu","sn":"Feng Liu","y":2016,"r":"通讯","t":"形貌","c":50,"ti":"Toward High Efficiency Polymer Solar Cells: Influence of Local Chemical Environment and Morphology","v":"Advanced Energy Materials","d":"10.1002/aenm.201601081"},{"i":"F82","s":"FengLiu","sn":"Feng Liu","y":2016,"r":"通讯","t":"形貌","c":34,"ti":"An electron-rich 2-alkylthieno[3,4-b]thiophene building block with excellent electronic and morphological tunability for high-performance small-molecule solar cells","v":"Journal of Materials Chemistry A","d":"10.1039/c6ta08790f"},{"i":"F83","s":"FengLiu","sn":"Feng Liu","y":2016,"r":"通讯","t":"OPV","c":19,"ti":"Enhancing Performances of Solution‐Processed Inverted Ternary Small‐Molecule Organic Solar Cells: Manipulating the Host‐Guest Donors and Acceptor Interaction","v":"Solar RRL","d":"10.1002/solr.201600003"},{"i":"F84","s":"FengLiu","sn":"Feng Liu","y":2015,"r":"通讯","t":"形貌","c":35,"ti":"Simultaneous spin-coating and solvent annealing: manipulating the active layer morphology to a power conversion efficiency of 9.6% in polymer solar cells","v":"Materials Horizons","d":"10.1039/c5mh00076a"},{"i":"F85","s":"FengLiu","sn":"Feng Liu","y":2014,"r":"一作","t":"形貌","c":140,"ti":"Fast Printing and In Situ Morphology Observation of Organic Photovoltaics Using Slot‐Die Coating","v":"Advanced Materials","d":"10.1002/adma.201404040"},{"i":"F86","s":"FengLiu","sn":"Feng Liu","y":2014,"r":"一作","t":"形貌","c":125,"ti":"Molecular Weight Dependence of the Morphology in P3HT:PCBM Solar Cells","v":"ACS Applied Materials & Interfaces","d":"10.1021/am505283k"},{"i":"F87","s":"FengLiu","sn":"Feng Liu","y":2014,"r":"通讯","t":"形貌","c":49,"ti":"New Insights into Morphology of High Performance BHJ Photovoltaics Revealed by High Resolution AFM","v":"Nano Letters","d":"10.1021/nl5025326"},{"i":"F88","s":"FengLiu","sn":"Feng Liu","y":2014,"r":"一作","t":"形貌","c":6,"ti":"Interpenetrating morphology based on highly crystalline small molecule and PCBM blends","v":"Journal of Materials Chemistry C","d":"10.1039/c4tc01451k"},{"i":"F89","s":"FengLiu","sn":"Feng Liu","y":2013,"r":"一作","t":"形貌","c":267,"ti":"Characterization of the morphology of solution-processed bulk heterojunction organic photovoltaics","v":"Progress in Polymer Science","d":"10.1016/j.progpolymsci.2013.07.010"},{"i":"F90","s":"FengLiu","sn":"Feng Liu","y":2013,"r":"一作","t":"形貌","c":224,"ti":"Understanding the Morphology of PTB7:PCBM Blends in Organic Photovoltaics","v":"Advanced Energy Materials","d":"10.1002/aenm.201301377"},{"i":"F91","s":"FengLiu","sn":"Feng Liu","y":2013,"r":"一作","t":"形貌","c":131,"ti":"Relating Chemical Structure to Device Performance via Morphology Control in Diketopyrrolopyrrole-Based Low Band Gap Polymers","v":"Journal of the American Chemical Society","d":"10.1021/ja408923y"},{"i":"F92","s":"FengLiu","sn":"Feng Liu","y":2013,"r":"一作","t":"OPV","c":103,"ti":"Conjugated Polymeric Zwitterions as Efficient Interlayers in Organic Solar Cells","v":"Advanced Materials","d":"10.1002/adma.201302477"},{"i":"F93","s":"FengLiu","sn":"Feng Liu","y":2013,"r":"通讯","t":"OPV","c":62,"ti":"The Role of Additive in Diketopyrrolopyrrole‐Based Small Molecular Bulk Heterojunction Solar Cells","v":"Advanced Materials","d":"10.1002/adma.201302848"},{"i":"F94","s":"FengLiu","sn":"Feng Liu","y":2013,"r":"通讯","t":"OPV","c":21,"ti":"Structural modification of thieno[3,4-c]pyrrole-4,6-dione: structure–property relationships and application in solution-processed small-molecule organic solar cells","v":"Journal of Materials Chemistry A","d":"10.1039/c3ta10471k"},{"i":"F95","s":"FengLiu","sn":"Feng Liu","y":2012,"r":"一作","t":"形貌","c":322,"ti":"On the morphology of polymer‐based photovoltaics","v":"Journal of Polymer Science Part B Polymer Physics","d":"10.1002/polb.23063"},{"i":"F96","s":"FengLiu","sn":"Feng Liu","y":2012,"r":"一作","t":"形貌","c":219,"ti":"Efficient Polymer Solar Cells Based on a Low Bandgap Semi‐crystalline DPP Polymer‐PCBM Blends","v":"Advanced Materials","d":"10.1002/adma.201200902"},{"i":"F97","s":"FengLiu","sn":"Feng Liu","y":2012,"r":"通讯","t":"OPV","c":9,"ti":"Copolymerization of 3,3′′′-didodecylquaterthiophene with fluorene and silole units: improving photovoltaic performance by tuning energy levels","v":"Polymer Chemistry","d":"10.1039/c2py20460f"}];
+const KEY = 'pv_reader_v1';
+const N = 10;
+
+let S = load();
+function load(){
+  try{
+    const raw = localStorage.getItem(KEY);
+    if(raw){ const o = JSON.parse(raw); if(o && o.status){ if(!o.star) o.star = {}; return o; } }
+  }catch(e){}
+  return { status:{}, star:{}, seen:[], date:null, ids:[] };
+}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+
+function todayStr(){
+  const d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+const byId = {};
+PAPERS.forEach(p => byId[p.i] = p);
+
+// Sanitize records against the current paper list (drop ids that no longer exist,
+// keep every still-valid read/star/seen/ids entry intact).
+['ids', 'seen'].forEach(k => { if (S[k]) S[k] = S[k].filter(id => byId[id]); });
+Object.keys(S.status).forEach(id => { if (!byId[id]) delete S.status[id]; });
+Object.keys(S.star).forEach(id => { if (!byId[id]) delete S.star[id]; });
+
+function shuffle(a){
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const t=a[i]; a[i]=a[j]; a[j]=t; }
+  return a;
+}
+
+function draw(force){
+  const t = todayStr();
+  if(!force && S.date === t && S.ids.length){ render(); return; }
+  let pool = PAPERS.filter(p => S.seen.indexOf(p.i) === -1);
+  if(pool.length < N){ S.seen = []; pool = PAPERS.slice(); }
+  shuffle(pool);
+  const pick = pool.slice(0, N);
+  S.ids = pick.map(p => p.i);
+  S.date = t;
+  pick.forEach(p => { if(S.seen.indexOf(p.i) === -1) S.seen.push(p.i); });
+  save(); render();
+}
+
+function setStatus(id, st){
+  if(S.status[id] === st){ delete S.status[id]; }
+  else { S.status[id] = st; }
+  save(); render();
+}
+
+function toggleStar(id){
+  if(S.star[id]){ delete S.star[id]; } else { S.star[id] = 1; }
+  save(); render();
+}
+
+function esc(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function doiUrl(d){ return 'https://doi.org/' + d; }
+function pillCls(t){ return t === '形貌' ? 't-形貌' : (t === '放大/稳定性' ? 't-放大' : (t === '钙钛矿代表作' ? 't-钙钛矿代表作' : '')); }
+
+function cardHTML(p, n){
+  const st = S.status[p.i] || '';
+  const cls = 'card' + (st === 'want' ? ' want' : st === 'no' ? ' no' : st === 'read' ? ' read' : '');
+  let acts = '';
+  acts += '<button class="small btn-want' + (st === 'want' ? ' on' : '') + '" data-c="want" data-id="' + p.i + '">想读</button>';
+  acts += '<button class="small btn-no' + (st === 'no' ? ' on' : '') + '" data-c="no" data-id="' + p.i + '">不读</button>';
+  acts += '<span class="sp"></span>';
+  if(st === 'want' || st === 'read'){
+    acts += '<a class="doi" href="' + doiUrl(p.d) + '" target="_blank" rel="noopener">DOI ↗</a>';
+    acts += '<button class="small btn-read' + (st === 'read' ? ' on' : '') + '" data-c="read" data-id="' + p.i + '">' + (st === 'read' ? '✓ 已读完' : '标记已读完') + '</button>';
+    acts += '<button class="small btn-star' + (S.star[p.i] ? ' on' : '') + '" data-c="star" data-id="' + p.i + '">' + (S.star[p.i] ? '★ 回看' : '☆ 回看') + '</button>';
+  } else if(st === 'no'){
+    acts += '<span class="hint">已剔除</span>';
+  } else {
+    acts += '<span class="hint">先判定</span>';
+  }
+  return '<div class="' + cls + '" data-id="' + p.i + '">'
+    + '<div class="meta"><span class="idx">' + String(n).padStart(2,'0') + '</span>'
+    + '<span>' + p.y + '</span><span>' + esc(p.r) + '</span>'
+    + '<span class="pill ' + pillCls(p.t) + '">' + esc(p.t) + '</span>'
+    + '<span class="cite">c' + p.c + '</span></div>'
+    + '<h3>' + esc(p.ti) + '</h3>'
+    + '<div class="venue">' + esc(p.v) + '</div>'
+    + '<div class="acts">' + acts + '</div>'
+    + '</div>';
+}
+
+function readList(){
+  return PAPERS.filter(p => S.status[p.i] === 'read')
+    .sort((a,b) => a.sn === b.sn ? (b.y - a.y || b.c - a.c) : a.sn.localeCompare(b.sn));
+}
+function wantList(){
+  return PAPERS.filter(p => S.status[p.i] === 'want').sort((a,b) => a.sn.localeCompare(b.sn) || b.y - a.y);
+}
+function starList(){
+  return PAPERS.filter(p => S.star[p.i])
+    .sort((a,b) => a.sn === b.sn ? (b.y - a.y || b.c - a.c) : a.sn.localeCompare(b.sn));
+}
+
+function render(){
+  const box = document.getElementById('cards');
+  if(!S.ids.length || S.date !== todayStr()){
+    box.innerHTML = '<div class="card"><div class="hint">还没抽取。点上面「抽今天的十篇」，今天固定这一组，不会重复到已经抽过的文章。</div></div>';
+    document.getElementById('dayinfo').textContent = '';
+  } else {
+    box.innerHTML = S.ids.map((id, k) => cardHTML(byId[id], k + 1)).join('');
+    document.getElementById('dayinfo').textContent = '今天 ' + S.date + ' 的十篇已锁定';
+  }
+
+  const ids = S.date === todayStr() ? S.ids : [];
+  const judged = ids.filter(id => S.status[id]).length;
+  const want = ids.filter(id => S.status[id] === 'want' || S.status[id] === 'read').length;
+  const read = ids.filter(id => S.status[id] === 'read').length;
+  const totalRead = PAPERS.filter(p => S.status[p.i] === 'read').length;
+
+  document.getElementById('s-judged').textContent = judged + ' / ' + ids.length;
+  document.getElementById('s-want').textContent = want;
+  document.getElementById('s-read').textContent = read;
+  document.getElementById('s-total').textContent = totalRead + ' / ' + PAPERS.length;
+  document.getElementById('track').style.width = (totalRead / PAPERS.length * 100).toFixed(1) + '%';
+  const remaining = PAPERS.length - S.seen.length;
+  document.getElementById('left').textContent = '本轮未抽过的剩余 ' + remaining + ' 篇';
+
+  const rl = readList(), wl = wantList();
+  document.getElementById('h-read').textContent = '✓ 已读完 · ' + rl.length;
+  let html = '';
+  if(!rl.length && !wl.length){
+    html = '<div class="empty">还没有读完的文章。</div>';
+  } else {
+    if(rl.length){
+      let cur = '';
+      rl.forEach(p => {
+        if(p.sn !== cur){ cur = p.sn; html += '<div class="grp">' + esc(cur) + '</div>'; }
+        html += '<div class="pi"><span class="yr">' + p.y + ' · c' + p.c + '</span><br><a href="' + doiUrl(p.d) + '" target="_blank" rel="noopener">' + esc(p.ti) + '</a></div>';
+      });
+    }
+    if(wl.length){
+      html += '<div class="grp" style="margin-top:14px">想读·未完成（' + wl.length + '）</div>';
+      wl.forEach(p => {
+        html += '<div class="pi"><span class="yr">' + p.y + ' · ' + esc(p.sn.split(' ')[1] || p.sn) + '</span><br><a href="' + doiUrl(p.d) + '" target="_blank" rel="noopener">' + esc(p.ti) + '</a></div>';
+      });
+    }
+  }
+  document.getElementById('purified').innerHTML = html;
+
+  const sl = starList();
+  document.getElementById('h-star').textContent = '★ 值得回看 · ' + sl.length;
+  let sh = '';
+  if(!sl.length){
+    sh = '<div class="empty">还没有标记。读到值得反复看的，点卡片上的 ☆ 回看。</div>';
+  } else {
+    let cur2 = '';
+    sl.forEach(p => {
+      if(p.sn !== cur2){ cur2 = p.sn; sh += '<div class="grp">' + esc(cur2) + '</div>'; }
+      const unread = S.status[p.i] === 'read' ? '' : ' · 未读完';
+      sh += '<div class="pi">'
+        + '<span class="yr">' + p.y + ' · c' + p.c + unread + '</span>'
+        + '<a class="unstar" data-unstar="' + p.i + '" title="移出回看">✕</a><br>'
+        + '<a href="' + doiUrl(p.d) + '" target="_blank" rel="noopener">' + esc(p.ti) + '</a>'
+        + '</div>';
+    });
+  }
+  document.getElementById('starred').innerHTML = sh;
+}
+
+function listMd(list, title, note){
+  const L = [];
+  L.push('# ' + title);
+  L.push('');
+  L.push('更新：' + todayStr() + ' · ' + note);
+  L.push('');
+  let cur = '';
+  list.forEach((p, k) => {
+    if(p.sn !== cur){ cur = p.sn; L.push(''); L.push('## ' + cur); L.push(''); }
+    L.push((k + 1) + '. ' + p.y + ' · ' + p.r + ' · ' + p.t + ' · c' + p.c + ' · ' + p.ti + ' · ' + p.v + ' · https://doi.org/' + p.d);
+  });
+  L.push('');
+  return L.join('\n');
+}
+
+function listCsv(list){
+  const q = s => '"' + String(s).replace(/"/g, '""') + '"';
+  const rows = [['Scholar','Year','Role','Topic','Cited','Title','Venue','DOI'].join(',')];
+  list.forEach(p => rows.push([p.sn, p.y, p.r, p.t, p.c, p.ti, p.v, p.d].map(q).join(',')));
+  return rows.join('\n');
+}
+
+function mdText(){ return listMd(readList(), '光伏文献 · 已读完', '已读完 ' + readList().length + ' 篇'); }
+function csvText(){ return listCsv(readList()); }
+function starMdText(){ return listMd(starList(), '光伏文献 · 值得回看', '标记 ' + starList().length + ' 篇'); }
+function starCsvText(){ return listCsv(starList()); }
+
+function download(name, text, type){
+  const blob = new Blob(['\ufeff' + text], {type: type || 'text/plain;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+}
+
+document.getElementById('cards').addEventListener('click', e => {
+  const b = e.target.closest('button[data-c]');
+  if(!b) return;
+  if(b.dataset.c === 'star'){ toggleStar(b.dataset.id); }
+  else { setStatus(b.dataset.id, b.dataset.c); }
+});
+document.getElementById('draw').onclick = () => draw(false);
+document.getElementById('redraw').onclick = () => { if(confirm('重抽今天这十篇？（之前的记录保留）')) draw(true); };
+document.getElementById('exp-md').onclick = () => download('pv_read_list.md', mdText());
+document.getElementById('exp-csv').onclick = () => download('pv_read_list.csv', csvText(), 'text/csv;charset=utf-8');
+document.getElementById('exp-star-md').onclick = () => download('pv_revisit_list.md', starMdText());
+document.getElementById('exp-star-csv').onclick = () => download('pv_revisit_list.csv', starCsvText(), 'text/csv;charset=utf-8');
+document.getElementById('starred').addEventListener('click', e => {
+  const u = e.target.closest('[data-unstar]');
+  if(u){ e.preventDefault(); toggleStar(u.dataset.unstar); }
+});
+document.getElementById('exp-copy').onclick = async () => {
+  try{ await navigator.clipboard.writeText(mdText()); alert('已复制到剪贴板'); }
+  catch(e){ alert('复制失败，请用导出 Markdown'); }
+};
+document.getElementById('reset').onclick = () => {
+  if(confirm('清空所有判定、已读记录、回看标记和抽取历史？不可撤销。')){
+    S = { status:{}, star:{}, seen:[], date:null, ids:[] };
+    save(); render();
+  }
+};
+
+function storageOK(){
+  try{ localStorage.setItem('__t','1'); localStorage.removeItem('__t'); return true; }
+  catch(e){ return false; }
+}
+if(!storageOK()){
+  var wEl = document.getElementById('warn');
+  if(wEl){ wEl.style.display = 'block'; wEl.textContent = '\u26a0 这个浏览器禁用了本地存储，进度不会被保存 —— 改用 Chrome / Edge 打开本文件。'; }
+}
+
+if(S.date === todayStr() && S.ids.length) render();
+else { S.ids = []; render(); }
+</script>
+</body>
+</html>

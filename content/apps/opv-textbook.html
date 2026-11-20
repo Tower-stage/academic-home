@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OPV Textbook · 增量版</title>
+<style>
+:root{
+  --navy:#122b4c; --orange:#c25a1e; --ink:#1d2229; --muted:#5a636e;
+  --line:#e3e7ed; --bg:#fbfbfc; --soft:#f4f6f9; --ok:#1f7a4d;
+  --serif:"Songti SC","Source Han Serif SC",Georgia,"Times New Roman",serif;
+  --sans:"Microsoft YaHei","PingFang SC",-apple-system,"Segoe UI",sans-serif;
+  --mono:Consolas,"SF Mono",Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:var(--sans);font-size:16px;line-height:1.78;
+  -webkit-font-smoothing:antialiased}
+
+/* ---------- 侧栏 ---------- */
+#toc{position:fixed;top:0;left:0;width:272px;height:100vh;overflow-y:auto;
+  background:#fff;border-right:1px solid var(--line);padding:26px 20px 40px}
+#toc h1{font-size:15px;letter-spacing:.02em;margin:0 0 4px;color:var(--navy)}
+#toc .sub{font-size:11.5px;color:var(--muted);margin-bottom:22px;line-height:1.5}
+#toc a{display:block;font-size:13.5px;color:#38414d;text-decoration:none;
+  padding:5px 8px;border-radius:5px;margin:1px 0}
+#toc a:hover{background:var(--soft);color:var(--navy)}
+#toc a.lv1{font-weight:600;margin-top:10px;color:var(--navy)}
+#toc a.lv2{padding-left:20px;font-size:13px;color:var(--muted)}
+#toc a .tick{color:var(--ok);font-size:11px;margin-left:4px}
+#toc .box{margin-top:22px;padding-top:16px;border-top:1px solid var(--line);
+  font-size:12px;color:var(--muted)}
+#toc .box b{color:var(--navy)}
+
+/* ---------- 正文 ---------- */
+main{margin-left:272px;padding:44px 52px 120px;max-width:1080px}
+article{max-width:780px}
+.hero{border-bottom:3px solid var(--navy);padding-bottom:22px;margin-bottom:8px}
+.hero .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--orange);font-weight:600;margin-bottom:10px}
+.hero h1{font-family:var(--serif);font-size:40px;line-height:1.25;margin:0 0 12px;
+  color:var(--navy);font-weight:700}
+.hero p{margin:0;color:var(--muted);font-size:14.5px}
+.hero .meta{margin-top:14px;font-size:12px;color:#8b95a3;font-family:var(--mono)}
+
+h2{scroll-margin-top:18px;font-family:var(--serif);font-size:27px;color:var(--navy);margin:64px 0 6px;
+  padding-top:14px;border-top:2px solid var(--navy);font-weight:700}
+h3{scroll-margin-top:18px;font-size:18.5px;color:var(--navy);margin:34px 0 8px;font-weight:600}
+h4{font-size:15.5px;margin:22px 0 6px;color:#2c3542}
+p{margin:10px 0}
+.lead{font-size:15px;color:var(--muted)}
+
+/* 一句话定义 */
+.one{margin:16px 0 6px;padding:14px 18px;background:var(--soft);
+  border-left:4px solid var(--orange);border-radius:0 6px 6px 0;font-size:15.5px}
+.one b{color:var(--navy)}
+
+/* 公式 */
+.eq{font-family:var(--mono);font-size:15px;background:#fff;border:1px solid var(--line);
+  border-radius:8px;padding:16px 18px;margin:16px 0;text-align:center;line-height:2.1;
+  color:#101820;overflow-x:auto}
+.eq .n{font-family:var(--sans);font-size:11.5px;color:var(--muted);display:block;
+  margin-top:8px;line-height:1.6}
+.frac{display:inline-block;vertical-align:middle;text-align:center;font-size:13.5px;
+  margin:0 2px}
+.frac .num{display:block;padding:0 5px 2px;border-bottom:1.2px solid currentColor}
+.frac .den{display:block;padding:2px 5px 0}
+
+/* 表 */
+table{border-collapse:collapse;width:100%;margin:18px 0;font-size:13.6px}
+th{background:var(--navy);color:#fff;font-weight:600;text-align:left;
+  padding:9px 11px;font-size:13px}
+td{padding:8px 11px;border-bottom:1px solid var(--line);vertical-align:top}
+tbody tr:nth-child(even){background:#fafbfc}
+td.num{font-family:var(--mono);white-space:nowrap}
+
+/* 提示块 */
+.note,.warn,.do{margin:16px 0;padding:13px 16px;border-radius:7px;font-size:14.3px;
+  border:1px solid var(--line);background:#fff}
+.note b:first-child,.warn b:first-child,.do b:first-child{display:block;margin-bottom:5px}
+.note b,.warn b,.do b{font-size:13px;
+  letter-spacing:.04em;text-transform:uppercase}
+.note{border-left:4px solid #3a6ea5}.note b{color:#3a6ea5}
+.warn{background:#fff8f4;border-left:4px solid var(--orange)}
+.warn b{color:var(--orange)}
+.do{background:#f5faf7;border-left:4px solid var(--ok)}.do b{color:var(--ok)}
+
+/* 自测 */
+details{margin:10px 0;border:1px solid var(--line);border-radius:7px;
+  background:#fff;padding:10px 14px}
+details summary{cursor:pointer;font-size:14.3px;font-weight:600;color:var(--navy);
+  list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"Q ";color:var(--orange);font-family:var(--mono)}
+details p{margin:10px 0 2px;font-size:14px;color:#333c48}
+
+/* 掌握按钮 */
+.mark{float:right;font-family:var(--sans);font-size:11.5px;color:var(--muted);
+  background:#fff;border:1px solid var(--line);border-radius:20px;padding:3px 11px;
+  cursor:pointer;margin-left:12px}
+.mark:hover{border-color:var(--navy);color:var(--navy)}
+.mark.on{background:var(--ok);border-color:var(--ok);color:#fff}
+
+/* 计算器 */
+.calc{margin:20px 0;border:1px solid var(--line);border-radius:10px;background:#fff;
+  overflow:hidden}
+.calc .hd{background:var(--navy);color:#fff;padding:11px 16px;font-size:13.5px;
+  font-weight:600;letter-spacing:.03em}
+.calc .bd{display:flex;flex-wrap:wrap;gap:14px;padding:18px 16px}
+.calc label{font-size:12.5px;color:var(--muted);display:block;margin-bottom:4px}
+.calc input{width:118px;font-family:var(--mono);font-size:14px;padding:7px 9px;
+  border:1px solid var(--line);border-radius:6px;color:var(--ink);background:#fff}
+.calc input:focus{outline:2px solid #cfd9e6;border-color:var(--navy)}
+.calc .out{margin:2px 16px 16px;background:var(--soft);border-radius:8px;
+  padding:13px 15px;font-family:var(--mono);font-size:14px;line-height:2}
+.calc .out b{color:var(--orange)}
+.calc .out .big{font-size:19px;color:var(--navy)}
+
+/* 问题记录 */
+#qbox{margin:18px 0}
+#qbox textarea{width:100%;min-height:74px;font-family:var(--sans);font-size:14px;
+  padding:11px 13px;border:1px solid var(--line);border-radius:8px;resize:vertical;
+  color:var(--ink);background:#fff;line-height:1.7}
+#qbox textarea:focus{outline:2px solid #cfd9e6;border-color:var(--navy)}
+#qbox .row{display:flex;gap:10px;align-items:center;margin-top:10px;flex-wrap:wrap}
+.btn{font-family:var(--sans);font-size:13px;padding:8px 16px;border-radius:6px;
+  border:1px solid var(--navy);background:var(--navy);color:#fff;cursor:pointer}
+.btn:hover{background:#1c3f6b}
+.btn.ghost{background:#fff;color:var(--navy)}
+.btn.ghost:hover{background:var(--soft)}
+.btn.mini{font-size:12px;padding:5px 11px}
+#qlist{margin-top:16px}
+.qitem{display:flex;gap:12px;align-items:flex-start;padding:11px 13px;background:#fff;
+  border:1px solid var(--line);border-left:3px solid var(--orange);border-radius:0 7px 7px 0;
+  margin-bottom:8px;font-size:14px}
+.qitem .t{flex:1;line-height:1.7}
+.qitem .ts{font-family:var(--mono);font-size:11px;color:#98a1ae;white-space:nowrap}
+.qitem .del{color:#b46;border:none;background:none;cursor:pointer;font-size:15px;
+  line-height:1;padding:2px 4px}
+.empty{color:#98a1ae;font-size:13px;padding:10px 0}
+
+kbd{font-family:var(--mono);font-size:12px;background:#eef1f5;border:1px solid var(--line);
+  border-bottom-width:2px;border-radius:4px;padding:1px 5px}
+code{font-family:var(--mono);font-size:13.4px;background:#eef1f5;border-radius:4px;
+  padding:1px 5px}
+hr{border:none;border-top:1px solid var(--line);margin:34px 0}
+.foot{margin-top:70px;padding-top:18px;border-top:1px solid var(--line);
+  font-size:12.5px;color:#8b95a3}
+
+/* ---------- 交互模拟器 ---------- */
+.sim{margin:22px 0;border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+.sim .hd{background:var(--navy);color:#fff;padding:9px 16px;font-size:12.8px;font-weight:600;
+  letter-spacing:.02em;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.sim .hd .seg{margin-left:auto;display:flex;border:1px solid rgba(255,255,255,.4);
+  border-radius:6px;overflow:hidden}
+.sim .hd .seg button{font:inherit;font-size:11.5px;font-weight:500;padding:4px 11px;
+  background:transparent;color:#c3d1e2;border:0;cursor:pointer;white-space:nowrap}
+.sim .hd .seg button.on{background:#fff;color:var(--navy)}
+.sim .fig{padding:4px 10px 0}
+.sim .fig svg{width:100%;height:auto;display:block}
+.sim .ctl{display:flex;flex-wrap:wrap;gap:12px 24px;padding:8px 16px 12px}
+.sim .ctl>div{width:168px}
+.sim .ctl label{display:flex;justify-content:space-between;gap:8px;font-size:11.5px;
+  color:var(--muted);margin-bottom:2px}
+.sim .ctl label b{font-family:var(--mono);color:var(--navy);font-weight:600;white-space:nowrap}
+.sim .ctl input[type=range]{width:100%;accent-color:var(--navy);cursor:pointer}
+.sim .presets{padding:0 16px 12px;display:flex;gap:8px;flex-wrap:wrap}
+.sim .out{margin:0 16px 12px;background:var(--soft);border-radius:8px;padding:10px 14px;
+  font-size:13px;line-height:1.92}
+.sim .out b{color:var(--orange);font-family:var(--mono)}
+.sim .cap{font-size:11.5px;color:#8b95a3;padding:0 16px 12px;line-height:1.65}
+
+@media (max-width:900px){
+  #toc{position:static;width:auto;height:auto;border-right:none;
+    border-bottom:1px solid var(--line);padding:18px 20px}
+  #toc a.lv2{display:none}
+  main{margin-left:0;padding:26px 20px 80px}
+  .hero h1{font-size:30px}
+  h2{font-size:23px}
+}
+@media print{
+  #toc,.mark,.btn,#qbox .row,.sim .ctl,.sim .presets{display:none!important}
+  main{margin:0;padding:0;max-width:none}
+  article{max-width:none}
+  body{font-size:10.5pt;background:#fff}
+  h2{page-break-after:avoid;margin-top:26px}
+  .eq,table,.one,.note,.warn,.do,details{page-break-inside:avoid}
+  a{color:inherit;text-decoration:none}
+}
+</style>
+</head>
+<body>
+
+<aside id="toc">
+  <h1>OPV Textbook</h1>
+  <nav id="nav"></nav>
+  <div class="box">
+    掌握进度：<b id="prog">0 / 6</b><br>
+    待补充问题：<b id="qcount">0</b> 条<br>
+    <span style="font-size:11px">数据存在本机 localStorage</span>
+  </div>
+</aside>
+
+<main>
+<article>
+
+<div class="hero">
+  <h1>有机光伏：五个卡点<br>能级带宽 · 能损 · TA · 光学常数 · 结构 · 输运复合</h1>
+  <div class="meta">v1.3 · 2026-11 · 单文件离线 · 新增模块零（能级 / 带宽 / 选择性吸收）</div>
+</div>
+
+<!-- ============================================================ 模块零 -->
+<section id="zero">
+<h2 id="h-zero">模块零 · 能级、带宽与选择性吸收<span class="mark" data-id="zero">标记已掌握</span></h2>
+
+<div class="one"><b>一句话：</b>无机半导体靠共价键把电子铺满整块晶体，能带以 eV 计宽，于是吸收又宽又平、材料不透明；有机靠范德华力把分子粘在一起，电子仍被关在单个分子内，只剩离散的 HOMO/LUMO 能级——吸收窄而强，半透明 OPV 才成立。</div>
+
+<h3 id="zero-1">0.1 两张能级图，差在电子有没有被共享</h3>
+
+<p>无机半导体以共价键为主。电子在整块固体里离域，波函数跨越许多原子，形成几 eV 宽的能带（下图 a 的上下两条抛物线）。宽能带意味着 <i>E</i> &gt; <i>E</i><sub>g</sub> 之后态密度连续且很大：吸收一旦开始就很强，并一直延伸到紫外。光谱宽而平，材料在可见区就是不透明的。</p>
+
+<p>有机固体的分子之间只有范德华力，耦合只有几十 meV，比分子内的跃迁能小两个数量级以上。所以能带没有真正形成：深处的轨道基本还是「每个分子自己的」。DOS 不是连续函数，而是一串离散能级——HOMO、HOMO−1…，LUMO、LUMO+1…，每个电子能级上再叠振动复制（下图 b 里成组出现的横条）。图注里 HOMO 那条「发虚」，指的是紧密堆积的有机晶体已经出现「似带非带」的迹象，宽度仍只有几十 meV。</p>
+
+<div class="sim" id="sim0">
+  <div class="hd">能级图与吸收光谱 · 拖滑块看变化
+    <span class="seg">
+      <button data-m="inorg" class="on">无机（共价）</button>
+      <button data-m="org">有机（范德华）</button>
+    </span>
+  </div>
+  <div class="fig"><svg id="dos-svg" viewBox="0 0 720 368" role="img" aria-label="无机与有机半导体的态密度与吸收光谱示意图"></svg></div>
+  <div class="ctl">
+    <div><label for="d-eg">带隙 <i>E</i><sub>g</sub> <b id="d-egv">1.40 eV</b></label><input id="d-eg" type="range" min="0.9" max="2.2" step="0.02" value="1.4"></div>
+    <div id="d-bw-wrap"><label for="d-bw">带宽 BW <b id="d-bwv">2.5 eV</b></label><input id="d-bw" type="range" min="0.4" max="4" step="0.1" value="2.5"></div>
+    <div id="d-sg-wrap" style="display:none"><label for="d-sg">能级展宽 σ <b id="d-sgv">60 meV</b></label><input id="d-sg" type="range" min="0.01" max="0.25" step="0.005" value="0.06"></div>
+  </div>
+  <div class="out" id="d-out"></div>
+  <div class="cap">两幅图由同一个带隙输入生成，纵轴都是能量、单位相同，所以可以直接对比：同一个 <i>E</i><sub>g</sub>，左边吸收铺开几百纳米，右边只占一条窄带，中间留出真空窗。曲线是模型算出来的示意图，不是任何一支材料的实测谱。</div>
+</div>
+
+<p class="lead">把两边调成同一个 <i>E</i><sub>g</sub>——这正是原文 Fig. 1 的设定：带隙一样，吸收宽度差一个数量级。区别不在带隙，在带宽。</p>
+
+<h3 id="zero-2">0.2 带宽是分子间耦合的度量</h3>
+
+<div class="eq">
+BW ≈ 4<i>t</i>，　<i>t</i> = ⟨ψ<sub>i</sub>|<i>H</i>|ψ<sub>j</sub>⟩
+<span class="n">t：相邻分子之间的跃迁积分。一维紧束缚链的带宽就是 4t</span>
+<span class="n">有机晶体 t ≈ 10–50 meV → BW ≈ 0.04–0.2 eV；共价晶体有效 t ≈ 0.5–1.5 eV → BW ≈ 2–6 eV</span>
+<span class="n">这是把两类材料放进同一套语言里比较，t 的定义并不严格相同；要记住的是数量级的差</span>
+</div>
+
+<p>吸收强度由两件事相乘决定：态密度和振子强度。四支材料的态密度都只是一条窄带，撑不起吸收；把 α 抬到 10<sup>5</sup> 的是 f——分子内 π–π* 跃迁的振子强度。所以它们不是「吸收少」，而是「吸收集中在很窄的一段」。</p>
+
+<div class="eq">
+α(<i>E</i>) ∝ <i>f</i> · <i>g</i>(<i>E</i>)
+<span class="n">f：振子强度；g(E)：态密度。无机靠 g(E) 大取胜（连续态），有机靠 f 大取胜（少数强跃迁）</span>
+</div>
+
+<div class="note"><b>一条谱线有多宽：拿 PM6 拆开看</b>
+PM6 的膜吸收从约 450 nm 拉到 680 nm，看着宽，其实只有三样东西叠在一起：<b>① 振动复制</b>——0-0 与 0-1 两个肩峰间距约 0.17 eV（≈1370 cm<sup>−1</sup>，C=C 伸缩）；<b>② 单线宽度</b>——每根复制线自己的半高宽只有 60–80 meV，由薄膜里的位点无序撑起来；<b>③ 聚集</b>——分子堆起来后跃迁偶极相干叠加，整包络再移位、再变形。<br>
+所以「带宽」有两层，别混着说：<b>一根振动线 0.06–0.09 eV</b>、<b>一整条吸收带 0.3–0.5 eV</b>。前者只由分子内振动与无序决定，<b>和 E<sub>g</sub> 无关</b>——D18 同属 BDT 类给体、带整体蓝移约 0.2 eV，而它的单线宽度与 PM6 几乎一样。
+</div>
+
+<p>把最常用的四支摆在一起看：<b>D18、PM6</b> 是给体，<b>L8-BO、BTP-eC9</b> 是受体。</p>
+
+<table>
+  <thead><tr><th style="width:15%">材料</th><th style="width:11%">角色</th><th style="width:19%">E<sub>g</sub><sup>opt</sup></th><th>膜吸收范围</th><th style="width:25%">常用对里的 V<sub>oc</sub></th></tr></thead>
+  <tbody>
+    <tr><td><b>D18</b></td><td>给体</td><td class="num">≈1.95–2.00 eV</td><td>400–620 nm</td><td class="num">0.87–0.90 V（:L8-BO）</td></tr>
+    <tr><td><b>PM6</b></td><td>给体</td><td class="num">≈1.78–1.80 eV</td><td>450–680 nm</td><td class="num">0.84–0.86 V（:eC9）</td></tr>
+    <tr><td><b>L8-BO</b></td><td>受体</td><td class="num">≈1.35–1.40 eV</td><td>700–920 nm</td><td class="num">0.87–0.90 V</td></tr>
+    <tr><td><b>BTP-eC9</b></td><td>受体</td><td class="num">≈1.32–1.35 eV</td><td>700–930 nm</td><td class="num">0.84–0.86 V</td></tr>
+  </tbody>
+</table>
+
+<div class="note"><b>把这四支摆在一起</b>
+一个分子所有跃迁的 f 加起来大致等于它的电子数：<b>f 是面积，不是高度</b>，面积差不多时摊得越窄峰越高。所以差别不在「吸得多不多」，而在「把吸收放在哪、摊多宽」：<br>
+① <b>E<sub>g</sub> 从 2.0 走到 1.33、跨了 0.65 eV，峰值 α 却都在 1–3×10<sup>5</sup> cm<sup>−1</sup>，差不到 3 倍</b>——有机内部 f 不是区分度。<br>
+② <b>同族换料（D18 → PM6）是「红移不掉 f」</b>：E<sub>g</sub> 降约 0.2 eV，峰高与峰宽基本不动，动的只是位置。<br>
+③ <b>换类别（PM6 → eC9/L8-BO）是「红移还略增」</b>：E<sub>g</sub> 降约 0.45 eV，峰反而更高，因为它们的低能带不是纯电荷转移，局域 π–π* 成分还在。真做成纯 CT 带，α 会掉到 10<sup>4</sup> 量级——<b>那才是「红移掉 f」</b>。
+</div>
+
+<div class="note"><b>回到器件：换给体只换来 0.03–0.05 V</b>
+同用 L8-BO、把 PM6 换成 D18，V<sub>oc</sub> 只涨 0.03–0.05 V，J<sub>sc</sub> 几乎不动——吸收边是受体定的（≈1.35 eV），不是给体。这 0.05 V 不走带隙，走 <i>ΔV</i><sub>nr</sub>，要回模块一查 EQE<sub>EL</sub>。<br>
+想把 J<sub>sc</sub> 抬高，动「覆盖」比动「峰高」有用：100 nm 膜里 α = 10<sup>5</sup> 已经吸掉 63%，α = 10<sup>6</sup> 也只到 90%。
+</div>
+<table>
+  <thead><tr><th style="width:20%">量</th><th style="width:37%">无机（共价）</th><th>有机（范德华）</th></tr></thead>
+  <tbody>
+    <tr><td>分子间作用</td><td>共价键，每键 1–3 eV</td><td>范德华，10–100 meV</td></tr>
+    <tr><td><b>带宽 BW</b></td><td class="num">2–6 eV</td><td class="num">0.05–0.4 eV</td></tr>
+    <tr><td>态密度</td><td>连续，三维抛物线 ∝√(<i>E</i>−<i>E</i><sub>C</sub>)</td><td>离散能级 + 振动复制（每个能级带几个伴峰）</td></tr>
+    <tr><td>主跃迁</td><td>带间跃迁，连续</td><td>分子内 π–π*，振子强度大</td></tr>
+    <tr><td><b>吸收带</b></td><td>数百 nm 连续，<b>没有空窗</b></td><td>几十至一百多 nm，峰与峰之间是真空窗</td></tr>
+    <tr><td><b>α（NIR）</b></td><td class="num">10<sup>3</sup>–10<sup>5</sup> cm<sup>−1</sup></td><td class="num">10<sup>5</sup>–10<sup>6</sup> cm<sup>−1</sup></td></tr>
+    <tr><td><b>d<sub>90</sub></b></td><td class="num">0.2–20 μm</td><td class="num">20–230 nm</td></tr>
+    <tr><td>光学后果</td><td>可见区不透明</td><td>可以只挡 UV 与 NIR，放可见光过去</td></tr>
+  </tbody>
+</table>
+
+<p><b>三个旋钮</b>——把「改结构」拆成三个可拖的量：共轭长度 / 平面化、D–A 推拉强度、聚集方式。看四件事怎么跟着动：E<sub>g</sub>、f（∝ μ<sup>2</sup>）、FWHM、峰值 α。</p>
+
+<div class="sim" id="kn-sim">
+  <div class="hd">三个旋钮：E<sub>g</sub>、μ、f 是三条不同的轴
+    <span class="seg" id="kn-seg">
+      <button data-k="d18">D18</button>
+      <button data-k="pm6" class="on">PM6</button>
+      <button data-k="l8bo">L8-BO</button>
+      <button data-k="ec9">eC9</button>
+      <button data-k="ct">纯 CT</button>
+    </span>
+  </div>
+  <div class="fig"><svg id="kn-svg" viewBox="0 0 680 300"></svg></div>
+  <div class="ctl">
+    <div><label>共轭长度 / 平面化 <b id="kn-nv">n = 14</b></label><input id="kn-n" type="range" min="4" max="24" step="1" value="14"></div>
+    <div><label>D–A 推拉强度 <b id="kn-ictv">0.41</b></label><input id="kn-ict" type="range" min="0" max="1" step="0.01" value="0.41"></div>
+    <div><label>聚集 H ← 0 → J <b id="kn-aggv">+0.30 J</b></label><input id="kn-agg" type="range" min="-1" max="1" step="0.01" value="0.3"></div>
+  </div>
+  <div class="out" id="kn-out"></div>
+  <div class="cap">模型示意：E<sub>g</sub> = 2.85 − 0.60·(1−e<sup>−n/6</sup>) − 1.15·ICT − 0.14·agg；f = 0.35·(n/12)<sup>0.6</sup>·(1−0.75·ICT<sup>2</sup>)·(1+0.45·agg)；峰值 α ∝ f/FWHM。用来看方向，不是第一性原理。</div>
+</div>
+
+<h3 id="zero-3">0.3 吸收系数：为什么 OPV 只要一百纳米</h3>
+
+<div class="eq">
+<i>T</i> = e<sup>−α<i>d</i></sup>，　<i>A</i> = 1 − <i>T</i>，　<i>d</i><sub>90</sub> = <span class="frac"><span class="num">2.303</span><span class="den">α</span></span>
+<span class="n">d 为膜厚（cm）。α 用 cm<sup>−1</sup> 时，换成 nm 要乘 10<sup>7</sup>：d<sub>90</sub>(nm) = 2.303×10<sup>7</sup> / α</span>
+</div>
+
+<div class="note"><b>三个词先对齐：NIR、α、d<sub>90</sub></b>
+<b>NIR</b>（near-infrared，近红外）：习惯指 780–2500 nm；本书实际用的是 700–1400 nm 那一段，因为 AM1.5G 的光子有将近一半落在 700 nm 以外（光子能量低，同样的功率对应更多光子），而人眼在那里完全看不见——挡住它不损失透明度。原文那句「NIR 直接带隙无机」，指的是<b>在近红外才起吸收、并且是直接带隙</b>的无机半导体（窄带隙 III–V、部分硫属化合物等）。「直接带隙」这个限定不能省：间接带隙的硅要靠声子补动量，同样能量下 α 低两个数量级左右，吸收层得做到几十到几百 μm。<br>
+<b>α</b>：吸收系数（cm<sup>−1</sup>）。光强按 <i>I</i> = <i>I</i><sub>0</sub>e<sup>−α<i>z</i></sup> 衰减，<i>z</i> 的单位是 cm；它描述的是「这个波长上门窗有多严」，不是「总共吸了多少」。<br>
+<b>d<sub>90</sub></b>：吸收掉 90% 光所需的厚度，d<sub>90</sub> = 2.303/α。同族还有 d<sub>63</sub> = 1/α（就是 1/e 穿透深度，模块三的光学计算器用的那个）和 d<sub>99</sub> = 4.6/α。选 90% 是因为「一层就够黑」说的是这个量级；63% 只吸掉一多半，做器件不够。注意 d<sub>90</sub> 是<b>逐波长</b>的量：半透明的诀窍就是让 NIR 处 d<sub>90</sub> 小（吸干净）、可见处 d<sub>90</sub> 大（放过去）。
+</div>
+
+<p>四支常用材料的峰值 α 都落在 1–3×10<sup>5</sup> cm<sup>−1</sup>（有机的一般范围是 10<sup>5</sup>–10<sup>6</sup>），比 NIR 直接带隙无机高 1–2 个数量级。换成「吸收 90% 需要多厚」这件事就很好懂了：</p>
+
+<table>
+  <thead><tr><th style="width:22%">α（cm<sup>−1</sup>）</th><th style="width:42%">代表情况</th><th>吸收 90% 所需厚度 d<sub>90</sub></th></tr></thead>
+  <tbody>
+    <tr><td class="num">1 × 10<sup>6</sup></td><td>有机主吸收峰的上限（一般材料到不了）</td><td class="num">23 nm</td></tr>
+    <tr><td class="num">1 × 10<sup>5</sup></td><td>D18 / PM6 / eC9 / L8-BO 的膜内峰值都在这一段</td><td class="num">230 nm</td></tr>
+    <tr><td class="num">1 × 10<sup>4</sup></td><td>NIR 直接带隙无机（偏强）</td><td class="num">2.3 μm</td></tr>
+    <tr><td class="num">1 × 10<sup>3</sup></td><td>NIR 直接带隙无机（偏弱）</td><td class="num">23 μm</td></tr>
+  </tbody>
+</table>
+
+<p>有机薄膜的典型厚度就是 100 nm 量级，正好落在自己的 d<sub>90</sub> 上：在吸收带里，一层就够黑。无机要有同样的吸收量得做到 μm 级——这就是硅和 CIGS 做不成「看得见外面的窗」的直接原因：不是不能做薄，是薄了就不吸光。</p>
+
+<div class="warn"><b>最容易混的一步</b>α 大只说明「吸得到」。吸到之后还有解离、输运、收集（模块五），电压还要看复合（模块一）。α 高 1–2 个数量级，完全不妨碍 PCE 比硅低——这是两件不同的事。</div>
+
+<h3 id="zero-4">0.4 半透明器件：选择比决定能不能两头都要</h3>
+
+<p>半透明器件的两个指标是死的：AVT（可见光平均透过率）决定「窗有多透明」，NIR 吸收决定「能发多少电」。两者共用同一个膜厚，所以只能靠<b>光谱选择性</b>把它们分开。把可见区的残余吸收记作 α<sub>vis</sub>、把窗口外（UV 与 NIR）的吸收记作 α<sub>off</sub>：</p>
+
+<div class="eq">
+AVT ≈ e<sup>−α<sub>vis</sub><i>d</i></sup>，　<i>A</i><sub>NIR</sub> = 1 − e<sup>−α<sub>off</sub><i>d</i></sup>
+<span class="n">假设：可见区的残余吸收近似平坦，窗口外的吸收带足够强。真实 AVT 还要用 AM1.5G × V(λ) 加权</span>
+</div>
+
+<div class="eq">
+<i>S</i> ≡ <span class="frac"><span class="num">α<sub>off</sub></span><span class="den">α<sub>vis</sub></span></span> = <span class="frac"><span class="num">ln[1/(1−<i>A</i><sub>NIR</sub>)]</span><span class="den">ln(1/AVT)</span></span>
+<span class="n">最后这个等式很关键：它把「需要多大选择比」变成一个只跟目标 AVT 和 A<sub>NIR</sub> 有关的数，<b>与膜厚无关</b></span>
+</div>
+
+<div class="sim">
+  <div class="hd">半透明器件设计器 · AVT 与 NIR 吸收只能靠选择比分开</div>
+  <div class="fig"><svg id="st-svg" viewBox="0 0 540 306" role="img" aria-label="AVT 与近红外吸收的权衡曲线"></svg></div>
+  <div class="ctl">
+    <div><label for="st-aoff">α<sub>off</sub>（带外）<b id="st-aoffv"></b></label><input id="st-aoff" type="range" min="3" max="6" step="0.02" value="5.36"></div>
+    <div><label for="st-avis">α<sub>vis</sub>（可见残余）<b id="st-avisv"></b></label><input id="st-avis" type="range" min="0" max="5" step="0.02" value="4.55"></div>
+    <div><label for="st-d">膜厚 <i>d</i> <b id="st-dv"></b></label><input id="st-d" type="range" min="20" max="500" step="5" value="100"></div>
+  </div>
+  <div class="presets">
+    <button class="btn ghost mini" data-p="ideal">跳到「AVT 70% · NIR 90%」（100 nm）</button>
+    <button class="btn ghost mini" data-p="real">跳到「AVT 40% · NIR 80%」（100 nm）</button>
+  </div>
+  <div class="out" id="st-out"></div>
+  <div class="cap">模型：可见区（400–700 nm）残余吸收平坦，α<sub>vis</sub>；UV 与 NIR 两段都用 α<sub>off</sub>、且都视为完全落在窗口外。曲线由 d 从 0 扫到 500 nm 得到，每一点是一个膜厚。真实器件还要看电极、颜色（CIELAB）与角度依赖，这里只用来判断数量级。</div>
+</div>
+
+<table>
+  <thead><tr><th style="width:26%">目标 AVT ＼ A<sub>NIR</sub></th><th>70%</th><th>80%</th><th>90%</th></tr></thead>
+  <tbody>
+    <tr><td><b>50%</b></td><td class="num">1.7</td><td class="num">2.3</td><td class="num">3.3</td></tr>
+    <tr><td><b>60%</b></td><td class="num">2.4</td><td class="num">3.2</td><td class="num">4.5</td></tr>
+    <tr><td><b>70%</b></td><td class="num">3.4</td><td class="num">4.5</td><td class="num"><b>6.5</b></td></tr>
+    <tr><td><b>80%</b></td><td class="num">5.4</td><td class="num">7.2</td><td class="num">10.3</td></tr>
+  </tbody>
+</table>
+
+<p>读法：想要 AVT 70% 同时 NIR 吸收 90%，选择比 6.5 就够；要 AVT 80% + 90%，得 10.3。有机体系里 α<sub>off</sub>/α<sub>vis</sub> 做到 10–100 是常见的（主吸收落在 700–900 nm，可见区只剩尾吸收），所以<b>这个目标在光谱上是可行的</b>。真正难的是两件别的事：把可见区的尾巴压干净（不然颜色发黄、AVT 达不到），以及在 100 nm 里把载流子收出来（模块五）。</p>
+
+<div class="do"><b>怎么用</b>看到一篇 ST-OPV，先算它自己的 S = α<sub>off</sub>/α<sub>vis</sub>（从吸收谱的两个区读），再对照它报的 AVT 和 NIR 吸收。如果 S 只有 3 却声称 AVT 80% + NIR 90%，那不是材料变好了，是口径不一样。</div>
+
+<h3 id="zero-5">0.5 从论文里取数</h3>
+
+<table>
+  <thead><tr><th style="width:26%">论文里看到的</th><th style="width:30%">要抄下来的</th><th>为什么</th></tr></thead>
+  <tbody>
+    <tr><td>吸收谱 / α 谱</td><td>峰位、半高宽、400–700 nm 的 α</td><td>决定 AVT、颜色，以及「空窗」到底有多空</td></tr>
+    <tr><td>T(λ) 或 AVT</td><td>口径：含不含电极/玻璃？加权还是简单平均？</td><td>不同口径能差十几个百分点，这是最容易比错的地方</td></tr>
+    <tr><td>颜色</td><td>CIELAB 的 a*、b*（或色坐标）</td><td>中性色要求 |a*|、|b*| 都小；只报「透明」不谈颜色是不够的</td></tr>
+    <tr><td>吸收边 / <i>E</i><sub>g</sub></td><td>EQE 起始，或 α 谱的拐点</td><td>接模块一算能损。注意读<b>起始</b>，不要读吸收峰</td></tr>
+    <tr><td>NIR 吸收范围</td><td>600–1100 nm 的平均吸收</td><td>它才是 J<sub>sc</sub> 上限的那一项</td></tr>
+  </tbody>
+</table>
+
+<div class="warn"><b>「透明度 30%」至少有三种意思</b>① 裸薄膜的平均透过率；② 完整器件（含电极）的 AVT；③ 贴到玻璃上之后的可见光透过。看到数字先问：测的是哪个、加权了没有。这一条比任何材料参数都更容易让比较失效。</div>
+
+<h3 id="zero-6">0.6 与后面五个模块的接口</h3>
+
+<table>
+  <thead><tr><th style="width:30%">本模块的量</th><th style="width:22%">接到哪</th><th>怎么接</th></tr></thead>
+  <tbody>
+    <tr><td>吸收边 / <i>E</i><sub>g</sub></td><td>模块一 能损</td><td><i>E</i><sub>g</sub> 从 EQE 起始读。吸收峰不是带隙——窄带材料的这一点尤其容易错</td></tr>
+    <tr><td>α 与 k</td><td>模块三 光学</td><td>α = 4πk/λ。椭偏反演出来的 k 谱，就是这条窄而强的峰</td></tr>
+    <tr><td>d<sub>90</sub> ≈ 100 nm</td><td>模块五 输运</td><td>有机的载流子收集长度也是 ~100 nm。两者重合不是巧合：吸收给了你「必须薄」，输运给了你「不能厚」</td></tr>
+    <tr><td>HOMO/LUMO 与 BW</td><td>模块四 结构</td><td>骨架决定能级位置，侧链与堆积方式决定 BW 和谱宽</td></tr>
+  </tbody>
+</table>
+
+<h3 id="zero-quiz">0.7 自测</h3>
+
+<details><summary>有机的 α 比无机高 1–2 个数量级，为什么 PCE 反而不如硅？</summary>
+<p>因为 α 只决定「吸收长度」。无机靠宽吸收 + 高迁移率 + 长寿命，把厚层里产生的载流子也收得出来；有机的收集长度只有 ~100 nm，所以必须薄，薄就限制了总吸收量，再叠上模块一那个 0.4–0.6 eV 的能损。α 是必要条件，不是竞争力。</p></details>
+
+<details><summary>把膜厚从 100 nm 加到 300 nm，AVT 和 J<sub>sc</sub> 各怎么变？用公式说。</summary>
+<p>AVT ≈ e<sup>−α<sub>vis</sub><i>d</i></sup>，d 变三倍，透过率变成原来的三次方：若原来 α<sub>vis</sub>d = 0.2（AVT 82%），三倍后 0.6（AVT 55%），肉眼可见地变暗、变黄。J<sub>sc</sub> 随 A<sub>NIR</sub> = 1−e<sup>−αd</sup> 上升，但边际递减（100 nm 时约 63%，300 nm 时 95%），且 FF 可能因复合变差。<b>ST-OPV 的厚度是被「透明度」和「收集」两头夹住的。</b></p></details>
+
+<details><summary>为什么无机不能靠「把吸收带挪到 NIR」做成半透明窗？</summary>
+<p>因为它的吸收是连续的带间吸收：<i>E</i> &gt; <i>E</i><sub>g</sub> 之后全部吸收，而且 DOS 随能量继续增大。要可见区透明，<i>E</i><sub>g</sub> 就得 &gt; 1.8 eV——可那时 NIR 一个光子都吸不到。要同时在 NIR 吸收、在可见区留空窗，中间必须存在一段「真的没有态」的间隔，这正是离散能级能给、连续能带给不了的东西。</p></details>
+
+<details><summary>左图里把 σ 从 60 meV 拖到 250 meV，你看到什么？这对应材料的什么状态？</summary>
+<p>振动结构并成一片，HOMO/LUMO 从「一根棍」变成一条窄带——就是图注里说的「似带非带」。对应物理上分子间耦合增强或无序增大（紧密堆积的有机晶体、或者掺杂后的极化子带）。但注意：σ 到 250 meV 已经比真实有机晶体的带宽还大，属于把模型推出适用范围的演示。</p></details>
+</section>
+
+<!-- ============================================================ 能损 -->
+<section id="loss">
+<h2 id="h-loss">模块一 · 能损（Energy Loss）<span class="mark" data-id="loss">标记已掌握</span></h2>
+
+<div class="one"><b>一句话：</b>能损是「材料能吸收的光子能量」与「器件实际给出的电压」之间的差。它由两部分组成：辐射复合那一半物理上躲不掉，非辐射复合那一半由材料与形貌决定。</div>
+
+<h3 id="loss-1">1.1 能损的定义</h3>
+<p>带隙 <i>E</i><sub>g</sub> 决定了一个光子最多能贡献多少能量（单位 eV）。但器件输出的开路电压 <i>V</i><sub>oc</sub> 永远比 <i>E</i><sub>g</sub>/<i>q</i> 小。这个差就是能损：</p>
+
+<div class="eq">
+Δ<i>E</i><sub>loss</sub> = <i>E</i><sub>g</sub> − <i>qV</i><sub>oc</sub>　　（单位：eV，因为 q=1 时数值相同）
+<span class="n">Eg 从 EQE 的起始波长换算：Eg(eV) ≈ 1240 / λ<sub>onset</sub>(nm)</span>
+</div>
+
+<p>任何论文只要给了 EQE 和 Voc，就能算出它的能损，不需要懂合成。</p>
+
+<h3 id="loss-2">1.2 辐射极限与非辐射损失</h3>
+
+<div class="eq">
+Δ<i>E</i><sub>loss</sub> = Δ<i>V</i><sub>rad</sub> + Δ<i>V</i><sub>nr</sub>
+<span class="n">ΔV<sub>rad</sub>：辐射复合导致的下限，来自 detailed balance，物理上不可消除</span>
+<span class="n">ΔV<sub>nr</sub>：非辐射复合导致的额外损失，靠材料与形貌压制</span>
+</div>
+
+<table>
+  <thead><tr><th style="width:16%">项目</th><th style="width:26%">OPV 典型值</th><th>含义</th></tr></thead>
+  <tbody>
+    <tr><td><b>ΔV<sub>rad</sub></b></td><td class="num">≈ 0.25 – 0.30 V</td><td>Eg 越小，这一项越大。这是“天花板里的天花板”，任何材料都躲不掉。</td></tr>
+    <tr><td><b>ΔV<sub>nr</sub></b></td><td class="num">0.20 – 0.45 V</td><td>好器件能压到 0.20–0.25 V，差的超过 0.35 V。<b>这才是可优化的部分。</b></td></tr>
+  </tbody>
+</table>
+
+<div class="warn"><b>常见误解</b>“Voc 低是因为 Eg 低”只对了一半。Eg 低确实压低 Voc，但同时抬高 Jsc。真正值得问的是：<b>这个器件的非辐射损失是多少？</b>这才是同 Eg 体系之间拉开差距的地方。</div>
+
+<h3 id="loss-3">1.3 非辐射损失怎么算：EQE<sub>EL</sub></h3>
+<p>给器件通一个正向电流（暗态），它会发光。这个发光的<b>外量子效率</b>叫 EQE<sub>EL</sub>。它和非辐射损失是一一对应的：</p>
+
+<div class="eq">
+Δ<i>V</i><sub>nr</sub> = −<span class="frac"><span class="num"><i>k</i><sub>B</sub><i>T</i></span><span class="den"><i>q</i></span></span> · ln(EQE<sub>EL</sub>)
+<span class="n">室温下 k<sub>B</sub>T/q ≈ 25.9 mV，所以 ΔV<sub>nr</sub>(V) ≈ −0.0259 × ln(EQE<sub>EL</sub>)</span>
+</div>
+
+<table>
+  <thead><tr><th>EQE<sub>EL</sub></th><th>ΔV<sub>nr</sub></th><th>水平</th></tr></thead>
+  <tbody>
+    <tr><td class="num">1 × 10<sup>−3</sup></td><td class="num">0.179 V</td><td>极好（罕见）</td></tr>
+    <tr><td class="num">1 × 10<sup>−4</sup></td><td class="num">0.238 V</td><td>好器件</td></tr>
+    <tr><td class="num">1 × 10<sup>−5</sup></td><td class="num">0.298 V</td><td>一般</td></tr>
+    <tr><td class="num">1 × 10<sup>−6</sup></td><td class="num">0.357 V</td><td>差，说明复合没压住</td></tr>
+  </tbody>
+</table>
+
+<div class="calc">
+  <div class="hd">能损计算器 · 填三个数</div>
+  <div class="bd">
+    <div><label>Eg（eV）</label><input id="c-eg" type="number" step="0.01" value="1.40"></div>
+    <div><label>ΔV<sub>rad</sub>（V）</label><input id="c-rad" type="number" step="0.01" value="0.27"></div>
+    <div><label>EQE<sub>EL</sub></label><input id="c-eqe" type="number" step="any" value="0.0001"></div>
+  </div>
+  <div class="out" id="c-out"></div>
+</div>
+
+<h3 id="loss-4">1.4 从论文里取数</h3>
+<table>
+  <thead><tr><th style="width:30%">看到什么</th><th>做什么</th></tr></thead>
+  <tbody>
+    <tr><td>EQE 曲线</td><td>读起始波长 → 算 Eg（1240/λ<sub>onset</sub>）。注意是<b>起始</b>，不是峰值。</td></tr>
+    <tr><td>J–V 表</td><td>抄 Voc、Jsc、FF、PCE。只抄这四列。</td></tr>
+    <tr><td>有没有 EQE<sub>EL</sub> / EL 谱 / ΔE<sub>nr</sub></td><td>有 → 直接算 ΔV<sub>nr</sub>，这是这篇最硬的一个数；没有 → 记成“未报”，这本身就是信息。</td></tr>
+  </tbody>
+</table>
+
+<div class="note"><b>判断依据</b>两个器件 Eg 相同、Voc 差 60 mV，几乎一定差在 EQE<sub>EL</sub> 上（约差一个数量级）。这时该问的是谁的复合通道被压住了。<b></b></div>
+
+<h3 id="loss-quiz">1.5 自测</h3>
+<details><summary>某器件 Eg = 1.45 eV，Voc = 0.92 V。它的总能损是多少？先猜哪一半占大头。</summary>
+<p>ΔE<sub>loss</sub> = 1.45 − 0.92 = <b>0.53 eV</b>。按 ΔV<sub>rad</sub> ≈ 0.26 V 估，ΔV<sub>nr</sub> ≈ 0.27 V，非辐射那一半略大。对应 EQE<sub>EL</sub> 约 3×10<sup>−5</sup>。</p></details>
+
+<details><summary>为什么不能直接把 Voc 做到接近 Eg/q？</summary>
+<p>发光和发电是同一套跃迁的逆过程。器件越容易复合发光，就越难维持高电压。辐射复合给出 detailed-balance 下限，非辐射复合再往上加一层。要做高 Voc，等于要做“发光很弱但复合更弱”的器件。这就是为什么 EQE<sub>EL</sub> 是关键证据。</p></details>
+
+<details><summary>Eg 从 1.35 提到 1.55 eV，Jsc 和 Voc 大致怎么动？</summary>
+<p>Jsc 下降（吸收的光子变少），Voc 上升（Eg/q 抬高，且 ΔV<sub>rad</sub> 通常略降）。总效率一般不会单调变好，中间有最优 Eg。单结的 ~30% 天花板就来自这里（详见 Sze 那一章）。</p></details>
+</section>
+
+<!-- ============================================================ TA -->
+<section id="ta">
+<h2 id="h-ta">模块二 · 瞬态吸收（TA）<span class="mark" data-id="ta">标记已掌握</span></h2>
+
+<div class="one"><b>一句话：</b>TA 是给样品打一束短脉冲“泵浦”把它激发，再用另一束“探针”看不同波长、不同延迟下它<em>吸收变化了多少</em>（ΔA）。从中读出激发态在<b>多长时间内变成了什么</b>。</div>
+
+<h3 id="ta-1">2.1 ΔA 图是什么</h3>
+<p>横轴是探针波长（nm），纵轴是延迟时间（ps–ns–μs 对数），颜色是 ΔA 的大小。只有三类信号：</p>
+
+<table>
+  <thead><tr><th style="width:18%">信号</th><th style="width:14%">符号</th><th>物理含义</th></tr></thead>
+  <tbody>
+    <tr><td><b>漂白</b> bleach</td><td class="num">ΔA &lt; 0</td><td>基态被抽走了，吸收变少。看它<b>多久恢复</b> = 激子/极化子活多久。</td></tr>
+    <tr><td><b>光致吸收</b> PIA</td><td class="num">ΔA &gt; 0</td><td>出现了新的吸收物种：激子、CT 态、极化子。看它<b>长在哪</b> = 是什么物种。</td></tr>
+    <tr><td><b>等吸收点</b></td><td class="num">ΔA ≈ 0</td><td>两物种浓度相等的波长，常用来判断是不是简单两步转换。</td></tr>
+  </tbody>
+</table>
+
+<h3 id="ta-2">2.2 三个问题</h3>
+
+<div class="eq">
+① 漂白在多久内恢复？　② 有没有 CT 带、在哪？　③ 极化子信号是单分子还是双分子衰减？
+</div>
+
+<table>
+  <thead><tr><th style="width:8%">问题</th><th style="width:30%">图上怎么看</th><th>对应物理量 / 为什么重要</th></tr></thead>
+  <tbody>
+    <tr><td><b>①</b></td><td>取一个漂白峰，画 ΔA(t)，拟合出 τ</td><td>激子解离（ps 内）vs 复合（ns–μs）。快解离是好事，但<b>解离完还得能跑出来</b>。</td></tr>
+    <tr><td><b>②</b></td><td>长波侧有没有一个弱而宽的吸收带</td><td>CT 态能量 <i>E</i><sub>CT</sub>。它与 ΔV<sub>nr</sub> 直接相关。<b>这条把模块二和模块一连起来了。</b></td></tr>
+    <tr><td><b>③</b></td><td>同一波长下 ΔA 与初始强度的标度关系</td><td>单分子（陷阱/单极）衰减 vs 双分子复合。双分子过程越弱 = 复合系数相对 Langevin 的折减越大。</td></tr>
+  </tbody>
+</table>
+
+<h3 id="ta-3">2.3 时间尺度对照表</h3>
+<table>
+  <thead><tr><th style="width:24%">时间窗</th><th style="width:34%">发生什么</th><th>看出问题的方式</th></tr></thead>
+  <tbody>
+    <tr><td class="num">0 – 0.1 ps</td><td>激发、热激子冷却</td><td>多数 fs-TA 的分辨极限附近，别过度解读</td></tr>
+    <tr><td class="num">0.1 – 10 ps</td><td>激子扩散到给受体界面、CT 态形成、部分超快解离</td><td>漂白快速衰减 + PIA 长出；<b>界面质量</b>在这里显形</td></tr>
+    <tr><td class="num">10 ps – 10 ns</td><td>自由极化子形成、迁移、早期复合</td><td>极化子带建立；开始出现双分子特征</td></tr>
+    <tr><td class="num">10 ns – 10 μs</td><td>双分子复合、陷阱辅助复合</td><td>决定 Voc 与 FF 的那一段</td></tr>
+  </tbody>
+</table>
+
+<div class="warn"><b>三个常见坑</b>
+① <b>激发密度过高</b>：为了信噪比加能量，结果双分子复合与俄歇过程被放大，测出来的不是工作条件下的物理。
+② <b>只看薄膜、不看器件</b>：薄膜 TA 没有电极与界面，结论要小心外推。
+③ <b>与 EQE 不自洽</b>：TA 说“解离效率很高”，但器件 EQE 只有 60%，那说明损失发生在收集而不是解离。</div>
+
+<h3 id="ta-4">2.4 从论文里取数</h3>
+<div class="note"><b>做法</b>看到 TA 图，先在纸上写三行：“漂白恢复 τ ≈ ___；CT 带在 ___ nm；衰减是单/双分子”。然后看作者的解释有没有<b>超出这三行的证据</b>。超出就是推测，不是数据。</div>
+
+<h3 id="ta-quiz">2.5 自测</h3>
+<details><summary>漂白在 2 ps 内掉了 80%，说明器件效率一定高吗？</summary>
+<p>不一定。它只说明激子在 2 ps 内大量离开基态（解离或湮灭）。还要看之后极化子信号是否<b>持续存在</b>到 ns–μs。解离完马上复合，器件照样低效。“解离快”和“收集好”是两件事。</p></details>
+
+<details><summary>论文说“我们观察到长寿命极化子，因此复合被抑制”。这句话缺什么？</summary>
+<p>缺标度分析：长寿命也可能是陷阱导致的<b>慢而不好的</b>过程。要证明“复合被抑制”，需要给出双分子复合系数相对 Langevin 的折减，或者给 ΔA 随激发强度的依赖关系，而不只是寿命变长。</p></details>
+
+<details><summary>为什么 CT 带的位置值得记下来？</summary>
+<p>因为 <i>E</i><sub>CT</sub> 与 ΔV<sub>nr</sub> 相关：CT 态与基态耦合越弱、能级下移越多，非辐射通道通常越强（能隙定律）。所以 CT 带位置是你判断“这个体系 Voc 还有没有救”的第二个证据。</p></details>
+</section>
+
+<!-- ============================================================ 结构 -->
+<!-- ============================================================ 椭偏 -->
+<section id="ell">
+<h2 id="h-ell">模块三 · 光学常数与椭偏<span class="mark" data-id="ell">标记已掌握</span></h2>
+
+<div class="one"><b>一句话：</b>椭偏测的不是吸收，是偏振态；它据此反演出 n、k 与厚度，而 k 才是吸收。所以它是所有光学模拟的输入。</div>
+
+<h3 id="ell-1">3.1 椭偏的输出</h3>
+
+<p>一束线偏振光斜着打到薄膜上，反射光的偏振态从「线」变成了「椭圆」。你测两个量：振幅比 ψ 和相位差 Δ。它们和界面反射系数绑在一起：</p>
+
+<div class="eq">
+tan ψ · e<sup>iΔ</sup> = <span class="frac"><span class="num"><i>r</i><sub>p</sub></span><span class="den"><i>r</i><sub>s</sub></span></span>
+<span class="n">rp、rs：p 与 s 偏振的复反射系数（由每层的 n、k、厚度与界面粗糙度决定）</span>
+</div>
+
+<p>但从 ψ、Δ 到 n、k 不是一步到位的。一条曲线里至少有三个未知数（n、k、厚度 d），所以必须<b>先假设一个色散模型</b>，再去拟合。这就是“非唯一解”的来源（见 3.4）。</p>
+
+<div class="eq">
+ε<sub>1</sub> = <i>n</i><sup>2</sup> − <i>k</i><sup>2</sup>，　ε<sub>2</sub> = 2<i>nk</i>，　α = <span class="frac"><span class="num">4π<i>k</i></span><span class="den">λ</span></span>
+<span class="n">α 是吸收系数（cm<sup>-1</sup>）。k = 0 时 α = 0：透明就是没有虚部</span>
+</div>
+
+<table>
+  <thead><tr><th style="width:22%">椭偏给你</th><th style="width:30%">单位 / 量级</th><th>你可以拿它做什么</th></tr></thead>
+  <tbody>
+    <tr><td><b>n(λ)、k(λ)</b></td><td class="num">n 1.5–2.2；k 峰值 0.3–1.5</td><td>喂给转移矩阵，算吸收分布与 Jsc 上限</td></tr>
+    <tr><td><b>厚度 d</b></td><td class="num">精度约 0.1 nm</td><td>对工艺：旋涂/刮涂厚度的真实值，而不是称的溶液浓度</td></tr>
+    <tr><td><b>各向异性</b></td><td class="num">n<sub>o</sub> 与 n<sub>e</sub> 差 0.02–0.3</td><td>判断分子是 face-on 还是 edge-on（见 3.6）</td></tr>
+    <tr><td><b>粗糙层 / 混合层</b></td><td class="num">0.5–5 nm 等效厚度</td><td>解释 k 的带边为什么“发胖”</td></tr>
+  </tbody>
+</table>
+
+<div class="warn"><b>最容易搞错的一点</b>椭偏不直接测吸收。有人拿椭偏曲线“看吸收峰”，这是把 ψ 或 Δ 的极大值当吸收峰——只有当 n 近似常数时才勉强成立。<b>吸收要看 α 或 k，不是看 ψ、Δ 的峰位。</b></div>
+
+<h3 id="ell-2">3.2 它在文献里的位置</h3>
+
+<p>它在文献里少见，原因有三个：</p>
+
+<table>
+  <thead><tr><th style="width:26%">结构原因</th><th>后果</th></tr></thead>
+  <tbody>
+    <tr><td>产出是<b>参数</b>，不是纪录</td><td>一张 n、k 表刷新不了 PCE，过不了“新纪录 / 新机理”的 novelty 关</td></tr>
+    <tr><td>默认位置在 <b>Methods / SI</b></td><td>一句 “optical constants measured by spectroscopic ellipsometry” 就算交代了，显著性极低</td></tr>
+    <tr><td>评审门槛在<b>建模</b>，不在测量</td><td>能评色散模型与非唯一解的人少，方法学争议进不了高影响叙事 → 转去专业期刊当主角</td></tr>
+  </tbody>
+</table>
+
+<div class="note"><b>注意</b>越想把 Jsc 算准、把寄生吸收拆干净，越绕不开它。没有可信的 n、k，光学模拟就退化成自由参数拟合：EQE 对不上就调厚度，还不对就调迁移率，最后什么都能拟合上。</div>
+
+<p>它能当主角的场景只有五类：分子取向与各向异性；原位实时成膜动力学；高通量组合筛选；埋层界面与光学损耗分解；光学常数数据库。Campoy-Quiles 那条线就是把这五类串起来的样本，从共聚物光学常数起步，中间做成组合高通量，再往侧向厚度梯度（rainbow）和热电延伸。</p>
+
+<h3 id="ell-3">3.3 关键工作（含 DOI）</h3>
+
+<table>
+  <thead><tr><th style="width:10%">年份</th><th>工作</th><th style="width:20%">DOI</th></tr></thead>
+  <tbody>
+    <tr><td class="num">2005</td><td>Ellipsometric characterization of the optical constants of polyfluorene gain media</td><td><a href="https://doi.org/10.1002/adfm.200400121" target="_blank">10.1002/adfm.200400121</a></td></tr>
+    <tr><td class="num">2005</td><td>On the optical anisotropy of conjugated polymer thin films</td><td><a href="https://doi.org/10.1103/physrevb.72.045209" target="_blank">10.1103/physrevb.72.045209</a></td></tr>
+    <tr><td class="num">2013</td><td>Advanced ellipsometric characterization of conjugated polymer films</td><td><a href="https://doi.org/10.1002/adfm.201303060" target="_blank">10.1002/adfm.201303060</a></td></tr>
+    <tr><td class="num">2014</td><td>On the complex refractive index of polymer:fullerene photovoltaic blends</td><td><a href="https://doi.org/10.1016/j.tsf.2014.02.096" target="_blank">10.1016/j.tsf.2014.02.096</a></td></tr>
+    <tr><td class="num">2018</td><td>High-throughput multiparametric screening of solution processed bulk heterojunction solar cells</td><td><a href="https://doi.org/10.1002/aelm.201700477" target="_blank">10.1002/aelm.201700477</a></td></tr>
+    <tr><td class="num">2019</td><td>Efficient exploration of the composition space in ternary organic solar cells（材料库 + 高光谱成像）</td><td><a href="https://doi.org/10.1002/aenm.201902417" target="_blank">10.1002/aenm.201902417</a></td></tr>
+    <tr><td class="num">2021</td><td>Accelerating organic solar cell material's discovery: high-throughput screening and big data</td><td><a href="https://doi.org/10.1039/d1ee00559f" target="_blank">10.1039/d1ee00559f</a></td></tr>
+    <tr><td class="num">2023</td><td>RAINBOW organic solar cells: implementing spectral splitting in lateral multi-junction architectures</td><td><a href="https://doi.org/10.1002/adma.202212226" target="_blank">10.1002/adma.202212226</a></td></tr>
+    <tr><td class="num">2024</td><td>Combinatorial screening of wide band-gap organic solar cell materials with Voc between 1.1 and 1.4 V</td><td><a href="https://doi.org/10.1039/d4ta01944j" target="_blank">10.1039/d4ta01944j</a></td></tr>
+  </tbody>
+</table>
+
+<h3 id="ell-4">3.4 判断一次光学模拟能不能信</h3>
+
+<table>
+  <thead><tr><th style="width:26%">问题</th><th style="width:34%">去哪找答案</th><th>不合格长什么样</th></tr></thead>
+  <tbody>
+    <tr><td><b>① n、k 是测的还是引的？</b></td><td>Methods 或 SI；问“哪年、哪个体系、薄膜还是溶液”</td><td>不写来源，或拿溶液值当薄膜值</td></tr>
+    <tr><td><b>② 什么色散模型、加没加粗糙层？</b></td><td>SI 的拟合表；有没有报 MSE 与置信区间</td><td>只说“fitted”，不报模型与误差</td></tr>
+    <tr><td><b>③ 各向异性处理了吗？</b></td><td>是 isotropic、uniaxial 还是 biaxial；几个入射角</td><td>单角度、各向同性、厚度与 n 同时自由拟合</td></tr>
+  </tbody>
+</table>
+
+<div class="do"><b>用法</b>按这三问，文章分成“可引用”和“看看就好”两类。凡是拿 EQE 去反推 n、k 的文章（而不是拿 n、k 去预测 EQE），循环论证的风险很高。</div>
+
+<h3 id="ell-5">3.5 色散模型选型</h3>
+
+<table>
+  <thead><tr><th style="width:18%">模型</th><th style="width:32%">什么时候用</th><th>代价 / 翻车点</th></tr></thead>
+  <tbody>
+    <tr><td><b>Cauchy</b></td><td>透明区（k≈0），只要 n 与厚度</td><td>带边附近必然错；不能拿它算吸收</td></tr>
+    <tr><td><b>Tauc-Lorentz</b></td><td>有带隙、要同时拿 Eg 与吸收</td><td>参数多，初始值不好会给假带隙</td></tr>
+    <tr><td><b>B-spline</b></td><td>不想假设模型，实验数据好</td><td>自由度最高、最容易过拟合出物理上不存在的鼓包</td></tr>
+    <tr><td><b>EMA / Bruggeman</b></td><td>粗糙层、混合相、孔隙</td><td>等效介质一上，k 的带边容易被“抹平”</td></tr>
+  </tbody>
+</table>
+
+<div class="warn"><b>非唯一解是常态</b>同一条 ψ、Δ 曲线，可以有多组 (d, n, k) 拟合得同样好。压它有三个办法：<b>多角度</b>（55/65/75°）、<b>多厚度</b>（同一工艺做 3–5 个厚度联合拟合）、<b>外部约束</b>（透射/反射谱、已知的 Eg 或带边位置）。三样都没有的拟合结果，只能当趋势看。</div>
+
+<h3 id="ell-6">3.6 各向异性</h3>
+
+<p>共轭聚合物薄膜几乎不可能是各向同性的。分子平面取向决定了两件事：面内（in-plane）与面外（out-of-plane）的极化率不同，于是两个方向的 n、k 都不同。单轴模型给两个折射率：</p>
+
+<div class="eq">
+n<sub>o</sub>（面内，ordinary）　vs　n<sub>e</sub>（面外，extraordinary）
+<span class="n">两者之差 0.02–0.3 都可能出现；差得越多，说明取向越明显</span>
+</div>
+
+<table>
+  <thead><tr><th style="width:20%">取向</th><th style="width:30%">通常对应</th><th>对光学的影响</th></tr></thead>
+  <tbody>
+    <tr><td><b>face-on</b></td><td>π–π 堆积垂直于基底</td><td>面外吸收增强，垂直入射器件里更吃香</td></tr>
+    <tr><td><b>edge-on</b></td><td>主链平行于基底</td><td>面内吸收强，但垂直入射时贡献打折</td></tr>
+  </tbody>
+</table>
+
+<div class="warn"><b>影响</b>不处理各向异性，k 的带边会被系统性搞大：拟合器会用“更强的吸收”去补偿取向带来的偏差。结果会把 k 系统性高估。<b>而各向异性一旦处理，往往还要上双轴模型</b>——那就不再是 2 个参数，而是 4 个。</div>
+
+<h3 id="ell-7">3.7 从 n、k 到器件：吸收与 Jsc 上限</h3>
+
+<p>有了每层的 (d, n, k)，用转移矩阵解出膜内的电场分布 |E(z)|²，再对每层积分：</p>
+
+<div class="eq">
+A<sub>i</sub> = ∫ α<sub>i</sub> |E(z)|<sup>2</sup> dz　　（α<sub>i</sub> = 4πk<sub>i</sub>/λ）
+<span class="n">活性层的 A<sub>active</sub> 就是“能被利用的光”；电极、界面层、ITL 的 A 就是寄生吸收</span>
+</div>
+
+<p>把 A<sub>active</sub>(λ) 乘上 AM1.5 的光子通量再积分，得到这个厚度下的 <b>Jsc 理论上限</b>。把它和实测 Jsc 比，答案就分岔了：</p>
+
+<table>
+  <thead><tr><th style="width:32%">实测 Jsc 相对上限</th><th>结论</th></tr></thead>
+  <tbody>
+    <tr><td>接近（差 5% 以内）</td><td>光学没问题，剩下的损失在电学侧（复合、迁移率、收集）</td></tr>
+    <tr><td>明显偏低（差 15% 以上）</td><td>光学有问题：厚度不对、寄生吸收大、或者 n/k 本身错了</td></tr>
+  </tbody>
+</table>
+
+<div class="calc">
+  <div class="hd">光学常数计算器 · 填四个数</div>
+  <div class="bd">
+    <div><label>n</label><input id="o-n" type="number" step="0.01" value="1.75"></div>
+    <div><label>k</label><input id="o-k" type="number" step="0.01" value="0.40"></div>
+    <div><label>波长 λ（nm）</label><input id="o-l" type="number" step="1" value="600"></div>
+    <div><label>Eg（eV，可留空）</label><input id="o-eg" type="number" step="0.01" value="1.40"></div>
+  </div>
+  <div class="out" id="o-out"></div>
+</div>
+
+<h3 id="ell-8">3.8 避坑清单</h3>
+<ol style="font-size:14.3px;line-height:2;padding-left:24px">
+  <li>拿 ψ 或 Δ 的峰位当吸收峰。</li>
+  <li>用溶液或文献里的 n、k 代替本次薄膜的 n、k。</li>
+  <li>单角度拟合，厚度和 n 同时放开。</li>
+  <li>不报色散模型、不报 MSE。</li>
+  <li>各向同性拟合各向异性薄膜，k 带边被搞大。</li>
+  <li>粗糙层厚度自由拟合，吃掉了一部分 k。</li>
+  <li>用 EQE 反推 n、k，再用这组 n、k 预测 EQE（循环论证）。</li>
+  <li>厚度只用称量/旋涂参数估，不做椭偏或台阶仪实测。</li>
+  <li>把“吸收强”当成“收集好”：光学与电学混为一谈。</li>
+  <li>忘记入射介质与背反射：玻璃/ITO 一侧的干涉会造出假的吸收条纹。</li>
+</ol>
+
+<h3 id="ell-quiz">3.9 自测</h3>
+<details><summary>某论文说“我们的薄膜在 600 nm 吸收很强”，然后给了 ψ 谱的一个峰。哪里不对？</summary>
+<p>峰位不等于吸收峰。吸收看 α = 4πk/λ；ψ、Δ 是 n、k、厚度共同作用的结果，峰可能来自干涉或 n 的色散。要判断吸收，直接看 k 或 α。</p></details>
+
+<details><summary>同一批样品，作者报了面内 n 和面外 n，差 0.15。这说明了什么？又漏了什么？</summary>
+<p>说明有明显的分子取向（各向异性）。漏的是：只报 n 不报 k 的各向异性；以及如果做了双轴还该给出第三个方向。若只用各向同性模型拟合，k 会被系统性高估。</p></details>
+
+<details><summary>实测 Jsc 比光学算出的上限低 20%，作者归因于“材料迁移率低”。这个归因能接受吗？</summary>
+<p>不能先这么说。低 20% 先查光学：厚度对不对、寄生吸收多少、n/k 来源可靠吗。只有光学上限确认可靠之后，差的那部分才轮到电学解释。</p></details>
+</section>
+
+<section id="struct">
+<h2 id="h-struct">模块四 · 化学结构<span class="mark" data-id="struct">标记已掌握</span></h2>
+
+<div class="one"><b>一句话：</b>你不需要会合成，但必须会<b>从结构预测性质</b>：骨架决定能级与吸收，侧链决定堆积与形貌，分子量决定重现性。</div>
+
+<h3 id="st-1">4.1 骨架：D–A 交替</h3>
+<p>主流给体是“给电子单元（D）+ 缺电子单元（A）”交替的共聚物。D 抬 HOMO，A 压 LUMO，两者的组合把 Eg 和能级定下来。</p>
+
+<table>
+  <thead><tr><th style="width:26%">单元角色</th><th style="width:30%">常见代表</th><th>对性质的影响</th></tr></thead>
+  <tbody>
+    <tr><td>给电子单元 D</td><td>BDT（苯并二噻吩）类</td><td>抬 HOMO → 吸收红移、Voc 下降、空穴传输改善</td></tr>
+    <tr><td>缺电子单元 A</td><td>BT（苯并噻二唑）、BDD（双酮类）、TT（噻吩并噻吩）</td><td>压 LUMO → Eg 变小、吸收红移</td></tr>
+  </tbody>
+</table>
+
+<div class="eq">
+抬 HOMO → <i>V</i><sub>oc</sub> ↓，<i>J</i><sub>sc</sub> ↑；降 Eg → <i>J</i><sub>sc</sub> ↑，但 Δ<i>V</i><sub>nr</sub> 通常 ↑
+<span class="n">红移不是免费午餐，每篇论文都在 Eg 和 Voc 之间来回挪</span>
+</div>
+
+<h3 id="st-2">4.2 侧链：决定它能不能成膜、能不能稳定</h3>
+<p>侧链（烷基、烷氧基、烷硫基、硅氧基、支链如 2-乙基己基 / 2-癸基十四烷基）对能级影响很小，主要改<b>溶解度、π–π 堆积距离、结晶度</b>。</p>
+
+<div class="note"><b>学方向</b>侧链的杂原子与支化方式通过偶极和构象影响堆积，方向和幅度依体系而异（同一个侧链在不同骨架上可能反着来）。<b>正确姿势是：看到侧链工程，直接去找 FF、迁移率、GIWAXS 的 π–π 间距有没有动。</b></div>
+
+<table>
+  <thead><tr><th style="width:28%">旋钮</th><th style="width:30%">主要影响</th><th>论文里去找的证据</th></tr></thead>
+  <tbody>
+    <tr><td><b>侧链</b></td><td>溶解度、堆积、结晶度、形貌稳定性</td><td>FF、迁移率、GIWAXS 的 π–π 间距与相干长度</td></tr>
+    <tr><td><b>分子量 / PDI</b></td><td>成膜性、粘度、批次重现性</td><td>不同批次的 PCE 波动、FF 差异（最容易被忽略的一栏）</td></tr>
+    <tr><td><b>端基 / 卤化</b>（受体侧）</td><td>LUMO 下移、吸收红移</td><td>Jsc 上升、Voc 略降、EQE 红边位移</td></tr>
+  </tbody>
+</table>
+
+<h3 id="st-3">4.3 非富勒烯受体：A–D–A 与 A–DA′D–A</h3>
+<table>
+  <thead><tr><th style="width:26%">类型</th><th style="width:26%">结构骨架</th><th>代表性思路</th></tr></thead>
+  <tbody>
+    <tr><td>ITIC 类</td><td>A–D–A（IDT 稠环核 + 端基）</td><td>核决定堆积与电子迁移率，端基决定 LUMO 与吸收红边</td></tr>
+    <tr><td>Y6 类</td><td>A–DA′D–A（稠环核 + 卤化端基）</td><td>端基卤化 → LUMO 下移、红移、Jsc 提升；核决定形貌与稳定性</td></tr>
+  </tbody>
+</table>
+
+<div class="do"><b>训练法</b>读摘要时看到“我们引入 X 基团”，<b>先合上论文，写一句预测</b>：Eg 会___，Voc 会___，FF 会___，形貌证据应该是___。然后翻表核对。</div>
+
+<h3 id="st-quiz">4.4 自测</h3>
+<details><summary>某工作把给体上的烷氧基换成烷硫基，PCE 从 15.2% 提到 16.1%，Voc 基本不变。你最先怀疑哪一项？</summary>
+<p>不先去猜能级，而先看 FF 与形貌证据：Voc 没动，说明能级/非辐射损失没大改；提升大概率来自堆积改善 → 迁移率与 FF。这是典型的侧链 → 形貌 → FF 路径。</p></details>
+
+<details><summary>为什么“同一材料不同批次效率差 1%”是结构问题，也是方法问题？</summary>
+<p>分子量/PDI 分布不同 → 成膜与相分离尺度不同 → FF 波动。这是 OPV 的结构性弱点，也是为什么很多“新纪录”难以复现。<b>读到没报批次与分子量的高 PCE，先打一个问号。</b></p></details>
+
+<details><summary>一个体系 Eg 降到 1.25 eV，Jsc 涨了 2 mA/cm²，但 PCE 没涨。最可能的账怎么算？</summary>
+<p>Voc 掉得太多，且 ΔV<sub>nr</sub> 很可能同时变大（能隙定律）。所以在低 Eg 端，红移换电流通常不划算；单结存在最优 Eg 就来自这里。</p></details>
+</section>
+
+<!-- ============================================================ 输运与复合 -->
+<section id="tr">
+<h2 id="h-tr">模块五 · 输运与复合<span class="mark" data-id="tr">标记已掌握</span></h2>
+
+<div class="one"><b>一句话：</b>给体稀释后，输运与复合一起变坏，最后落在填充因子上。本节把电导率、复合机制、收集效率三件事连起来，源头是 Adv. Mater. 2026 的 donor-diluted 研究（PM6:Y12，给体从 1% 到 45%）。</div>
+
+<h3 id="tr-1">5.1 输运：电导率、DOS 与逾渗模型</h3>
+
+<p>本节覆盖六个模型。它们从 J-V 曲线出发，先提电导率，再定 DOS 形状，再用跳跃与逾渗解释，最后落到迁移率。</p>
+
+<p><b>模型 1 · 有效电导率 σ<sub>oc</sub>（Eq 1）</b></p>
+<p class="one">一句话：σ<sub>oc</sub> 是活性层开路附近的纯输运电导率，等于 J-V 斜率扣除复合电阻后的量。</p>
+<div class="eq">L / σ<sub>oc</sub> = [ dV/dJ − n<sub>id</sub>·k<sub>B</sub>T / (e·J<sub>rec</sub>) ]<sub>J=0</sub></div>
+<p><b>怎么测试/测量：</b>用完整太阳能电池，源表扫 J-V 曲线，配太阳模拟器。</p>
+<ul>
+<li>原始数据是 J 对 V 曲线，重点看开路点 V<sub>oc</sub> 附近的斜率 dV/dJ。</li>
+<li>先做外串阻校正：大正偏压下拟合 dV/dJ，得串联电阻 R<sub>s</sub>，再扣掉。</li>
+<li>要备好厚度 L、开路复合电流 J<sub>rec</sub>（约等于光生电流）、理想因子 n<sub>id</sub>。</li>
+</ul>
+<div class="note"><b>外串阻校正</b> 大正偏压下输运电阻可忽略，dV/dJ 只剩外串阻 R<sub>s</sub>。拟合这一段得 R<sub>s</sub>，再从 J-V 扣除。Eq 1 为清晰省略了这一步。</div>
+<p><b>怎么得出：</b>dV/dJ 在 J=0 处含两项：输运电阻 L/σ<sub>oc</sub>，加复合电阻 n<sub>id</sub>·k<sub>B</sub>T/(e·J<sub>rec</sub>)。</p>
+<p>后者是"电导率无穷大"假想器件的倒数斜率，代表无输运损耗的曲线斜率。扣掉它，剩下纯输运电阻，再除以 L 得 σ<sub>oc</sub>。</p>
+<p>拟合参数：n<sub>id</sub>（由 suns-V<sub>oc</sub> 得）、R<sub>s</sub>（由大正偏压得）、L（轮廓仪或椭偏测厚）。</p>
+<p>假设：近 V<sub>oc</sub> 时复合电阻与输运电阻线性叠加，J<sub>rec</sub>≈J<sub>ph</sub>。</p>
+<p><b>可视化性：高。</b>画一条 J-V 曲线，标两条切线：真实斜率与"无穷电导率"斜率，两斜率之差即输运项。再画 σ<sub>oc</sub> 对温度或光强的散点。物理直觉直接：斜率等于电阻。</p>
+<p><b>复现难度：中。</b>仪器是标准太阳电池测试台加源表，普通实验室都有。变温要 cryostat，属较贵设备。软件 Python + numpy 足够，数值微分加线性拟合。不做合成的测量组能复现，只需拿到器件。</p>
+
+<p><b>模型 2 · DOS 特征能量 E<sub>U</sub>（suns-V<sub>oc</sub>）</b></p>
+<p class="one">一句话：E<sub>U</sub> 是 DOS 的局部斜率，量度能隙内每个能量处的无序程度。</p>
+<p><b>怎么测试/测量：</b>测光强序列乘温度序列的 suns-V<sub>oc</sub>。</p>
+<ul>
+<li>用中性密度滤光片做一串光强，每个光强下测 V<sub>oc</sub>。</li>
+<li>同一组在多个温度重复，形成二维矩阵。</li>
+<li>suns-V<sub>oc</sub> 只变光强、不变偏压，避免器件退化。</li>
+</ul>
+<p><b>怎么得出：</b>光强依赖 V<sub>oc</sub> 给出复合理想因子 n<sub>id</sub>（V<sub>oc</sub> ∝ n<sub>id</sub>·k<sub>B</sub>T/e · ln I）。</p>
+<p>温度依赖的 n<sub>id</sub> 代入多陷获-释放（MTR）模型，反演 DOS 形状。</p>
+<p>对每个能隙深度 E<sub>g</sub> − eV<sub>oc</sub> 算局部斜率 E<sub>U</sub>。E<sub>U</sub> 恒定是纯指数 DOS；E<sub>U</sub> 随深度增大是幂律 DOS。</p>
+<p>本文 PM6:Y12 的 E<sub>U</sub> 随深度增大，判为幂律 DOS。</p>
+<p><b>可视化性：中高。</b>画 E<sub>U</sub> 对 (E<sub>g</sub>−eV<sub>oc</sub>) 曲线，或归一化 DOS 对能量。斜率即无序，直觉中等。</p>
+<p><b>复现难度：中高。</b>变温加变光强是门槛，cryostat 较贵。软件 Python 够用，但 MTR 反演要自己写数值程序。测量组可复现，依赖拿到器件。</p>
+
+<p><b>模型 3 · Miller–Abrahams 跳跃（Eq 2）</b></p>
+<p class="one">一句话：跳跃速率由隧穿项与热激活项共同决定。</p>
+<div class="eq">ν<sub>ij</sub> = ν<sub>0</sub>·exp(−u)；u = 2r<sub>ij</sub>/α + ΔE<sub>ij</sub>/(k<sub>B</sub>T)（向上跳）；u = 2r<sub>ij</sub>/α（向下跳）</div>
+<p><b>怎么测试/测量：</b>不是直接测量，是理论模型，用于定性解释 σ<sub>oc</sub> 的温度依赖。</p>
+<p>输入量：位点间距 r<sub>ij</sub>、局域长度 α、位点能量差 ΔE<sub>ij</sub>、温度 T。</p>
+<p><b>怎么得出：</b>向上跳（E<sub>i</sub>&lt;E<sub>j</sub>）要热激活，乘 exp(−ΔE<sub>ij</sub>/k<sub>B</sub>T)。向下跳只靠隧穿，无温度项。</p>
+<p>u 是统一跳跃参数，越大速率越低。距离项是隧穿贡献，Boltzmann 项是热激活。</p>
+<p>本文用法：在 E<sub>U</sub> 相近的能隙深度，各组分 Boltzmann 项相当，故输运差异主要来自隧穿与空间项，引出几何逾渗。</p>
+<p><b>可视化性：中。</b>画跳跃速率对温度（Arrhenius 图）或对位点间距。是定性参考模型，直觉中等。</p>
+<p><b>复现难度：低。</b>纯理论，不需要仪器。可做动力学蒙特卡洛（KMC）模拟，Python 即可。</p>
+
+<p><b>模型 4 · 逾渗模型（Eq 3）</b></p>
+<p class="one">一句话：电导率在阈值 f<sub>c</sub> 之上按 (f−f<sub>c</sub>)<sup>p</sup> 幂律增长，饱和于 σ<sub>max</sub>。</p>
+<div class="eq">σ = min( σ<sub>min</sub>·(f − f<sub>c</sub>)<sup>p</sup>, σ<sub>max</sub> )</div>
+<p><b>怎么测试/测量：</b>用模型 1 得不同 PM6 分数在 300 K、固定能隙深度 E<sub>g</sub>−eV<sub>oc</sub>=0.66 eV 的 σ<sub>oc</sub>。</p>
+<p>固定温度与固定能量截面，排除能量无序影响，只留空间连通性。</p>
+<p><b>怎么得出：</b>把 σ<sub>oc</sub> 对给体分数 f 拟合 Eq 3，固定 p=2。</p>
+<p>拟合参数：σ<sub>min</sub>、f<sub>c</sub>、σ<sub>max</sub>。p=2 是三维逾渗网络的理论临界指数。</p>
+<p>f<sub>c</sub>≈0，说明链纠缠保证连通。图 5c 里 μ<sub>eff</sub> 用同一模型拟合，p=1.8 作自由参数，落在三维范围。</p>
+<div class="warn"><b>阈值≈0 的读法</b> f<sub>c</sub> 接近零不代表没有逾渗，而是给体链纠缠与混合网络在极低分数仍保连通。作者建议把低电导率叫"强拓扑受限"。</div>
+<p><b>可视化性：高。</b>σ<sub>oc</sub> 对 PM6 分数散点，叠加 (f−f<sub>c</sub>)² 拟合线。阈值加幂律加饱和，直觉很强。</p>
+<p><b>复现难度：低到中。</b>只需 σ<sub>oc</sub> 数据，scipy 的 curve_fit 即可。数据来自模型 1。</p>
+
+<p><b>模型 5 · SCLC 迁移率（Mott–Gurney 与 Mark–Helfrich）</b></p>
+<p class="one">一句话：用单载流子器件的空间电荷限制电流测迁移率，电子用 Mott–Gurney，空穴用 Mark–Helfrich。</p>
+<div class="eq">Mott–Gurney：J = (9/8) ε ε<sub>0</sub> μ<sub>n</sub> V² / L³</div>
+<div class="eq">Mark–Helfrich：J ∝ V<sup>l+1</sup>，l = T<sub>c</sub>/T</div>
+<p><b>怎么测试/测量：</b>做单电子与单空穴器件。</p>
+<ul>
+<li>电子-only：如 ITO/ZnO 或 PEIE/活性层/Ca-Al。</li>
+<li>空穴-only：如 ITO/PEDOT:PSS/MoO<sub>3</sub>/活性层/MoO<sub>3</sub>/Ag。</li>
+<li>暗态扫 J-V，log J–log V 上找 SCLC 区（斜率≈2 或 &gt;2）。</li>
+<li>电极要阻挡另一载流子，保证单载流子注入。</li>
+</ul>
+<p><b>怎么得出：</b>Mott–Gurney 由 J 对 V² 斜率提 μ<sub>n</sub>，假设高斯 DOS、迁移率不依赖电场。</p>
+<p>Mark–Helfrich 由 log-log 斜率和截距提 μ<sub>p</sub>，假设指数尾巴 DOS，特征温度 T<sub>c</sub>。</p>
+<p>本文电子器件符合 Mott–Gurney，空穴器件偏离 V² 关系、符合 Mark–Helfrich，判为混合 DOS。</p>
+<p><b>可视化性：中高。</b>画 log J 对 log V，斜率 2 与 &gt;2 一眼区分两模型。直觉中等。</p>
+<p><b>复现难度：中。</b>单载流子器件要额外制备，做器件组容易，纯测量组要现成样品。仪器是普通源表。软件 Python 够用。</p>
+
+<p><b>模型 6 · 有效迁移率调和平均（Eq 4）</b></p>
+<p class="one">一句话：μ<sub>eff</sub> 是电子与空穴迁移率的调和平均，由较慢一方主导。</p>
+<div class="eq">μ<sub>eff</sub> = 2 / ( μ<sub>n</sub><sup>−1</sup> + μ<sub>p</sub><sup>−1</sup> )</div>
+<p><b>怎么测试/测量：</b>取模型 5 的 μ<sub>n</sub> 与 μ<sub>p</sub>，直接代入 Eq 4。</p>
+<p><b>怎么得出：</b>μ<sub>eff</sub> = 2 μ<sub>n</sub> μ<sub>p</sub> / (μ<sub>n</sub>+μ<sub>p</sub>)。当 μ<sub>p</sub>≪μ<sub>n</sub>，μ<sub>eff</sub>≈2 μ<sub>p</sub>，慢载流子主导。</p>
+<p>本文 μ<sub>eff</sub> 随 PM6 分数下降，与 σ<sub>oc</sub> 同服从逾渗模型（p=1.8），把宏观电导率与微观迁移率连起来。</p>
+<p><b>可视化性：中。</b>画 μ<sub>eff</sub> 对 PM6 分数散点加逾渗拟合线，与 σ<sub>oc</sub> 并排对比。"短板主导"直觉强。</p>
+<p><b>复现难度：低。</b>只需 μ<sub>n</sub>、μ<sub>p</sub> 数据，一行代码。</p>
+
+<div class="do"><b>推荐总图</b> 一张三面板图：σ<sub>oc</sub> 对 PM6 分数散点加 (f−f<sub>c</sub>)² 线；μ<sub>eff</sub> 对 PM6 分数同拟合；log J–log V 双对数图区分 Mott–Gurney 与 Mark–Helfrich。</div>
+
+<h3 id="tr-2">5.2 复合：Langevin 与 Smoluchowski</h3>
+
+<p>本节回答载流子怎么消失。作者用 PL 瞬态和 TDCF 两套方法测复合，结论：高给体分数是 Langevin 型，低给体分数是 Smoluchowski 型（扩散限制相遇）。</p>
+
+<p><b>模型 1 · PL 瞬态测复合</b></p>
+<p class="one">一句话：连续激光激发后 1 ns 内快速关断，看发光衰减，反推载流子浓度和总复合率。</p>
+<p><b>怎么测试/测量：</b>用 CW 激光打器件，稳态后瞬间关断（约 1 ns），记录 PL 衰减，原始数据是 PL(t) 曲线。</p>
+<ul>
+<li>要分开两个成分：低于 10 ns 的局域激子快衰减，和 μs–ms 的非孪生复合慢衰减。</li>
+<li>激子衰减与激光通量无关；非孪生复合与通量有关，靠变通量分开。</li>
+</ul>
+<p><b>怎么得出：</b>PL(t) = k<sub>rad</sub>·n²(t)，所以 PL 衰减直接给 n(t)，再由 R(t) = −dn/dt 得总复合率。k<sub>rad</sub> 是辐射复合系数。</p>
+<p>好处：PL 在复合发生的地方、发生的时候观测，而不是事后抽存活载流子。</p>
+<p><b>可视化性：高。</b>PL(t) 衰减曲线加双对数斜率，一眼看到快/慢两段。</p>
+<p><b>复现难度：中。</b>要时间分辨单光子计数（TCSPC）加快关断激光，光学实验室常规，不做合成也能做（只要给薄膜或器件）。</p>
+
+<p><b>模型 2 · 复合阶数 δ</b></p>
+<p class="one">一句话：δ 是复合率随载流子浓度的幂次，δ=2 是双分子（Langevin），δ&gt;2 是陷阱辅助。</p>
+<div class="eq">δ = E<sub>U</sub>/(k<sub>B</sub>T) + 1；　n(t) ∝ t<sup>−1/(δ−1)</sup>；　PL 指数 = −2/(δ−1)</div>
+<p><b>怎么得出：</b>对指数 DOS 的陷阱辅助复合，δ 由特征能量 E<sub>U</sub> 决定。</p>
+<ul>
+<li>δ=2（E<sub>U</sub>≈kT，无陷阱）→ PL 指数 −2，是最简单的双分子情形。</li>
+<li>δ=3（E<sub>U</sub>=50 meV）→ PL 指数 −1。</li>
+</ul>
+<p>本文高给体分数在 μs→ms 交界 δ 略小于 2；长时 PL 指数约 3，意味着 E<sub>U</sub>&lt;kT、δ 应回到 2——矛盾，作者据此改提 Smoluchowski（见模型 5）。</p>
+<p><b>可视化性：中。</b>双对数 PL 的斜率就是 δ，但不同时间窗要分开看。</p>
+<p><b>复现难度：低。</b>纯分析，从 PL 衰减取斜率。</p>
+
+<p><b>模型 3 · Langevin 复合与缩减因子 γ（Eq 5）</b></p>
+<p class="one">一句话：库仑吸引下电子空穴相遇即复合，速率正比迁移率之和；γ 是实测与 Langevin 预测的比值。</p>
+<div class="eq">k<sub>2</sub> = γ · e(μ<sub>n</sub> + μ<sub>p</sub>) / (ε·ε<sub>0</sub>)</div>
+<p><b>怎么测试/测量：</b>k<sub>2</sub> 来自 PL 和 TDCF（1 太阳等效），μ 来自 SCLC，ε 查表或椭偏。</p>
+<p><b>怎么得出：</b>γ = k<sub>2,实测</sub> / k<sub>L</sub>。高 PM6 分数 γ&lt;1（复合比 Langevin 慢，正常）；低 PM6 分数 γ 接近甚至超过 1。</p>
+<div class="warn"><b>γ&gt;1 不物理</b> 复合不可能比 Langevin 更快。作者自己点破：这是强行套 Langevin 框架的假象——低给体分数下复合机制已经变成 Smoluchowski 型，Langevin 公式不再适用，γ 失去意义。</div>
+<p><b>可视化性：高。</b>γ 对 PM6 分数散点，一条越低越怪的曲线。</p>
+<p><b>复现难度：低。</b>要 k<sub>2</sub>、μ、ε 三个数，Python 一行。</p>
+
+<p><b>模型 4 · CT 再解离缩减因子 γ<sub>ct</sub> = 1 − η<sub>diss</sub></b></p>
+<p class="one">一句话：CT 态会再解离回自由载流子而不是复合掉，所以复合被压低，γ<sub>ct</sub> = 1 − η<sub>diss</sub>。</p>
+<p><b>怎么测试/测量：</b>TDCF 在 V<sub>oc</sub> 处测解离效率 η<sub>diss</sub>（2%、5%、45% 三个组分）。</p>
+<p><b>怎么得出：</b>Blom 组机制：CT 态再解离 → 有效缩减 γ<sub>ct</sub> = 1 − η<sub>diss</sub>。15% 以上 PM6，γ<sub>ct</sub> 与实测 γ 同量级，说明再解离能解释高给体分数下的低复合。</p>
+<p>5% 处偏离，可能是 TDCF 低估载流子浓度 → 高估 k<sub>2</sub>（低连通性下抽出效率差）。</p>
+<p><b>可视化性：中。</b>γ 与 γ<sub>ct</sub> 叠一张图，看两条线是否同量级。</p>
+<p><b>复现难度：中。</b>要 TDCF，比 PL 更小众。</p>
+
+<p><b>模型 5 · Smoluchowski 复合（t<sup>−3/2</sup>，Eq 6）</b></p>
+<p class="one">一句话：载流子要先扩散穿过空间才相遇，复合率随时间变慢，长时极限 R(t) → t<sup>−3/2</sup>。</p>
+<div class="eq">R(t) → t<sup>−3/2</sup>（t→∞）；　n(t) ∝ t<sup>−1/2</sup>；　k<sub>2</sub>(t) ∝ t<sup>−1/2</sup>；　γ<sub>app</sub>(t) ∝ t<sup>−1/2</sup></div>
+<p><b>怎么得出：</b>解扩散方程的长时解，得 R(t) → t<sup>−3/2</sup>。这个标度独立于能量无序、陷阱分布、跳跃参数——是空间扩散限制相遇的普适统计。</p>
+<p>本文所有器件在长时（≳10 μs）复合率都收敛到 −3/2 斜率，1% 和 2% 组分全程都是它。</p>
+<div class="do"><b>关键判断</b> t<sup>−3/2</sup> 是硬物理（扩散方程通解），Langevin 的 γ 是套框架。低给体分数时，说复合是 Smoluchowski 型比说 γ 超标诚实。</div>
+<p><b>可视化性：高。</b>R(t) 双对数图上斜率 = −3/2 的直线，是所有器件长时都收敛到的那条线。</p>
+<p><b>复现难度：低。</b>只要 PL 瞬态长时数据，取双对数斜率。</p>
+
+<p><b>模型 6 · TDCF 与 PL 的差异</b></p>
+<p class="one">一句话：PL 连续监测辐射复合，TDCF 只测延迟后仍存活、能被抽出的载流子。</p>
+<p><b>怎么得出：</b>PL 对局域复合敏感，主导早期动力学（Langevin 型）；TDCF 在延迟后选择性测存活载流子，低连通体系会漏掉已复合的载流子，从而高估复合系数。</p>
+<p>所以对低给体分数 PL 更可信；对好器件 TDCF 较准。</p>
+<p><b>可视化性：中。</b>两方法 k<sub>2</sub> 并排对比。</p>
+<p><b>复现难度：中。</b>TDCF 要专用装置。</p>
+
+<h3 id="tr-3">5.3 收集效率：α、β 与填充因子</h3>
+
+<p>本节把输运和复合并起来，解释它们怎么吃掉填充因子。作者用两个自定义品质因数 α、β 把输运电阻折算进理想因子，再用 Green 方程预测 FF。</p>
+
+<p><b>模型 1 · 品质因数 α（Eq 7）</b></p>
+<p class="one">一句话：α 是输运电阻在开路附近造成的额外电压降，让 J-V 变平。</p>
+<div class="eq">α = e·L/(k<sub>B</sub>T) · J<sub>gen</sub>/σ<sub>oc</sub></div>
+<p><b>怎么测试/测量：</b>J<sub>gen</sub>（短路附近光电流）、σ<sub>oc</sub>（5.1 节）、L（膜厚）。</p>
+<p><b>怎么得出：</b>α 正比产生电流、反比电导率。σ<sub>oc</sub> 小（低给体分数）→ α 大 → 光照 J-V 在 V<sub>oc</sub> 处被压扁 → FF 掉。表观理想因子变成 n<sub>id</sub> + α。</p>
+<div class="warn"><b>α 的局限</b> α 只在 V<sub>oc</sub> 定义，不描述最大功率点（mpp）的曲率，而 FF 在 mpp 决定，所以 α 系统性地高估 FF。</div>
+<p><b>可视化性：中。</b>α 对 PM6 分数；或 J-V 在 V<sub>oc</sub> 处的两条切线（真实 vs 无穷电导率）。</p>
+<p><b>复现难度：低。</b>纯计算，输入 σ<sub>oc</sub>、J<sub>gen</sub>、L。</p>
+
+<p><b>模型 2 · 品质因数 β（迭代，Eq 9）</b></p>
+<p class="one">一句话：β 是 α 的推广，可在任意电压（尤其 mpp）算，用来更准地预测 FF。</p>
+<div class="eq">β = α · [ voc(voc+1) / n<sub>id</sub> ] · [ (n<sub>σ</sub> − 1) / ln(voc + 1) ]；　voc = e·V<sub>oc</sub> / ( (n<sub>id</sub> + β)·k<sub>B</sub>T )</div>
+<p><b>怎么得出：</b>把 α 换成 β 后，表观理想因子变成 n<sub>id</sub> + β。β 需要迭代：初值 α → 代入算 voc → 更新 β → 再代入，直到收敛。需要 n<sub>id</sub>、n<sub>σ</sub>（电导理想因子）、α、V<sub>oc</sub> 四个量。</p>
+<p><b>可视化性：低。</b>本身是迭代参数，没有单一直观图；但 β 预测的 FF 贴实测这条线可视化很强。</p>
+<p><b>复现难度：低。</b>Python 循环几次就收敛。</p>
+
+<p><b>模型 3 · Green 方程（Eq 8）</b></p>
+<p class="one">一句话：Green 方程是经验式，把归一化开路电压 voc 换成 FF。</p>
+<div class="eq">FF = ( voc − ln(voc + 0.72) ) / ( voc + 1 )；　voc = e·V<sub>oc</sub> / ( n<sub>app</sub>·k<sub>B</sub>T )</div>
+<p><b>怎么得出：</b>Green (1982) 的经验式，n<sub>app</sub> 是表观理想因子（含 α 或 β）。把 α 或 β 塞进 n<sub>app</sub>，就能预测 FF。</p>
+<div class="do"><b>关键判断</b> α、β、Green 方程都是作者定义的品质因数或经验式，不是微观定律。价值在于：把输运电阻统一折算成理想因子，从而只用一条 J-V 就能预测 FF。能用，但不神秘。</div>
+<p><b>可视化性：高。</b>一张图：实测 FF 对 PM6 分数 + α 预测线（虚线）+ β 预测线（实线）。β 线贴实测，α 线偏高。</p>
+<p><b>复现难度：低。</b>要 σ<sub>oc</sub>、J<sub>gen</sub>、n<sub>id</sub>、V<sub>oc</sub>，Python 全搞定。</p>
+
+</section>
+
+<!-- ============================================================ workflow -->
+<section id="workflow">
+<h2 id="h-wf">阅读流程</h2>
+
+<h3 id="wf-1">六数表</h3>
+<table>
+  <thead><tr><th style="width:14%">体系</th><th>Eg</th><th>Voc</th><th>ΔE<sub>loss</sub></th><th>ΔV<sub>nr</sub></th><th>Jsc</th><th>FF</th><th>PCE</th><th style="width:16%">形貌/机制证据</th></tr></thead>
+  <tbody>
+    <tr><td>—</td><td class="num">1.40</td><td class="num">0.86</td><td class="num">0.54</td><td class="num">0.27</td><td class="num">26.1</td><td class="num">0.74</td><td class="num">16.6%</td><td>GIWAXS + TA</td></tr>
+  </tbody>
+</table>
+<p class="lead">ΔE<sub>loss</sub> 与 ΔV<sub>nr</sub> 都由前面两个公式算出来，不用抄论文的结论。填满 10 行后，对这个体系的判断基本成形。</p>
+
+<h3 id="wf-2">三遍读法（60 s / 10 min / 15 min）</h3>
+<table>
+  <thead><tr><th style="width:16%">遍</th><th style="width:14%">时间</th><th>只看这些</th></tr></thead>
+  <tbody>
+    <tr><td>第一遍</td><td class="num">60 秒</td><td>标题 + 摘要 + 目录图 + PCE 那一行。判“有没有可比性”，没有就不读。</td></tr>
+    <tr><td>第二遍</td><td class="num">10 分钟</td><td>J–V、EQE、一张机制图 → 填六数表。</td></tr>
+    <tr><td>第三遍</td><td class="num">15 分钟</td><td>只给值得的 10%：方法 + 机制讨论。</td></tr>
+  </tbody>
+</table>
+
+<div class="note"><b>判断标准</b>“多了一行可比数据”才算读完。同质化在这里是优势：变量被控制住，差异才能归因。</div>
+</section>
+
+<!-- ============================================================ 待补充 -->
+<section id="questions">
+<h2 id="h-q">待补充问题</h2>
+
+<div class="one">哪里看不懂就写一行，不用组织语言；攒够了就搬进某个模块。</div>
+
+<div id="qbox">
+  <textarea id="qin" placeholder="例：为什么 Y6 体系里 ΔVnr 比 ITIC 低？ / 等吸收点在两物种浓度相等时出现，那我怎么从图判断是不是只有两步？"></textarea>
+  <div class="row">
+    <button class="btn" id="qadd">记下这个问题</button>
+    <button class="btn ghost" id="qexport">导出 Markdown</button>
+    <button class="btn ghost mini" id="qclear">清空</button>
+    <span style="font-size:12px;color:#98a1ae">存在本机浏览器，换设备不会同步</span>
+  </div>
+</div>
+
+<div id="qlist"></div>
+</section>
+
+<div class="foot">
+  OPV Textbook v1.3 · 单文件离线文档 · 直接编辑本文件即可增补（新增小节请沿用
+  <code>&lt;h3&gt;</code> + <code>.one</code> + <code>.eq</code> + <code>details</code> 的写法）<br>
+  参考框架：Sze &amp; Ng, <i>Physics of Semiconductor Devices</i> 3rd ed. Ch.13（器件物理）；OPV 数值区间为文献常见范围，具体以论文数据为准。
+</div>
+
+</article>
+</main>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- 目录自动生成 ---------- */
+  var nav = document.getElementById('nav');
+  var heads = document.querySelectorAll('section > h2, section > h3');
+  heads.forEach(function(h){
+    if(!h.id) return;
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent.replace('标记已掌握','').trim();
+    a.className = (h.tagName === 'H2') ? 'lv1' : 'lv2';
+    nav.appendChild(a);
+  });
+
+  /* ---------- 掌握进度 ---------- */
+  var PK = 'opv_tb_progress_v1';
+  var prog = {};
+  try { prog = JSON.parse(localStorage.getItem(PK) || '{}') || {}; } catch(e){ prog = {}; }
+
+  var marks = document.querySelectorAll('.mark');
+  var progEl = document.getElementById('prog');
+
+  function paint(btn){
+    var on = !!prog[btn.dataset.id];
+    btn.classList.toggle('on', on);
+    btn.textContent = on ? '✓ 已掌握' : '标记已掌握';
+  }
+  function paintAll(){
+    var n = 0;
+    marks.forEach(function(b){ if(prog[b.dataset.id]) n++; });
+    progEl.textContent = n + ' / ' + marks.length;
+    // 侧栏打勾
+    document.querySelectorAll('#nav a').forEach(function(a){
+      a.innerHTML = a.innerHTML.replace(/\s*<span class="tick">✓<\/span>/,'');
+    });
+    marks.forEach(function(b){
+      if(!prog[b.dataset.id]) return;
+      var sec = b.closest('section');
+      if(!sec) return;
+      var link = nav.querySelector('a[href="#' + sec.id + '"]');
+      if(link) link.insertAdjacentHTML('beforeend',' <span class="tick">✓</span>');
+    });
+  }
+  marks.forEach(function(btn){
+    paint(btn);
+    btn.addEventListener('click', function(){
+      if(prog[btn.dataset.id]) delete prog[btn.dataset.id];
+      else prog[btn.dataset.id] = 1;
+      try { localStorage.setItem(PK, JSON.stringify(prog)); } catch(e){}
+      paint(btn); paintAll();
+    });
+  });
+  paintAll();
+
+  /* ---------- 能损计算器 ---------- */
+  var egEl = document.getElementById('c-eg'),
+      radEl = document.getElementById('c-rad'),
+      eqeEl = document.getElementById('c-eqe'),
+      outEl = document.getElementById('c-out');
+
+  function fmt(x, d){ return (Math.round(x*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
+
+  function calc(){
+    var eg  = parseFloat(egEl.value),
+        rad = parseFloat(radEl.value),
+        eqe = parseFloat(eqeEl.value);
+
+    if(isNaN(eg) || isNaN(rad) || !isFinite(eqe) || eqe <= 0 || eqe > 1){
+      outEl.innerHTML = '<span style="color:#b46">EQE_EL 需要在 0 与 1 之间（例：0.0001 = 1e-4）</span>';
+      return;
+    }
+    var dVnr = -0.02585 * Math.log(eqe);
+    var loss = rad + dVnr;
+    var voc  = eg - loss;
+
+    outEl.innerHTML =
+      'Δ<i>V</i><sub>nr</sub> = <b>' + fmt(dVnr,3) + ' V</b>' +
+      '　（EQE<sub>EL</sub> = ' + eqe.toExponential(1) + '）<br>' +
+      'Δ<i>E</i><sub>loss</sub> = ' + fmt(rad,2) + ' + ' + fmt(dVnr,3) + ' = <b>' + fmt(loss,3) + ' eV</b>（' + fmt(loss*1000,0) + ' meV）<br>' +
+      '预测 <span class="big"><i>V</i><sub>oc</sub> ≈ <b>' + fmt(voc,3) + ' V</b></span><br>' +
+      '<span style="font-size:12px;color:#5a636e">若实测 Voc 明显低于此值，说明还有工艺/接触层面的损失，值得回原文找串联电阻与形貌。</span>';
+  }
+  [egEl, radEl, eqeEl].forEach(function(el){ el.addEventListener('input', calc); });
+  calc();
+
+  /* ---------- 问题记录 ---------- */
+  var QK = 'opv_tb_q_v1';
+  var qin = document.getElementById('qin'),
+      qlist = document.getElementById('qlist'),
+      qcount = document.getElementById('qcount');
+
+  var qs = [];
+  try { qs = JSON.parse(localStorage.getItem(QK) || '[]') || []; } catch(e){ qs = []; }
+
+  function saveQ(){ try { localStorage.setItem(QK, JSON.stringify(qs)); } catch(e){} }
+
+  function renderQ(){
+    qcount.textContent = qs.length;
+    if(!qs.length){
+      qlist.innerHTML = '<div class="empty">还没有记录。第一个问题往往就是最值得写的那个小节。</div>';
+      return;
+    }
+    qlist.innerHTML = qs.map(function(q,i){
+      return '<div class="qitem"><div class="t">' + escapeHtml(q.t) + '</div>' +
+             '<div class="ts">' + q.at + '</div>' +
+             '<button class="del" data-i="' + i + '" title="删除">×</button></div>';
+    }).join('');
+    qlist.querySelectorAll('.del').forEach(function(b){
+      b.addEventListener('click', function(){
+        qs.splice(+b.dataset.i, 1); saveQ(); renderQ();
+      });
+    });
+  }
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"]/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];
+    });
+  }
+
+  document.getElementById('qadd').addEventListener('click', function(){
+    var t = qin.value.trim();
+    if(!t) return;
+    var d = new Date();
+    var stamp = d.getFullYear() + '-' +
+                String(d.getMonth()+1).padStart(2,'0') + '-' +
+                String(d.getDate()).padStart(2,'0');
+    qs.push({t:t, at:stamp});
+    saveQ(); qin.value = ''; renderQ();
+    qin.focus();
+  });
+
+  document.getElementById('qclear').addEventListener('click', function(){
+    if(!qs.length) return;
+    if(!confirm('清空全部 ' + qs.length + ' 条问题记录？')) return;
+    qs = []; saveQ(); renderQ();
+  });
+
+  document.getElementById('qexport').addEventListener('click', function(){
+    var txt = '# OPV Textbook · 待补充问题\n\n';
+    if(!qs.length) txt += '（暂无）\n';
+    qs.forEach(function(q,i){
+      txt += (i+1) + '. ' + q.t + '　`' + q.at + '`\n';
+    });
+    txt += '\n---\n把这份清单贴给我，我按模块把它们变成新的小节。\n';
+    var blob = new Blob([txt], {type:'text/markdown;charset=utf-8'});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'opv-textbook-questions.md';
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+  });
+
+  renderQ();
+})();
+</script>
+
+<script>
+(function(){
+  var out = document.getElementById('o-out');
+  if (!out) return;
+  function val(id, d){ var e = document.getElementById(id); if(!e) return d; var v = parseFloat(e.value); return isFinite(v) ? v : d; }
+  function fmt(x, u){ if(!isFinite(x)) return '不吸收（k = 0）'; return x >= 100 ? x.toFixed(0) + ' ' + u : x.toFixed(1) + ' ' + u; }
+  function upd(){
+    var k = Math.max(0, val('o-k', 0.40)), lam = val('o-l', 600), eg = val('o-eg', 0);
+    if (lam <= 0) { out.innerHTML = ''; return; }
+    var alpha = 4 * Math.PI * k * 1e7 / lam;
+    var dpen = alpha > 0 ? 1e7 / alpha : Infinity;
+    var d90 = alpha > 0 ? 2.303 / alpha * 1e7 : Infinity;
+    var eph = 1240 / lam;
+    var h = [];
+    h.push('<div>吸收系数 α = <b>' + (alpha > 0 ? alpha.toExponential(2) : '0') + '</b> cm<sup>-1</sup></div>');
+    h.push('<div>穿透深度 1/α ≈ <b>' + fmt(dpen, 'nm') + '</b></div>');
+    h.push('<div>吸收 90% 所需厚度 ≈ <b>' + fmt(d90, 'nm') + '</b></div>');
+    var tail = '';
+    if (eg > 0) { tail = eph < eg ? ' 低于 Eg：不被吸收' : ' 高于 Eg：可被吸收'; }
+    h.push('<div>光子能量 E ≈ <b>' + eph.toFixed(2) + ' eV</b>' + tail + '</div>');
+    out.innerHTML = h.join('');
+  }
+  ['o-n','o-k','o-l','o-eg'].forEach(function(id){
+    var e = document.getElementById(id);
+    if (e) e.addEventListener('input', upd);
+  });
+  upd();
+})();
+</script>
+<script id="m0-js1">
+(function(){
+  "use strict";
+
+  /* 模块零 (1)：能级图 + 吸收谱 */
+  var svg = document.getElementById('dos-svg');
+  if (!svg) return;
+
+  var IN = '#3a6ea5', OG = '#c25a1e', NAVY = '#122b4c';
+  var A = {ax:104, right:332, yT:60, yB:314};
+  var B = {ax:470, right:702, yT:60, yB:314, l0:350, l1:1250};
+  var amps = [1, 0.72, 0.48, 0.3];
+  var mode = 'inorg';
+
+  var egEl = document.getElementById('d-eg'),
+      bwEl = document.getElementById('d-bw'),
+      sgEl = document.getElementById('d-sg'),
+      egV  = document.getElementById('d-egv'),
+      bwV  = document.getElementById('d-bwv'),
+      sgV  = document.getElementById('d-sgv'),
+      bwWrap = document.getElementById('d-bw-wrap'),
+      sgWrap = document.getElementById('d-sg-wrap'),
+      outEl = document.getElementById('d-out');
+
+  function TX(x, y, s, o){
+    o = o || {};
+    return '<text x="'+x+'" y="'+y+'" font-size="'+(o.fs||10.5)+'" fill="'+(o.f||'#5a636e')+'"'+
+      (o.a ? ' text-anchor="'+o.a+'"' : '') + (o.w ? ' font-weight="700"' : '') + '>'+s+'</text>';
+  }
+  function LN(x1, y1, x2, y2, c, w, dash){
+    return '<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" stroke="'+c+'" stroke-width="'+(w||1)+'"'+
+      (dash ? ' stroke-dasharray="'+dash+'"' : '')+'/>';
+  }
+  function sub(a, b){ return a+'<tspan font-size="7.5" dy="2">'+b+'</tspan>'; }
+
+  function draw(){
+    var eg = +egEl.value, bw = +bwEl.value, sg = +sgEl.value;
+    egV.textContent = eg.toFixed(2)+' eV';
+    bwV.textContent = bw.toFixed(1)+' eV';
+    sgV.textContent = Math.round(sg*1000)+' meV';
+
+    var Emin = (mode === 'inorg') ? -bw : -0.62;
+    var Emax = (mode === 'inorg') ? eg + bw : eg + 0.62;
+    function ye(E){ return A.yB - (E - Emin) / (Emax - Emin) * (A.yB - A.yT); }
+    function lx(l){ return B.ax + (l - B.l0) / (B.l1 - B.l0) * (B.right - B.ax); }
+
+    var g = [], i, n;
+
+    function band(pts, color){
+      var d = 'M' + pts.map(function(p){ return p[0].toFixed(1)+','+p[1].toFixed(1); }).join(' L') + ' Z';
+      var s = pts.map(function(p){ return p[0].toFixed(1)+','+p[1].toFixed(1); }).join(' ');
+      g.push('<path d="'+d+'" fill="'+color+'" fill-opacity="0.22"/>');
+      g.push('<polyline points="'+s+'" fill="none" stroke="'+color+'" stroke-width="1.7" stroke-linejoin="round"/>');
+    }
+    function arrow(x, ya, yb, c, label, side){
+      var top = Math.min(ya, yb), bot = Math.max(ya, yb);
+      g.push(LN(x, top, x, bot, '#fff', 4.5));
+      g.push(LN(x, top, x, bot, c, 1.2));
+      g.push('<path d="M'+(x-3.6)+','+(top+5)+'L'+x+','+top+'L'+(x+3.6)+','+(top+5)+'" fill="none" stroke="'+c+'" stroke-width="1.2"/>');
+      g.push('<path d="M'+(x-3.6)+','+(bot-5)+'L'+x+','+bot+'L'+(x+3.6)+','+(bot-5)+'" fill="none" stroke="'+c+'" stroke-width="1.2"/>');
+      if (label) g.push(TX(x + (side === 'l' ? -7 : 7), (top+bot)/2 + 4, label,
+        {fs:10.5, f:c, a: side === 'l' ? 'end' : 'start', w:1}));
+    }
+
+    /* ----- a 态密度 ----- */
+    g.push(TX(16, 22, 'a', {fs:13, f:NAVY, w:1}));
+    g.push(TX(32, 22, mode === 'inorg' ? '无机（共价键）' : '有机（范德华）', {fs:12, f:NAVY, w:1}));
+    g.push(LN(A.ax, A.yB, A.ax, A.yT-4, NAVY, 1.3));
+    g.push('<path d="M'+(A.ax-4)+','+(A.yT+4)+'L'+A.ax+','+(A.yT-6)+'L'+(A.ax+4)+','+(A.yT+4)+'" fill="none" stroke="'+NAVY+'" stroke-width="1.3"/>');
+    g.push(TX(A.ax+7, A.yT+3, 'E', {fs:11, f:NAVY, w:1}));
+    g.push(LN(A.ax, A.yB+18, A.ax+72, A.yB+18, '#5a636e', 1));
+    g.push('<path d="M'+(A.ax+72)+','+(A.yB+18)+'L'+(A.ax+65)+','+(A.yB+15)+'L'+(A.ax+65)+','+(A.yB+21)+'Z" fill="#5a636e"/>');
+    g.push(TX(A.ax+78, A.yB+22, 'DOS', {fs:10.5}));
+
+    g.push(LN(A.ax, ye(0), A.right, ye(0), '#c3ccdb', 1, '4 3'));
+    g.push(LN(A.ax, ye(eg), A.right, ye(eg), '#c3ccdb', 1, '4 3'));
+
+    if (mode === 'inorg'){
+      var cb = [[A.ax, ye(eg)]], vb = [[A.ax, ye(-bw)]], Ex;
+      for (i = 1; i <= 40; i++){
+        Ex = eg + bw * i / 40;
+        cb.push([A.ax + Math.sqrt((Ex-eg)/bw) * (A.right - A.ax), ye(Ex)]);
+        Ex = -bw + bw * i / 40;
+        vb.push([A.ax + Math.sqrt((Ex+bw)/bw) * (A.right - A.ax), ye(Ex)]);
+      }
+      band(cb, IN); band(vb, IN);
+      arrow(A.ax+26, ye(0), ye(eg), NAVY, sub('E','g'), 'r');
+      arrow(A.right-18, ye(eg), ye(Emax), IN, 'BW', 'l');
+      arrow(A.right-18, ye(Emin), ye(0), IN, 'BW', 'l');
+      g.push(TX(A.ax-8, ye(eg)-5, sub('E','CBM'), {a:'end'}));
+      g.push(TX(A.ax-8, ye(0)+13, sub('E','VBM'), {a:'end'}));
+    } else {
+      var pts = [], vmax = 0, k, E2, val;
+      for (k = 0; k <= 240; k++){
+        E2 = Emin + (Emax - Emin) * k / 240;
+        val = 0;
+        for (n = 0; n < 4; n++){
+          val += amps[n] * Math.exp(-Math.pow(E2 + 0.17*n, 2) / (2*sg*sg));
+          val += amps[n] * Math.exp(-Math.pow(E2 - (eg + 0.17*n), 2) / (2*sg*sg));
+        }
+        if (val > vmax) vmax = val;
+        pts.push([E2, val]);
+      }
+      var curve = pts.map(function(p){ return [A.ax + (p[1]/vmax) * (A.right - A.ax - 10), ye(p[0])]; });
+      band(curve, OG);
+
+      for (k = 0; k < 4; k++){
+        var yv = ye(-0.17*k);
+        g.push(LN(A.ax, yv, A.ax + 6 + amps[k]*34, yv, OG, 3.4));
+        var yc = ye(eg + 0.17*k);
+        g.push(LN(A.ax, yc, A.ax + 6 + amps[k]*34, yc, OG, 3.4));
+      }
+      g.push(TX(A.ax+48, ye(eg)+3.5, 'LUMO', {fs:9.5, f:OG, w:1}));
+      g.push(TX(A.ax+48, ye(eg+0.17)+3.5, 'LUMO+1', {fs:9.5, f:OG}));
+      g.push(TX(A.ax+48, ye(0)+3.5, 'HOMO', {fs:9.5, f:OG, w:1}));
+      g.push(TX(A.ax+48, ye(-0.17)+3.5, 'HOMO-1', {fs:9.5, f:OG}));
+      for (k = 0; k < 2; k++){
+        g.push('<circle cx="'+(A.ax+20)+'" cy="'+(ye(eg+0.51)-12-k*7)+'" r="1.6" fill="'+OG+'"/>');
+        g.push('<circle cx="'+(A.ax+20)+'" cy="'+(ye(-0.51)+12+k*7)+'" r="1.6" fill="'+OG+'"/>');
+      }
+      arrow(A.ax+26, ye(0), ye(eg), NAVY, sub('E','g'), 'r');
+    }
+
+    /* ----- b 吸收光谱 ----- */
+    g.push(TX(384, 22, 'b', {fs:13, f:NAVY, w:1}));
+    g.push(TX(400, 22, '吸收光谱（示意）', {fs:12, f:NAVY, w:1}));
+
+    g.push('<rect x="'+lx(400).toFixed(1)+'" y="'+B.yT+'" width="'+(lx(700)-lx(400)).toFixed(1)+
+           '" height="'+(B.yB-B.yT)+'" fill="#eff2f7"/>');
+    g.push(TX((lx(400)+lx(700))/2, B.yT+15, '可见窗', {fs:9.5, a:'middle', f:'#8b95a3'}));
+
+    g.push(LN(B.ax, B.yB, B.ax, B.yT-4, NAVY, 1.3));
+    g.push('<path d="M'+(B.ax-4)+','+(B.yT+4)+'L'+B.ax+','+(B.yT-6)+'L'+(B.ax+4)+','+(B.yT+4)+'" fill="none" stroke="'+NAVY+'" stroke-width="1.3"/>');
+    g.push(LN(B.ax, B.yB, B.right, B.yB, NAVY, 1.3));
+    g.push('<text transform="translate('+(B.ax-34)+','+((B.yT+B.yB)/2)+') rotate(-90)" font-size="10.5" fill="#5a636e" text-anchor="middle">A（归一化）</text>');
+
+    [0, 0.5, 1].forEach(function(v){
+      var yy = B.yB - v*(B.yB-B.yT);
+      g.push(LN(B.ax-4, yy, B.ax, yy, NAVY, 1));
+      g.push(TX(B.ax-6, yy+3.5, v, {fs:9.5, a:'end'}));
+    });
+    [400, 600, 800, 1000, 1200].forEach(function(l){
+      g.push(LN(lx(l), B.yB, lx(l), B.yB+4, NAVY, 1));
+      g.push(TX(lx(l), B.yB+16, l, {fs:9.5, a:'middle'}));
+    });
+    g.push(TX(B.right, B.yB+32, '波长 λ / nm', {fs:10.5, a:'end'}));
+
+    var pts2 = [], vmax2 = 0, lam, Ev, val2, peakI = 0;
+    for (lam = B.l0; lam <= B.l1; lam += 2){
+      Ev = 1240 / lam;
+      if (mode === 'inorg'){
+        val2 = (Ev > eg) ? Math.sqrt(Math.min(Ev - eg, bw)) : 0;
+      } else {
+        val2 = 0;
+        for (n = 0; n < 4; n++){
+          val2 += amps[n] * Math.exp(-Math.pow(Ev - (eg + 0.17*n), 2) / (2*sg*sg));
+        }
+      }
+      pts2.push([lam, val2]);
+      if (val2 > vmax2){ vmax2 = val2; peakI = pts2.length - 1; }
+    }
+    if (vmax2 > 0){
+      var poly = pts2.map(function(p){
+        return lx(p[0]).toFixed(1)+','+(B.yB - (p[1]/vmax2)*(B.yB-B.yT)).toFixed(1);
+      }).join(' ');
+      g.push('<polyline points="'+poly+'" fill="none" stroke="'+(mode === 'inorg' ? IN : OG)+'" stroke-width="2"/>');
+    }
+
+    svg.innerHTML = g.join('');
+
+    if (mode === 'inorg'){
+      outEl.innerHTML =
+        '<div>带宽 <b>BW = '+bw.toFixed(1)+' eV</b>　带隙 <b>E<sub>g</sub> = '+eg.toFixed(2)+
+        ' eV</b>（吸收边 '+Math.round(1240/eg)+' nm）</div>'+
+        '<div>吸收从 '+Math.round(1240/eg)+' nm 连续延伸到紫外，<b>中间没有空窗</b>——所以无机做不到「可见透明 + NIR 吸收」</div>'+
+        '<div style="color:#5a636e;font-size:12px">把 BW 拖小：能带变窄、吸收变「陡」，它就开始像有机了</div>';
+    } else {
+      var lamPeak = pts2[peakI][0], hp = pts2[peakI][1]/2, il = peakI, ir = peakI;
+      while (il > 0 && pts2[il][1] > hp) il--;
+      while (ir < pts2.length-1 && pts2[ir][1] > hp) ir++;
+      var fw = pts2[ir][0] - pts2[il][0];
+      outEl.innerHTML =
+        '<div>0-0 跃迁 <b>'+lamPeak+' nm</b>（'+eg.toFixed(2)+' eV）　振动间隔 <b>0.17 eV</b>（≈1370 cm<sup>-1</sup>）</div>'+
+        '<div>主吸收半高宽 <b>'+fw+' nm</b>　能级展宽 σ = '+Math.round(sg*1000)+' meV</div>'+
+        '<div style="color:#5a636e;font-size:12px">σ 拖大 → 振动结构并成一条「似带」，这就是图 b 里 HOMO 那条发虚的来历</div>';
+    }
+  }
+
+  document.querySelectorAll('#sim0 .seg button').forEach(function(b){
+    b.addEventListener('click', function(){
+      mode = b.dataset.m;
+      document.querySelectorAll('#sim0 .seg button').forEach(function(o){
+        o.classList.toggle('on', o === b);
+      });
+      bwWrap.style.display = (mode === 'inorg') ? '' : 'none';
+      sgWrap.style.display = (mode === 'org') ? '' : 'none';
+      draw();
+    });
+  });
+  [egEl, bwEl, sgEl].forEach(function(e){ e.addEventListener('input', draw); });
+  draw();
+})();
+</script>
+<script id="m0-js2">
+(function(){
+  "use strict";
+
+  /* 模块零 (2)：AVT / NIR 权衡 */
+  var st = document.getElementById('st-svg');
+  if (!st) return;
+
+  var P = {x0:64, x1:520, y0:40, y1:262};
+  var aoffEl = document.getElementById('st-aoff'),
+      avisEl = document.getElementById('st-avis'),
+      dEl    = document.getElementById('st-d'),
+      aoffV  = document.getElementById('st-aoffv'),
+      avisV  = document.getElementById('st-avisv'),
+      dV     = document.getElementById('st-dv'),
+      stOut  = document.getElementById('st-out');
+
+  function xv(v){ return P.x0 + v*(P.x1-P.x0); }
+  function yv(v){ return P.y1 - v*(P.y1-P.y0); }
+  function tf(x, y, s, o){
+    o = o || {};
+    return '<text x="'+x+'" y="'+y+'" font-size="'+(o.fs||9.5)+'" fill="'+(o.f||'#5a636e')+'"'+
+      (o.a ? ' text-anchor="'+o.a+'"' : '') + (o.w ? ' font-weight="700"' : '') + '>'+s+'</text>';
+  }
+  function lnl(x1, y1, x2, y2, c, w, dash){
+    return '<line x1="'+x1.toFixed(1)+'" y1="'+y1.toFixed(1)+'" x2="'+x2.toFixed(1)+'" y2="'+y2.toFixed(1)+
+      '" stroke="'+c+'" stroke-width="'+(w||1)+'"'+(dash ? ' stroke-dasharray="'+dash+'"' : '')+'/>';
+  }
+  function sci(x){
+    var e = Math.floor(Math.log(x) / Math.LN10 + 1e-9);
+    var m = x / Math.pow(10, e);
+    return m.toFixed(1)+'×10<sup>'+e+'</sup>';
+  }
+
+  function verdict(a, n){
+    if (a >= 0.5) return n >= 0.8
+      ? '两个指标同时拿到，这在文献里属于好数据——先确认它的 AVT 口径和这里一致。'
+      : '透明度过关，但 NIR 吸收不够，Jsc 会吃亏：要么加厚（牺牲 AVT），要么把 αoff 做大（更难）。';
+    if (a >= 0.3) return n >= 0.8
+      ? '有颜色的窗：AVT 一般，NIR 吸收够。这是最常见的折中区。'
+      : '两头都不突出，是最不划算的区域——先看是不是膜太薄。';
+    return 'AVT 太低，已经不算「窗」了，除非应用不要透明度。往左下走就是普通 OPV 的厚度区间。';
+  }
+
+  function drawST(){
+    var aoff = Math.pow(10, +aoffEl.value),
+        avis = Math.pow(10, +avisEl.value),
+        d    = +dEl.value,
+        dc   = d * 1e-7,
+        avt  = Math.exp(-avis * dc),
+        anir = 1 - Math.exp(-aoff * dc),
+        S    = aoff / avis;
+
+    aoffV.innerHTML = sci(aoff)+' cm<sup>-1</sup>';
+    avisV.innerHTML = sci(avis)+' cm<sup>-1</sup>';
+    dV.textContent = d + ' nm';
+
+    var g = [];
+    g.push('<rect x="'+xv(0.3).toFixed(1)+'" y="'+P.y0+'" width="'+(P.x1-xv(0.3)).toFixed(1)+
+           '" height="'+(P.y1-P.y0)+'" fill="#f4f7fb"/>');
+    g.push(tf(xv(0.3)+8, P.y0+14, '高透明区（AVT ≥ 30%，经验参考）', {f:'#8b95a3'}));
+
+    for (var t = 0; t <= 1.0001; t += 0.2){
+      g.push(lnl(xv(t), P.y0, xv(t), P.y1, '#e6eaf0', 1));
+      g.push(lnl(P.x0, yv(t), P.x1, yv(t), '#e6eaf0', 1));
+      g.push(tf(xv(t), P.y1+15, Math.round(t*100)+'%', {a:'middle'}));
+      g.push(tf(P.x0-8, yv(t)+3.5, Math.round(t*100)+'%', {a:'end'}));
+    }
+    g.push(lnl(P.x0, P.y0, P.x0, P.y1, '#122b4c', 1.3));
+    g.push(lnl(P.x0, P.y1, P.x1, P.y1, '#122b4c', 1.3));
+
+    var pts = [], dd, u;
+    for (dd = 0; dd <= 500; dd += 2){
+      u = avis * dd * 1e-7;
+      pts.push(xv(Math.exp(-u)).toFixed(1)+','+yv(1 - Math.exp(-aoff*dd*1e-7)).toFixed(1));
+    }
+    g.push('<polyline points="'+pts.join(' ')+'" fill="none" stroke="#3a6ea5" stroke-width="2.2"/>');
+
+    g.push('<circle cx="'+xv(0.7).toFixed(1)+'" cy="'+yv(0.9).toFixed(1)+
+           '" r="6" fill="none" stroke="#c25a1e" stroke-width="1.3" stroke-dasharray="2 2"/>');
+    g.push(tf(xv(0.7)-8, yv(0.9)-9, '目标 AVT 70% · NIR 90%', {f:'#c25a1e', a:'end'}));
+
+    g.push(lnl(xv(avt), yv(anir), xv(avt), P.y1, '#c25a1e', 1, '3 3'));
+    g.push(lnl(xv(avt), yv(anir), P.x0, yv(anir), '#c25a1e', 1, '3 3'));
+    g.push('<circle cx="'+xv(avt).toFixed(1)+'" cy="'+yv(anir).toFixed(1)+'" r="5" fill="#c25a1e"/>');
+    if (avt > 0.62) g.push(tf(xv(avt)-9, yv(anir)-9, '你在这里', {f:'#c25a1e', w:1}));
+    else g.push(tf(xv(avt)+9, yv(anir)-9, '你在这里', {f:'#c25a1e', w:1}));
+
+    g.push(tf((P.x0+P.x1)/2, P.y1+34, 'AVT（可见光平均透过率）', {a:'middle', fs:10.5}));
+    g.push('<text transform="translate(18,'+((P.y0+P.y1)/2).toFixed(1)+') rotate(-90)" font-size="10.5" fill="#5a636e" text-anchor="middle">NIR 吸收（估算）</text>');
+
+    st.innerHTML = g.join('');
+
+    stOut.innerHTML =
+      '<div>AVT = <b>'+(avt*100).toFixed(1)+'%</b>　NIR 吸收 = <b>'+(anir*100).toFixed(1)+'%</b>　（d = '+d+' nm）</div>'+
+      '<div>选择比 S = αoff/αvis = <b>'+S.toFixed(1)+'</b>　　d<sub>90</sub> = <b>'+
+      (2.303e7/aoff).toFixed(0)+' nm</b></div>'+
+      '<div style="color:#5a636e;font-size:12px">'+verdict(avt, anir)+'</div>';
+  }
+
+  function preset(kind){
+    var d = 100,
+        targetAVT = (kind === 'ideal') ? 0.70 : 0.40,
+        targetA = (kind === 'ideal') ? 0.90 : 0.80;
+    dEl.value = d;
+    avisEl.value = Math.log(-Math.log(targetAVT)/(d*1e-7)) / Math.LN10;
+    aoffEl.value = Math.log(-Math.log(1-targetA)/(d*1e-7)) / Math.LN10;
+    drawST();
+  }
+
+  [aoffEl, avisEl, dEl].forEach(function(e){ e.addEventListener('input', drawST); });
+  document.querySelectorAll('.presets button').forEach(function(b){
+    b.addEventListener('click', function(){ preset(b.dataset.p); });
+  });
+  drawST();
+})();
+</script>
+
+<script id="m0-js3">
+(function(){
+  var svg=document.getElementById('kn-svg'); if(!svg) return;
+  var nEl=document.getElementById('kn-n'), ictEl=document.getElementById('kn-ict'), aggEl=document.getElementById('kn-agg');
+  var out=document.getElementById('kn-out'), seg=document.getElementById('kn-seg');
+  var nV=document.getElementById('kn-nv'), ictV=document.getElementById('kn-ictv'), aggV=document.getElementById('kn-aggv');
+  var P={d18:{n:9,ict:0.34,agg:0.15},pm6:{n:14,ict:0.41,agg:0.30},l8bo:{n:11,ict:0.77,agg:0.62},ec9:{n:10,ict:0.83,agg:0.55},ct:{n:10,ict:1.00,agg:0.00}};
+
+  function model(){
+    var n=+nEl.value, ict=+ictEl.value, agg=+aggEl.value;
+    var g=1-Math.exp(-n/6);
+    var eg=2.85-0.60*g-1.15*ict-0.14*agg;
+    var f=0.35*Math.pow(n/12,0.6)*(1-0.75*ict*ict);
+    var J=Math.max(0,agg), H=Math.max(0,-agg);
+    var sig=(0.075+0.05*H+0.02*(1-ict))*(1-0.35*J);
+    var fw=2.355*Math.sqrt(0.01416+sig*sig);
+    var fe=f*(1+0.45*agg);
+    return {n:n,ict:ict,agg:agg,eg:eg,f:fe,fw:fw,ap:2.64e5*fe/fw};
+  }
+
+  function draw(){
+    var m=model();
+    nV.textContent='n = '+m.n;
+    ictV.textContent=m.ict.toFixed(2);
+    aggV.textContent=(m.agg>0?'+':'')+m.agg.toFixed(2)+(m.agg>0.05?' J':(m.agg<-0.05?' H':''));
+    var W=680,H=300,L=54,R=16,T=14,B=34,X0=350,X1=1200,Y1=6e5;
+    var X=function(l){return L+(l-X0)/(X1-X0)*(W-L-R);};
+    var Y=function(a){return H-B-Math.min(1,Math.max(0,a/Y1))*(H-T-B);};
+    var sig=m.fw/2.355, s=[];
+    s.push('<rect x="'+X(400)+'" y="'+T+'" width="'+(X(700)-X(400))+'" height="'+(H-T-B)+'" fill="#f4f6f9"/>');
+    s.push('<text x="'+((X(400)+X(700))/2)+'" y="'+(T+13)+'" text-anchor="middle" font-size="10.5" fill="#8b95a3">可见 400–700</text>');
+    s.push('<line x1="'+L+'" y1="'+(H-B)+'" x2="'+(W-R)+'" y2="'+(H-B)+'" stroke="#c8cfd9"/>');
+    s.push('<line x1="'+L+'" y1="'+T+'" x2="'+L+'" y2="'+(H-B)+'" stroke="#c8cfd9"/>');
+    [400,600,800,1000,1200].forEach(function(l){ s.push('<text x="'+X(l)+'" y="'+(H-B+15)+'" text-anchor="middle" font-size="10" fill="#8b95a3">'+l+'</text>'); });
+    [1,2,3,4,5].forEach(function(k){ s.push('<text x="'+(L-6)+'" y="'+(Y(k*1e5)+4)+'" text-anchor="end" font-size="10" fill="#8b95a3">'+k+'</text>'); });
+    s.push('<text x="'+(L-28)+'" y="'+(T+8)+'" font-size="10" fill="#8b95a3">α/10⁵</text>');
+    var pts=[], lam, E, a;
+    for(lam=X0; lam<=X1; lam+=2){
+      E=1240/lam;
+      a=m.ap*(Math.exp(-Math.pow(E-m.eg,2)/(2*sig*sig))+0.42*Math.exp(-Math.pow(E-m.eg-0.17,2)/(2*sig*sig)));
+      pts.push(X(lam).toFixed(1)+','+Y(a).toFixed(1));
+    }
+    var d='M'+pts.join(' L');
+    s.push('<path d="'+d+' L'+X(X1)+','+Y(0)+' L'+X(X0)+','+Y(0)+' Z" fill="rgba(18,43,76,.10)"/>');
+    s.push('<path d="'+d+'" fill="none" stroke="#122b4c" stroke-width="2"/>');
+    var le=1240/m.eg;
+    if(le>X0 && le<X1) s.push('<text x="'+X(le)+'" y="'+(H-B-6)+'" text-anchor="middle" font-size="10.5" fill="#c25a1e">Eg</text>');
+    svg.innerHTML=s.join('');
+    var note;
+    if(m.f<0.12) note='f 掉到 0.1 以下：跃迁偶极指向电荷转移态，峰值 α 只剩 10⁴ 量级——这就是「红移掉 f」。';
+    else if(m.agg>0.45) note='强 J 聚集：红移 + 变窄 + f 变大，三件事一起把峰顶上去。';
+    else if(m.agg<-0.45) note='H 聚集：蓝移 + 变宽 + f 变小，峰被摊平——同一个分子，堆歪了就吸不动。';
+    else note='α 峰值 = f ÷ 宽度。拖「推拉强度」看 f 被摊薄；拖 n 看红移但 f 不掉。';
+    out.innerHTML='<div>E<sub>g</sub> = <b>'+m.eg.toFixed(2)+' eV</b>（吸收边 <b>'+Math.round(1240/m.eg)+' nm</b>）　f = <b>'+m.f.toFixed(2)+'</b>　FWHM = <b>'+Math.round(m.fw*1000)+' meV</b></div>'+
+      '<div>峰值 α = <b>'+(m.ap/1e5).toFixed(1)+'×10⁵ cm⁻¹</b>　d₉₀ = <b>'+Math.round(2.303e7/m.ap)+' nm</b></div>'+
+      '<div style="color:#5a636e;font-size:12px">'+note+'</div>';
+  }
+
+  function setP(k){
+    var p=P[k]; if(!p) return;
+    nEl.value=p.n; ictEl.value=p.ict; aggEl.value=p.agg;
+    seg.querySelectorAll('button').forEach(function(b){ b.classList.toggle('on', b.dataset.k===k); });
+    draw();
+  }
+  seg.querySelectorAll('button').forEach(function(b){ b.addEventListener('click', function(){ setP(b.dataset.k); }); });
+  [nEl,ictEl,aggEl].forEach(function(e){ e.addEventListener('input', function(){
+    seg.querySelectorAll('button').forEach(function(b){ b.classList.remove('on'); });
+    draw();
+  }); });
+  setP('pm6');
+})();
+</script>
+</body>
+</html>

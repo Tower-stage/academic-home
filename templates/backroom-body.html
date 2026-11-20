@@ -1,5 +1,21 @@
+{{#if apps}}
+<section class="notes">
+{{#if posts}}
+  <p class="essay-group">工具</p>
+{{/if}}
+  <ul class="post-index" id="app-index">
+{{#each apps}}
+    <li><a href="#app-{{ slug }}" data-app="{{ slug }}" data-title="{{ title }}" data-desc="{{ desc }}">{{ title }}</a>{{#if date}}<span class="post-index-date">{{ date }}</span>{{/if}}</li>
+{{/each}}
+  </ul>
+</section>
+{{/if}}
+
 {{#if posts}}
 <section class="notes">
+{{#if apps}}
+  <p class="essay-group">文章</p>
+{{/if}}
   <ul class="post-index" id="post-index">
 {{#each posts}}
     <li><a href="#post-{{ slug }}" data-post="{{ slug }}">{{ title }}</a>{{#if date}}<span class="post-index-date">{{ date }}</span>{{/if}}</li>
@@ -18,5 +34,20 @@
   </div>
 </section>
 {{else}}
+{{#unless apps}}
 <p class="section-empty">还没有文章。在 <code>content/backroom/</code> 里新建一个 <code>.md</code> 就会出现在这里。</p>
+{{/unless}}
 {{/if}}
+
+<div id="app-view" hidden>
+  <a class="post-back" href="#" data-app-back="1">← 全部条目</a>
+  <div class="app-bar">
+    <h2 id="app-title"></h2>
+    <a id="app-open" class="app-open" href="#" target="_blank" rel="noopener" hidden>新标签页打开 ↗</a>
+  </div>
+  <p class="app-desc" id="app-desc" hidden></p>
+  <p class="section-empty" id="app-status" hidden></p>
+  <div id="app-frame-wrap" hidden>
+    <iframe id="app-frame" class="app-frame" title=""></iframe>
+  </div>
+</div>
