@@ -21,22 +21,25 @@
     <li><a href="#post-{{ slug }}" data-post="{{ slug }}">{{ title }}</a>{{#if date}}<span class="post-index-date">{{ date }}</span>{{/if}}</li>
 {{/each}}
   </ul>
-
-  <div id="post-view" hidden>
-{{#each posts}}
-    <article class="post" data-slug="{{ slug }}" hidden>
-      <a class="post-back" href="#" data-back="1">← 全部文章</a>
-      <h2>{{ title }}</h2>
-{{#if date}}      <p class="post-date">{{ date }}</p>
-{{/if}}      <div class="post-body">{{ body }}</div>
-    </article>
-{{/each}}
-  </div>
 </section>
 {{else}}
 {{#unless apps}}
 <p class="section-empty">还没有文章。在 <code>content/backroom/</code> 里新建一个 <code>.md</code> 就会出现在这里。</p>
 {{/unless}}
+{{/if}}
+
+{{! 单篇的容器必须留在 section.notes 外面：openPost 会把所有 section.notes 整个隐藏 }}
+{{#if posts}}
+<div id="post-view" hidden>
+{{#each posts}}
+  <article class="post" data-slug="{{ slug }}" hidden>
+    <a class="post-back" href="#" data-back="1">← 全部文章</a>
+    <h2>{{ title }}</h2>
+{{#if date}}    <p class="post-date">{{ date }}</p>
+{{/if}}    <div class="post-body">{{ body }}</div>
+  </article>
+{{/each}}
+</div>
 {{/if}}
 
 <div id="app-view" hidden>

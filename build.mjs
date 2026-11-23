@@ -444,6 +444,12 @@ async function build() {
     ? createHash('sha1').update(readFileSync(cssPath)).digest('hex').slice(0, 8)
     : '';
 
+  // unlock.js 同理：脚本改了但被旧缓存挡住，是排查起来最费劲的一类 bug
+  const jsPath = join(ROOT, 'static', 'js', 'unlock.js');
+  const jsV = existsSync(jsPath)
+    ? createHash('sha1').update(readFileSync(jsPath)).digest('hex').slice(0, 8)
+    : '';
+
   // 清空 dist 但不删 dist 目录本身（Windows 上删除被占用的目录会 EPERM，删内容则不会）
   mkdirSync(DIST, { recursive: true });
   for (const name of readdirSync(DIST)) {
@@ -463,6 +469,7 @@ async function build() {
         meta_description: siteView.title ? `${siteView.name} — ${siteView.title}` : siteView.name,
         page_path: page.out,
         css_v: cssV,
+        js_v: jsV,
         prefix: page.base || '',
       },
     ]);
