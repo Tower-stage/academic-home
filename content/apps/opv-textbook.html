@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>OPV Textbook · 增量版</title>
+<title>OPV Textbook</title>
 <style>
 :root{
   --navy:#122b4c; --orange:#c25a1e; --ink:#1d2229; --muted:#5a636e;
@@ -1063,6 +1063,22 @@ A<sub>i</sub> = ∫ α<sub>i</sub> |E(z)|<sup>2</sup> dz　　（α<sub>i</sub> 
     a.textContent = h.textContent.replace('标记已掌握','').trim();
     a.className = (h.tagName === 'H2') ? 'lv1' : 'lv2';
     nav.appendChild(a);
+  });
+
+  /* ---------- 目录点击：自己滚，不碰 URL ---------- */
+  /* 嵌在 backroom 的 iframe(srcdoc) 里时，href="#x" 会按父页面地址解析，
+     点一下整个页面就被导航回 backroom.html（密码门重新出现）。所以这里
+     拦下默认跳转，改用 scrollIntoView；只有独立打开才回写 hash。 */
+  nav.addEventListener('click', function(e){
+    var a = e.target && e.target.closest ? e.target.closest('a[href^="#"]') : null;
+    if(!a) return;
+    e.preventDefault();
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if(!el) return;
+    el.scrollIntoView({behavior:'smooth', block:'start'});
+    if(window.parent === window){
+      try { history.replaceState(null, '', '#' + el.id); } catch(err){}
+    }
   });
 
   /* ---------- 掌握进度 ---------- */
