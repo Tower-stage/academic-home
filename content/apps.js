@@ -2,10 +2,9 @@
 //  content/apps.js —— Essay 板块里的「工具」
 //
 //  这里每一条对应 content/apps/<slug>.html 一个文件（文件名 = slug）。
-//  构建时每个应用会被单独加密成 site/backroom/app-<slug>.json，
-//  只有点开那一条时浏览器才去下载 + 解密，所以：
-//    · 首页/列表不会因为应用体积大而变慢
-//    · 三个工具各占一个密文，改一个不用重传另外两个
+//  默认是公开的：原样复制成 site/apps/<slug>.html，摆在 tools.html 里。
+//  标了 pub: false 的会收进 Thinking（要密码），单独加密成
+//  site/backroom/app-<slug>.json，点开那一条时才下载 + 解密。
 //
 //  三个源文件不是这里长出来的，是各自项目的成品，改完要重新复制回来：
 //    content/apps/literature-reader.html  ← D:\Project\reading\1-三学者文献\app\pv_reader.html
@@ -29,6 +28,7 @@ export default [
     slug: "model-library",
     title: "🪶Model",
     date: "2026-11",
+    pub: false, // 比较珍贵的资料：收进 Thinking，要密码才看得到
   },
   {
     slug: "opv-textbook",

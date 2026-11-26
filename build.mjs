@@ -374,7 +374,10 @@ async function build() {
     title: a.title || a.slug,
     date: a.date || '',
     desc: a.desc || '',
+    pub: a.pub !== false, // false = 收进 Thinking，构建时单独加密
   }));
+  const publicApps = apps.filter((a) => a.pub);
+  const privateApps = apps.filter((a) => !a.pub);
 
   const now = new Date();
   const siteView = { ...site, year_now: now.getFullYear() };
@@ -433,7 +436,7 @@ async function build() {
       tpl: 'tools.html',
       navTitle: 'Tools',
       title: `Tools | ${siteView.name}`,
-      data: { apps },
+      data: { apps: publicApps },
     },
     {
       out: 'backroom.html',
@@ -500,15 +503,26 @@ async function build() {
     .sort((a, b) => String(b.date).localeCompare(String(a.date)));
 
   const backroomBodyNodes = parse(read('templates/backroom-body.html'), 'templates/backroom-body.html');
-  const backroomHtml = render(backroomBodyNodes, [{ posts }]);
+  const backroomHtml = render(backroomBodyNodes, [{ posts, apps: privateApps }]);
   mkdirSync(join(DIST, 'backroom'), { recursive: true });
   const rec = password ? await encryptHtml(backroomHtml, password) : { status: 'unavailable' };
   writeFileSync(join(DIST, 'backroom', 'content.json'), JSON.stringify(rec), 'utf8');
   written.push('backroom/content.json');
 
-  // 工具是公开的：直接落成普通 HTML 页面，谁都能开，不再加密。
+  // 收进 Thinking 的工具：单独加密成 backroom/app-<slug>.json，点开才下载解密。
+  for (const app of privateApps) {
+    const src = join(ROOT, 'content', 'apps', `${app.slug}.html`);
+    if (!existsSync(src)) {
+      throw new Error(`content/apps.js 里的 "${app.slug}" 找不到对应文件 content/apps/${app.slug}.html`);
+    }
+    const rec2 = password ? await encryptHtml(readFileSync(src, 'utf8'), password) : { status: 'unavailable' };
+    writeFileSync(join(DIST, 'backroom', `app-${app.slug}.json`), JSON.stringify(rec2), 'utf8');
+    written.push(`backroom/app-${app.slug}.json`);
+  }
+
+  // 公开工具：原样落成普通 HTML 页面。
   mkdirSync(join(DIST, 'apps'), { recursive: true });
-  for (const app of apps) {
+  for (const app of publicApps) {
     const src = join(ROOT, 'content', 'apps', `${app.slug}.html`);
     if (!existsSync(src)) {
       throw new Error(`content/apps.js 里的 "${app.slug}" 找不到对应文件 content/apps/${app.slug}.html`);

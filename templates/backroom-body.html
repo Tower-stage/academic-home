@@ -1,3 +1,13 @@
+{{#if apps}}
+<section class="notes">
+  <ul class="post-index" id="app-index">
+{{#each apps}}
+    <li><a href="#app-{{ slug }}" data-app="{{ slug }}" data-title="{{ title }}">{{ title }}</a>{{#if date}}<span class="post-index-date">{{ date }}</span>{{/if}}</li>
+{{/each}}
+  </ul>
+</section>
+{{/if}}
+
 {{#if posts}}
 <section class="notes">
   <ul class="post-index" id="post-index">
@@ -7,7 +17,9 @@
   </ul>
 </section>
 {{else}}
+{{#unless apps}}
 <p class="section-empty">还没有 Thinking。在 <code>content/backroom/</code> 里新建一个 <code>.md</code> 就会出现在这里。</p>
+{{/unless}}
 {{/if}}
 
 {{! 单篇的容器必须留在 section.notes 外面：openPost 会把所有 section.notes 整个隐藏 }}
@@ -21,5 +33,19 @@
 {{/if}}    <div class="post-body">{{ body }}</div>
   </article>
 {{/each}}
+</div>
+{{/if}}
+
+{{#if apps}}
+<div id="app-view" hidden>
+  <a class="post-back" href="#" data-app-back="1">← 全部 Thinking</a>
+  <div class="app-bar">
+    <h2 id="app-title"></h2>
+    <a id="app-open" class="app-open" href="#" target="_blank" rel="noopener" hidden>新标签页打开 ↗</a>
+  </div>
+  <p class="section-empty" id="app-status" hidden></p>
+  <div id="app-frame-wrap" hidden>
+    <iframe id="app-frame" class="app-frame" title=""></iframe>
+  </div>
 </div>
 {{/if}}
