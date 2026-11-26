@@ -89,7 +89,8 @@ export default {
     { label: "Home", href: "index.html" },
     { label: "Publications", href: "publications.html" },
     { label: "Experiences", href: "experiences.html" },
-    { label: "Essay", href: "backroom.html" },
+    { label: "Tools", href: "tools.html" },
+    { label: "随笔", href: "backroom.html" },
   ],
 
   // ---------- 可选装饰 ----------

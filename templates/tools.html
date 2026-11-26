@@ -1,0 +1,18 @@
+<h1>Tools</h1>
+<p class="section-intro">几个自己写的小工具，单文件、纯前端，点开就能用；数据只存在你自己的浏览器里，不上传。</p>
+
+{{#if apps}}
+<ul class="tool-list">
+{{#each apps}}
+  <li>
+    <a href="apps/{{ slug }}.html">
+      <span class="tool-name">{{ title }}</span>
+      {{#if desc}}<span class="tool-desc">{{ desc }}</span>{{/if}}
+    </a>
+    {{#if date}}<span class="post-index-date">{{ date }}</span>{{/if}}
+  </li>
+{{/each}}
+</ul>
+{{else}}
+<p class="section-empty">还没有工具。在 <code>content/apps/</code> 里放一个 <code>.html</code>，再在 <code>content/apps.js</code> 加一条即可。</p>
+{{/if}}

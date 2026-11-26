@@ -38,8 +38,8 @@ node build.mjs              # 只生成一次，输出到 site/
 | 论文列表 | `content/publications.js` | 自动分组、排序、加粗自己的名字 |
 | 经历页 | `content/experiences.js` | 研究 / 教育 / 会议 / 专利（顺序 = 数组顺序）；每条可加 `logo: "style/xxx.png"` 放校徽 |
 | 背景底纹 | `content/site.js` 里的 `watermark` | 放一张淡色图到 `static/style/`，写相对路径，如校徽 |
-| Backroom（私密） | `content/backroom/*.md` | 文章；整页一个密码；列表 + 单篇 |
-| Backroom 里的工具 | `content/apps.js` + `content/apps/*.html` | 独立单文件网页应用；同一个密码，各自单独加密、点开才加载 |
+| 随笔（私密） | `content/backroom/*.md` | 随笔；整页一个密码；列表 + 单篇 |
+| 工具（公开） | `content/apps.js` + `content/apps/*.html` | 独立单文件网页应用；不用密码，构建成 `site/apps/<slug>.html` |
 | 头像 | `static/style/avatar-empty.svg` | 现在是空圆形占位；换照片后改 `site.js` 里的 `avatar` |
 | 颜色、字号、间距 | `static/style/style.css` 顶部的 `:root` | |
 | 分享卡片（微信/推特） | `content/site.js` 的 `url` | 填上线域名（结尾带 `/`）才输出 `og:url` / `og:image`；卡片图是 `static/style/og.png`（1200×630） |
@@ -90,12 +90,14 @@ node build.mjs              # 只生成一次，输出到 site/
 - `equal: true` 会在你名字后加一个 †，页面顶部自动出现 "† co-first author" 图例。
 - DOI 一定要用 `https://doi.org/...` 形式，这个链接永久有效，换出版社也不用改。
 
-### 3.3 设密码 + 写 Backroom（博客 / 航拍 / 随手记）
+### 3.3 设密码 + 写随笔（博客 / 航拍 / 随手记）
 
-Backroom 是一个**整页加密**的私密角落：导航里的 "Backroom" 点进去，只有一个居中的密码输入框，
-输对密码才显示内容（输入框旁边没有任何提示文字）。内容就是一串文章；
-文章**只显示标题和日期**，点标题才展开那一篇（URL 会变成 `backroom.html#post-文件名`，可以直接收藏分享单篇），
-篇内左上角有"← 全部文章"返回列表。所以写多少篇都不会把页面拉长。
+随笔页（导航里的「随笔」，文件是 `backroom.html`）是一个**整页加密**的私密角落：点进去只有一个居中的密码输入框，
+输对密码才显示内容（输入框旁边没有任何提示文字）。内容就是一串随笔；
+随笔**只显示标题和日期**，点标题才展开那一篇（URL 会变成 `backroom.html#post-文件名`，可以直接收藏分享单篇），
+篇内左上角有"← 全部随笔"返回列表。所以写多少篇都不会把页面拉长。
+
+工具页（导航里的 `Tools`，文件是 `tools.html`）是**公开**的：不需要密码，谁都能点开用。
 
 **先设密码。** 复制 `content/.secret.js.example` 成 `content/.secret.js`，把里面改成你的密码：
 
@@ -105,7 +107,7 @@ export default "你的密码";
 
 这个文件已被 `.gitignore` 忽略，不会进仓库。本地预览时它自动生效。
 
-**写一篇文章**（在 `content/backroom/` 新建 `.md`，航拍记录等都用这个形式）：
+**写一篇随笔**（在 `content/backroom/` 新建 `.md`，航拍记录等都用这个形式）：
 
 ```md
 ---
@@ -116,20 +118,18 @@ date: 2026-11-16
 ```
 
 - `title`、`date` 两行是 front-matter，`---` 包起来，正文从下一行开始。
-- 文件名随便；`title` 就是文章标题。列表按 `date` 从新到旧排列，文件名决定 URL 里的锚点
+- 文件名随便；`title` 就是随笔标题。列表按 `date` 从新到旧排列，文件名决定 URL 里的锚点
   （`hello.md` → `#post-hello`）。文件名用英文/数字，别用空格和中文，免得链接难敲。
-- 所有文章都在 Backroom 里、都要密码——没有"公开"这一说了。
+- 所有随笔都要密码；工具是公开的，两者互不影响。
 
-**工具（可选）**：Backroom 里除了文章，还能挂整块的交互应用。现在有三条：文献抽读器、模型库 v2、OPV Textbook。
-做法是把每个应用存成一个**自包含的单文件 HTML** 放进 `content/apps/<英文短名>.html`，再在 `content/apps.js`
-里加一条 `{ slug, title, date, desc }`（数组顺序 = 列表顺序）。构建时每个应用用同一把密码**单独加密**成
-`site/backroom/app-<slug>.json`；页面列表只写标题，点开那一条才下载 + 解密，塞进 iframe 里跑
-（`srcdoc`，和站点同源，应用自己的 localStorage 照常可用），右上角还有「新标签页打开」。
-这样 400KB 的模型库不会拖慢文章列表，改一个工具也不用重传另外两个。
+**工具（可选，公开）**：导航里的 `Tools` 页列出三个交互应用：随机文献抽奖、OPV model database、OPV Textbook。
+把每个应用存成一个**自包含的单文件 HTML** 放进 `content/apps/<英文短名>.html`，再在 `content/apps.js`
+里加一条 `{ slug, title, date, desc }`（数组顺序 = 列表顺序）。构建时原样复制成 `site/apps/<slug>.html`，
+点开就是那一个应用，不需要密码。改一个工具只影响它自己。
 
 **上线时**：在 GitHub 仓库 Settings → Secrets and variables → Actions 新建 secret，
-名字 `SITE_PASSWORD`，值就是你的密码。这样 CI 构建时才会把 Backroom 加密进去。
-没设的话，Backroom 会是空的（不报错、也不挡其他页面）。
+名字 `SITE_PASSWORD`，值就是你的密码。这样 CI 构建时才会把随笔加密进去。
+没设的话，随笔页会是空的（不报错；工具页和别的页面照常）。
 
 > ⚠️ **安全边界，务必看**：静态站没有服务器，所谓"密码"其实是**浏览器端解密**——密文是公开的，
 > 密码只用来在访客浏览器里解锁。它能挡住随意翻看和搜索引擎，但挡不住一个拿到密文后

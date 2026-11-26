@@ -366,6 +366,16 @@ async function build() {
   const password = await getPassword();
   const backroomPosts = collectMarkdown('content/backroom');
 
+  // 工具（tools.html）：公开页面，每条对应 content/apps/<slug>.html，
+  // 构建时原样复制成 site/apps/<slug>.html —— 不需要密码。
+  const appsMeta = existsSync(join(ROOT, 'content', 'apps.js')) ? await load('content/apps.js') : [];
+  const apps = (Array.isArray(appsMeta) ? appsMeta : []).map((a) => ({
+    slug: a.slug,
+    title: a.title || a.slug,
+    date: a.date || '',
+    desc: a.desc || '',
+  }));
+
   const now = new Date();
   const siteView = { ...site, year_now: now.getFullYear() };
   // 邮箱防爬：页面只显示 "name [at] host [dot] tld"，真实地址 base64 放在 data 属性里，
@@ -419,10 +429,17 @@ async function build() {
       data: { sections: groupExperiences(exps || []), updated: monthYear(now) },
     },
     {
+      out: 'tools.html',
+      tpl: 'tools.html',
+      navTitle: 'Tools',
+      title: `Tools | ${siteView.name}`,
+      data: { apps },
+    },
+    {
       out: 'backroom.html',
       tpl: 'backroom.html',
-      navTitle: 'Essay',
-      title: `Essay | ${siteView.name}`,
+      navTitle: '随笔',
+      title: `随笔 | ${siteView.name}`,
       data: {},
     },
     {
@@ -477,35 +494,27 @@ async function build() {
     written.push(page.out);
   }
 
-  // ===== Backroom：整页加密（文章列表 + 单篇，一个密文）=====
+  // ===== Backroom：整页加密（只有随笔，一个密文）=====
   const posts = backroomPosts
     .map((p) => ({ slug: p.slug, title: p.meta.title || p.slug, date: p.meta.date || '', body: p.bodyHtml }))
     .sort((a, b) => String(b.date).localeCompare(String(a.date)));
-  // Essay 里的「工具」：每条对应 content/apps/<slug>.html，各自单独加密。
-  // 列表只带标题，密文等点开那一条时浏览器才去取，所以大应用不拖慢整页。
-  const appsMeta = existsSync(join(ROOT, 'content', 'apps.js')) ? await load('content/apps.js') : [];
-  const apps = (Array.isArray(appsMeta) ? appsMeta : []).map((a) => ({
-    slug: a.slug,
-    title: a.title || a.slug,
-    date: a.date || '',
-    desc: a.desc || '',
-  }));
 
   const backroomBodyNodes = parse(read('templates/backroom-body.html'), 'templates/backroom-body.html');
-  const backroomHtml = render(backroomBodyNodes, [{ posts, apps }]);
+  const backroomHtml = render(backroomBodyNodes, [{ posts }]);
   mkdirSync(join(DIST, 'backroom'), { recursive: true });
   const rec = password ? await encryptHtml(backroomHtml, password) : { status: 'unavailable' };
   writeFileSync(join(DIST, 'backroom', 'content.json'), JSON.stringify(rec), 'utf8');
   written.push('backroom/content.json');
 
+  // 工具是公开的：直接落成普通 HTML 页面，谁都能开，不再加密。
+  mkdirSync(join(DIST, 'apps'), { recursive: true });
   for (const app of apps) {
     const src = join(ROOT, 'content', 'apps', `${app.slug}.html`);
     if (!existsSync(src)) {
       throw new Error(`content/apps.js 里的 "${app.slug}" 找不到对应文件 content/apps/${app.slug}.html`);
     }
-    const one = password ? await encryptHtml(readFileSync(src, 'utf8'), password) : { status: 'unavailable' };
-    writeFileSync(join(DIST, 'backroom', `app-${app.slug}.json`), JSON.stringify(one), 'utf8');
-    written.push(`backroom/app-${app.slug}.json`);
+    writeFileSync(join(DIST, 'apps', `${app.slug}.html`), readFileSync(src, 'utf8'), 'utf8');
+    written.push(`apps/${app.slug}.html`);
   }
 
   // static/ 下的东西整包复制（样式、附件、CNAME 都放这里）

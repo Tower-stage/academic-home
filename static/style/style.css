@@ -401,6 +401,36 @@ hr {
 .post code { background: #f3f3f3; padding: .05em .35em; border-radius: 3px; font-size: .9em; }
 .post pre code { background: none; padding: 0; }
 
+/* 工具页：公开的一条条工具，标题 + 一句说明，右侧是日期 */
+.section-intro {
+  margin: .2em 0 1.1em;
+  color: var(--muted);
+  font-size: .92em;
+}
+.tool-list { list-style: none; margin: .6em 0 0; padding: 0; }
+.tool-list li {
+  display: flex;
+  align-items: baseline;
+  gap: 1em;
+  padding: .8em 0;
+  border-bottom: 1px solid var(--rule);
+}
+.tool-list li:first-child { border-top: 1px solid var(--rule); }
+.tool-list a { flex: 1; text-decoration: none; }
+.tool-name { display: block; }
+.tool-list a:hover .tool-name {
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  text-underline-offset: 2px;
+}
+.tool-desc {
+  display: block;
+  margin-top: .2em;
+  color: var(--muted);
+  font-size: .88em;
+  line-height: 1.55;
+}
+
 /* 工具：Essay 里的三个交互应用，各占一整屏，点开才解密塞进 iframe。
    iframe 允许比正文（800px）宽 —— 模型库卡片墙和 textbook 的侧栏要地方；
    用 50% - 半宽 的方式往两侧摊开，窄屏再退回满宽。 */

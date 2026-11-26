@@ -13,8 +13,9 @@ git add -A && git commit -m "..." && git push origin main
 
 推送后约 60–90 秒自动上线到 <https://boboxiao.cn>。
 
-三条硬规矩：
+四条硬规矩：
 
-1. 不要提交 `content/.secret.js`（Essay 密码），也不要手改 `site/`（构建产物）。
+1. 不要提交 `content/.secret.js`（随笔密码），也不要手改 `site/`（构建产物）。
 2. 中文段落不要折行，换行会渲染成一个空格。
-3. 改完必须验证线上（抓页面查关键字；Essay 内容要解密验证，方法见 SKILL.md），不要只看 Actions 变绿。
+3. 改完必须验证线上（抓页面查关键字；随笔内容要解密验证，方法见 SKILL.md），不要只看 Actions 变绿。
+4. 工具页 `tools.html` 和 `apps/*.html` 是公开的，不要往里放私密内容。
