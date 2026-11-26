@@ -90,7 +90,7 @@ export default {
     { label: "Publications", href: "publications.html" },
     { label: "Experiences", href: "experiences.html" },
     { label: "Tools", href: "tools.html" },
-    { label: "随笔", href: "backroom.html" },
+    { label: "Thinking", href: "backroom.html" },
   ],
 
   // ---------- 可选装饰 ----------

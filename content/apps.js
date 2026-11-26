@@ -22,20 +22,17 @@
 export default [
   {
     slug: "literature-reader",
-    title: "随机文献抽奖",
+    title: "🎲Random paper",
     date: "2026-11",
-    desc: "Amassian / Campoy-Quiles / Feng Liu 组内直属产出 · 每天抽十篇，点「想读」才出 DOI；读完打勾、值得回看点星，都存本机",
   },
   {
     slug: "model-library",
-    title: "OPV model database",
+    title: "🪶Model",
     date: "2026-11",
-    desc: "四大方向（器件物理 / 高分子物理 / 计算模拟 / 流变学）· 卡片墙按热度 × 可用性筛选",
   },
   {
     slug: "opv-textbook",
-    title: "OPV Textbook",
+    title: "📒Note",
     date: "2026-11",
-    desc: "能级 / 能损 / TA / 椭偏 / 结构 / 输运复合 · 六模块，带计算器与自测",
   },
 ];

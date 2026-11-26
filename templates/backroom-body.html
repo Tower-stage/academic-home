@@ -7,7 +7,7 @@
   </ul>
 </section>
 {{else}}
-<p class="section-empty">还没有随笔。在 <code>content/backroom/</code> 里新建一个 <code>.md</code> 就会出现在这里。</p>
+<p class="section-empty">还没有 Thinking。在 <code>content/backroom/</code> 里新建一个 <code>.md</code> 就会出现在这里。</p>
 {{/if}}
 
 {{! 单篇的容器必须留在 section.notes 外面：openPost 会把所有 section.notes 整个隐藏 }}
@@ -15,7 +15,7 @@
 <div id="post-view" hidden>
 {{#each posts}}
   <article class="post" data-slug="{{ slug }}" hidden>
-    <a class="post-back" href="#" data-back="1">← 全部随笔</a>
+    <a class="post-back" href="#" data-back="1">← 全部 Thinking</a>
     <h2>{{ title }}</h2>
 {{#if date}}    <p class="post-date">{{ date }}</p>
 {{/if}}    <div class="post-body">{{ body }}</div>

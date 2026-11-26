@@ -54,7 +54,7 @@ date: 2026-11-17
 
 ## 新增 / 更新一个「工具」
 
-工具（随机文献抽奖、OPV model database、OPV Textbook）是**独立的单文件 HTML 应用**，放在 `content/apps/<slug>.html`，构建时**原样复制**成 `site/apps/<slug>.html`——公开页面，不用密码。导航里的 `Tools`（`tools.html`）列出它们，点一下直接打开。随笔才需要密码，工具不需要。
+工具（🎲Random paper、🪶Model、📒Note）是**独立的单文件 HTML 应用**，放在 `content/apps/<slug>.html`，构建时**原样复制**成 `site/apps/<slug>.html`——公开页面，不用密码。导航里的 `Tools`（`tools.html`）列出它们，点一下直接打开。随笔才需要密码，工具不需要。
 
 三份源文件各有自己的项目，站点里存的是**复制品**，改完源文件要重新复制回来：
 
