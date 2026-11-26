@@ -54,7 +54,7 @@ date: 2026-11-17
 
 ## 新增 / 更新一个「工具」
 
-工具（🎲Random paper、🪶Model、📒Note）是**独立的单文件 HTML 应用**，放在 `content/apps/<slug>.html`，构建时**原样复制**成 `site/apps/<slug>.html`——公开页面，不用密码。导航里的 `Tools`（`tools.html`）列出它们，点一下直接打开。随笔才需要密码，工具不需要。
+工具（🎲Random paper、🪶Model、📒Note）是**独立的单文件 HTML 应用**，放在 `content/apps/<slug>.html`。`content/apps.js` 里默认是公开的：原样复制成 `site/apps/<slug>.html`，`Tools`（`tools.html`）列出它们，点一下直接打开。某一条加了 `pub: false` 就会从 Tools 撤下、收进 `Thinking`：构建时单独加密成 `site/backroom/app-<slug>.json`，浏览者在 Thinking 里点开那条才解密塞进 iframe（目前只有 🪶Model 是这么放的）。
 
 三份源文件各有自己的项目，站点里存的是**复制品**，改完源文件要重新复制回来：
 
